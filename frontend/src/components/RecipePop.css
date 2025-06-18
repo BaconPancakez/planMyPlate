@@ -1,0 +1,130 @@
+/* Styles for the RecipePop component */
+.recipe-popup {
+  background-color: #E1F8EE;
+  padding: 20px;
+  color: #333;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 0 auto;
+  z-index: 1001;
+}
+
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.recipe-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.recipe-header h1 {
+  font-size: 32px;
+  margin: 0;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #333;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.recipe-header .stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.stats p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.bar {
+  color: black;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.recipe-main {
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.left-bar {
+  flex: 0 1 35%;
+  min-width: 280px;
+}
+
+.right-bar {
+  flex: 1;
+}
+
+.left-bar img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+
+/* Section Titles */
+.left-bar h2,
+.right-bar h2 {
+  font-size: 18px;
+  margin: 10px 0;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #333;
+  text-transform: uppercase;
+}
+
+/* List Styling */
+.left-bar ul,
+.right-bar ol {
+  margin: 0;
+  padding-left: 20px;
+  text-align: left;
+}
+
+.left-bar li,
+.right-bar li {
+  margin-bottom: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  list-style-position: inside;
+  text-align: left;
+}
+
+/* Popup Container */
+.popup-container {
+  position: relative;
+  border-radius: 10px;
+  z-index: 1001;
+}
+
+/* Close Button */
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}

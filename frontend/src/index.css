@@ -1,68 +1,55 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* -----------------------------------
+   Global Reset & Base Styling
+----------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #363e3b;
+  color: #fff;
+}
+
+.layout {
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  height: 100vh;
+  width: 100vw;
+  transition: all 0.3s ease;
+}
+
+/* Hide hamburger when popup is open */
+.popup-active .hamburger-btn {
+  display: none;
+}
+
+/* -----------------------------------
+   Main Content Layout
+----------------------------------- */
+.main-container {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  gap: 30px;
+  width: calc(100% - 60px);
+  transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.layout.expanded .main-container {
+  margin-left: 200px;
+  width: calc(100% - 200px);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.main-header {
+  height: 80px;
+  background-color: #95D1C8;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #1f2533;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }

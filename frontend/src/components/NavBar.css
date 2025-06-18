@@ -1,0 +1,88 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.profile p {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+/* -----------------------------------
+   Hamburger Toggle Button
+----------------------------------- */
+.hamburger-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  z-index: 1100;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* -----------------------------------
+   Sidebar Navigation
+----------------------------------- */
+.sidebar {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 80px;
+  background-color: #1f2533;
+  color: white;
+  padding-top: 70px;
+  transition: width 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.sidebar.expanded {
+  width: 200px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sidebar ul li:hover {
+  background-color: #2b3245;
+}
+
+.sidebar ul li svg {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+/* Hide text in collapsed mode */
+.sidebar.collapsed ul li span {
+  display: none;
+}
