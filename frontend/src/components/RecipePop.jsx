@@ -1,4 +1,4 @@
-import "./RecipePop.css"
+import "./RecipePop.css";
 
 export default function RecipePop({ recipe }) {
   return (

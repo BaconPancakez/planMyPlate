@@ -1,14 +1,11 @@
-import './App.css'
-import Explore from './pages/explore'
+import './App.css';
+import Explore from './pages/explore';
 
 function App() {
-
   return (
-    <>
-      <Explore/>
-    </>
-  )
+    <Explore />
+  );
 }
 
-export default App
+export default App;
 

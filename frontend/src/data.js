@@ -2,7 +2,7 @@ export default [
     {
         id: 1,
         title: "Pancakes",
-        image: "./src/assets/pancakes.jpg",
+        image: "https://cdn.loveandlemons.com/wp-content/uploads/2025/01/pancake-recipe-500x500.jpg",
         author: "your best man",
         stats: {
             prepTime: "10 mins",
@@ -33,7 +33,7 @@ export default [
     {
         id: 2,
         title: "Burger",
-        image: "./src/assets/burger.png",
+        image: "https://www.allrecipes.com/thmb/5JVfA7MxfTUPfRerQMdF-nGKsLY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/25473-the-perfect-basic-burger-DDMFS-4x3-56eaba3833fd4a26a82755bcd0be0c54.jpg",
         author: "your best man",
         stats: {
             prepTime: "10 mins",

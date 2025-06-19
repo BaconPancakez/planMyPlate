@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import RecipePop from './RecipePop';
-import "./RecipeList.css";
-import data from "../data.js";
+import './RecipeList.css';
+import data from '../data.js';
 
-const recipes = data;
-
-export default function Recipe() {
+export default function RecipeList() {
   const [showPopup, setShowPopup] = useState(false);
   const [activeRecipe, setActiveRecipe] = useState(null);
 
@@ -16,7 +14,7 @@ export default function Recipe() {
 
   return (
     <div className="recipes-container">
-      {recipes.map((recipe) => (
+      {data.map((recipe) => (
         <div
           className="recipe-box"
           key={recipe.id}
