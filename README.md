@@ -34,15 +34,17 @@ To run the backend application:
     ```
 3.  Start the development server:
 
-    ```bash
-    npm run dev
-    ```
+        ```bash
+        npm run dev
+        ```
 
-    The application will typically be available at `http://localhost:3000`.
+        The application will typically be available at `http://localhost:3000`.
 
-    **Note:** Ensure your Supabase instance is configured and running if the backend relies on it for database and authentication services. Refer to Supabase documentation for setup.
-    -> Required the
+        **Note:** Ensure your Supabase instance is configured and running if the backend relies on it for database and authentication services. Refer to Supabase documentation for setup.
+        -> Required the
 
-    PORT=8080
-    SUPABASE_URL=your_supabase_url_here
-    SUPABASE_ANON_KEY=your_supabase_anon_key_here
+        PORT=8080
+        SUPABASE_URL=your_supabase_url_here
+        SUPABASE_ANON_KEY=your_supabase_anon_key_here
+
+    GOOGLE

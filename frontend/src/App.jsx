@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// Importing necessary components and styles
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import Explore from './pages/Explore';
+import Home from './pages/Home';
+import NavBar from './components/NavBar';
 
+// The App component serves as the root component of the application
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="layout"> {/* Layout container for the app */}
+      <NavBar /> {/* Navigation bar displayed globally */}
+      <main className="main-content"> {/* Main content area */}
+        <header className="main-header"> {/* Header section */}
+        </header>
+        <Routes> {/* Defines the routes for the application */}
+          <Route path="/" element={<Home />} /> {/* Home page route */}
+          <Route path="/Explore" element={<Explore />} /> {/* Explore page route */}
+        </Routes>
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
+
