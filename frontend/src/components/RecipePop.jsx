@@ -8,11 +8,11 @@ export default function RecipePop({ recipe }) {
       <div className="recipe-header">
         <h1>{recipe.title}</h1>
         <div className="stats">
-            <p>Protein: {recipe.stats.protein}</p>
-            <span className="bar">|</span>
             <p>Cuisine: {recipe.stats.cuisine}</p>
             <span className="bar">|</span>
-            <p>Calories: {recipe.stats.calories}</p>
+            <p>Dietary: {recipe.stats.dietary}</p>
+            <span className="bar">|</span>
+            <p>Meal: {recipe.stats.meal}</p>
         </div>
         <div className="stats">
           <p>Prep Time: {recipe.stats.prepTime}</p>
