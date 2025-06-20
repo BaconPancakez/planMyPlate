@@ -58,13 +58,14 @@
   overflow: hidden;
 }
 
-.sidebar.expanded {
+.sidebar.expanded, .nav-item.expanded{
   width: 200px;
 }
 
-.sidebar.collapsed {
+.sidebar.collapsed, .nav-item.collapsed  {
   display: flex;
   justify-items: center;
+  width: 70px;
 }
 
 .sidebar ul {
@@ -75,7 +76,7 @@
 .sidebar ul li {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+
   font-size: 16px;
   cursor: pointer;
   transition: background 0.2s ease;
@@ -104,4 +105,22 @@
 
 .sidebar.collapsed ul li span {
   display: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  color: white;
+  height: 40px;
+  padding: 30px 20px;
+}
+
+.nav-item a {
+  color: white;
+  text-decoration: none;
+}
+
+a:focus, a:active, a:hover  {
+  outline: none;
+  text-decoration: none;
 }

@@ -1,10 +1,19 @@
+// Importing the CSS file for styling the RecipePop component
 import "./RecipePop.css";
 
+// The RecipePop component displays detailed information about a selected recipe
 export default function RecipePop({ recipe }) {
   return (
     <div className="recipe-popup">
       <div className="recipe-header">
         <h1>{recipe.title}</h1>
+        <div className="stats">
+            <p>Protein: {recipe.stats.protein}</p>
+            <span className="bar">|</span>
+            <p>Cuisine: {recipe.stats.cuisine}</p>
+            <span className="bar">|</span>
+            <p>Calories: {recipe.stats.calories}</p>
+        </div>
         <div className="stats">
           <p>Prep Time: {recipe.stats.prepTime}</p>
           <span className="bar">|</span>
@@ -31,6 +40,9 @@ export default function RecipePop({ recipe }) {
             ))}
           </ol>
         </div>
+      </div>
+      <div className="recipe-btn">
+            <button>Add to Cart</button>
       </div>
     </div>
   );

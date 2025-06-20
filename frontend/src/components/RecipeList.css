@@ -1,4 +1,6 @@
 /* Styles for the RecipeList component */
+
+/* Container for the list of recipes */
 .recipes-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -7,6 +9,7 @@
   justify-items: center;
 }
 
+/* Individual recipe box */
 .recipe-box {
   background-color: #E1F8EE;
   border-radius: 12px;
@@ -25,6 +28,7 @@
   transform: scale(1.03);
 }
 
+/* Image styling for recipe box */
 .recipe-box img {
   width: 90%;
   height: 140px;
@@ -38,6 +42,7 @@
   background-color: white;
 }
 
+/* Details section in recipe box */
 .recipe-details {
   padding: 10px 15px;
 }

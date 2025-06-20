@@ -1,19 +1,13 @@
-import { useState } from 'react';
-import NavBar from '../components/NavBar';
+// Importing the RecipeList component to display a list of recipes
 import RecipeList from '../components/RecipeList';
-import './Explore.css';
 
+// The Explore component represents the page where users can explore recipes
 export default function Explore() {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // sidebar toggle
-
   return (
-    <div className={`layout ${isOpen ? 'expanded' : ''} ${isPopupOpen ? 'popup-active' : ''}`}>
-      <NavBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="main-container">
-        <header className="main-header"></header>
-        <main className="main-content">
-          <RecipeList setIsPopupOpen={setIsPopupOpen} />
+    <div className="layout"> {/* Layout container for the page */}
+      <div className="main-container"> {/* Main container for the content */}
+        <main className="main-content"> {/* Main content area */}
+          <RecipeList /> {/* Displays the list of recipes */}
         </main>
       </div>
     </div>

@@ -9,6 +9,7 @@
   z-index: 1001;
 }
 
+/* Backdrop for the popup */
 .popup-backdrop {
   position: fixed;
   top: 0;
@@ -18,15 +19,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.556);
+  z-index: 1200;
+  background-color: rgba(0, 0, 0, 0.671);
 }
 
+/* Header section of the popup */
 .recipe-header {
   text-align: center;
   margin-bottom: 20px;
 }
 
+/* Title styling in the header */
 .recipe-header h1 {
   font-size: 32px;
   margin: 0;
@@ -37,6 +40,7 @@
   padding-bottom: 5px;
 }
 
+/* Stats section in the header */
 .recipe-header .stats {
   display: flex;
   justify-content: center;

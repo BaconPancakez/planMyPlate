@@ -5,6 +5,9 @@ export default [
         image: "https://cdn.loveandlemons.com/wp-content/uploads/2025/01/pancake-recipe-500x500.jpg",
         author: "your best man",
         stats: {
+            cuisine:"Western",
+            protein:"Low",
+            calories:"None",
             prepTime: "10 mins",
             cookTime: "10 mins",
             totalTime: "20 mins"
@@ -36,6 +39,9 @@ export default [
         image: "https://www.allrecipes.com/thmb/5JVfA7MxfTUPfRerQMdF-nGKsLY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/25473-the-perfect-basic-burger-DDMFS-4x3-56eaba3833fd4a26a82755bcd0be0c54.jpg",
         author: "your best man",
         stats: {
+            cuisine:"Western",
+            protein:"Low",
+            calories:"None",
             prepTime: "10 mins",
             cookTime: "10 mins",
             totalTime: "20 mins"
@@ -53,6 +59,9 @@ export default [
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK_O9cpxDRo1bDY_OP382RZqbLlUWjIRWNDQ&s",
         author: "your peep",
         stats: {
+            cuisine:"Western",
+            protein:"Low",
+            calories:"None",
             prepTime: "10 mins",
             cookTime: "30–40 mins",
             totalTime: "~50 mins"
@@ -85,6 +94,9 @@ export default [
         image: "https://images.unsplash.com/photo-1522237825450-a0c44eecddb4?q=80&w=2848?auto=format&fit=crop&w=800&q=80",
         author: "your peep",
         stats: {
+            cuisine:"Western",
+            protein:"Low",
+            calories:"None",
             prepTime: "15 mins",
             cookTime: "10–15 mins",
             totalTime: "30 mins"
