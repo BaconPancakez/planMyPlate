@@ -1,3 +1,5 @@
+// This file defines a React context and provider for managing UI-related state, such as navigation and popup visibility.
+
 import { createContext, useState } from 'react';
 
 export const UIContext = createContext();

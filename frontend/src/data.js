@@ -117,5 +117,137 @@ export default [
             "Bake at 180°C for 10–15 minutes or until golden brown.",
             "Freeze dough if not baking immediately."
         ]
+        
+    },
+    {
+        id: 5,
+        title: "Chicken Teriyaki",
+        image: "https://www.onceuponachef.com/images/2024/01/chicken-teriyaki.jpg",
+        author: "Chef Sakura",
+        stats: {
+            cuisine: "Japanese",
+            protein: "High",
+            calories: "Medium",
+            prepTime: "15 mins",
+            cookTime: "20 mins",
+            totalTime: "35 mins"
+        },
+        ingredients: [
+            "500g chicken thighs",
+            "1/4 cup soy sauce",
+            "2 tbsp mirin",
+            "2 tbsp sake",
+            "1 tbsp sugar",
+            "1 tsp grated ginger",
+            "Spring onions, chopped"
+        ],
+        directions: [
+            "Mix soy sauce, mirin, sake, sugar, and ginger.",
+            "Marinate chicken for 15 mins.",
+            "Cook chicken skin-side down until crispy.",
+            "Add marinade and simmer until thickened.",
+            "Serve over rice with chopped spring onions."
+        ]
+    },
+    {
+        id: 6,
+        title: "Shakshuka",
+        image: "https://www.eatloveeats.com/wp-content/uploads/2018/03/Shakshuka-with-Feta-and-Chorizo-Featured.jpg",
+        author: "Mediterranean Mama",
+        stats: {
+            cuisine: "Middle Eastern",
+            protein: "Medium",
+            calories: "Low",
+            prepTime: "10 mins",
+            cookTime: "15 mins",
+            totalTime: "25 mins"
+        },
+        ingredients: [
+            "1 tbsp olive oil",
+            "1 onion, diced",
+            "1 red bell pepper, diced",
+            "2 garlic cloves, minced",
+            "1 tsp paprika",
+            "1/2 tsp cumin",
+            "1 can crushed tomatoes",
+            "4 eggs",
+            "Salt and pepper",
+            "Fresh parsley"
+        ],
+        directions: [
+            "Sauté onion and bell pepper until soft.",
+            "Add garlic, paprika, and cumin. Cook 1 min.",
+            "Add tomatoes and simmer 10 mins.",
+            "Make wells in sauce and crack in eggs.",
+            "Cover and cook until eggs are just set.",
+            "Garnish with parsley and serve with bread."
+        ]
+    },
+    {
+        id: 7,
+        title: "Tandoori Cauliflower",
+        image: "https://plantbaes.com/wp-content/uploads/2025/03/Tandoori-Spiced-Cauliflower-Bowl-6.jpg",
+        author: "Spice Queen",
+        stats: {
+            cuisine: "Indian",
+            protein: "Low",
+            calories: "Low",
+            prepTime: "10 mins",
+            cookTime: "25 mins",
+            totalTime: "35 mins"
+        },
+        ingredients: [
+            "1 medium cauliflower",
+            "1/2 cup plain yogurt",
+            "1 tbsp tandoori masala",
+            "1 tsp turmeric",
+            "1 tsp paprika",
+            "1 tbsp lemon juice",
+            "1 tbsp oil",
+            "Salt to taste"
+        ],
+        directions: [
+            "Cut cauliflower into florets.",
+            "Mix marinade and coat florets.",
+            "Let sit for 10 mins.",
+            "Bake at 200°C for 25 mins until golden.",
+            "Serve with mint chutney or over rice."
+        ]
+    },
+    {
+        id: 8,
+        title: "Beef Pho",
+        image: "https://www.simplyrecipes.com/thmb/6NSfqz9vDog4Ct97ZKaEeG5ByFs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__04__Beef-Pho-LEAD-2-afc6b6a9144947fb9d72070d7ea8c95c.jpg",
+        author: "Phở Real",
+        stats: {
+            cuisine: "Vietnamese",
+            protein: "High",
+            calories: "Medium",
+            prepTime: "20 mins",
+            cookTime: "2 hours",
+            totalTime: "2h 20m"
+        },
+        ingredients: [
+            "1kg beef bones",
+            "1 onion, charred",
+            "1 knob of ginger, charred",
+            "2 star anise",
+            "1 cinnamon stick",
+            "4 cloves",
+            "Fish sauce",
+            "Rice noodles",
+            "Beef slices",
+            "Fresh herbs: basil, cilantro",
+            "Lime and chili"
+        ],
+        directions: [
+            "Simmer bones, onion, and ginger for 1.5 hours.",
+            "Add spices and simmer another 30 mins.",
+            "Strain broth and season with fish sauce.",
+            "Soak and cook rice noodles.",
+            "Assemble bowl: noodles, beef slices, herbs.",
+            "Pour hot broth over and serve with lime and chili."
+        ]
     }
+
 ]

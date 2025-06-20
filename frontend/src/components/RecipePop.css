@@ -154,3 +154,16 @@
 .popup-close:hover {
   transform: scale(1.2);
 }
+
+/* Button below the recipes */
+.recipe-btn{
+  display: flex;
+  justify-content: center;
+}
+
+.recipe-btn button{
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: none;
+  background-color: #8E99DF;
+}
