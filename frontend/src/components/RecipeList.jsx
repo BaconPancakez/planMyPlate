@@ -1,7 +1,10 @@
 // Importing necessary libraries, components, and styles
 import { useState } from 'react';
 import RecipePop from './RecipePop';
+
 import './RecipeList.css';
+
+// Mock data
 import data from '../data.js';
 
 // The RecipeList component displays a list of recipes and handles popup interactions

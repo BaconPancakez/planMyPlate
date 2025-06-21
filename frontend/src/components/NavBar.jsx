@@ -1,10 +1,16 @@
 // Importing necessary libraries, components, and styles
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes, FaHome, FaUser, FaUtensils, FaShoppingCart, FaSearch, FaCog, FaSignOutAlt } from "react-icons/fa";
-import { RiFridgeFill } from "react-icons/ri";
 
+// Import Icon for nav bar
+// https://react-icons.github.io/react-icons/ <- if ya wanna change the icon
+import { FaBars, FaTimes, FaHome, FaUser, FaUtensils, FaShoppingCart, FaSearch, FaSignOutAlt } from "react-icons/fa";
+import { RiFridgeFill } from "react-icons/ri";
+import { SlCalender } from "react-icons/sl";
+
+// Refer to the .jsx for info
 import { UIContext } from "../contexts/UIContext";
+
 
 import "./NavBar.css";
 
@@ -75,7 +81,7 @@ export default function NavBar() {
           <li>
             <Link to="/">
               <div className={`nav-item ${isNavOpen ? "expanded" : "collapsed"} `}>
-                <FaCog /> {isNavOpen && <span>Settings</span>}
+                <SlCalender /> {isNavOpen && <span>My Meal Plan</span>}
               </div>
             </Link>
           </li>
