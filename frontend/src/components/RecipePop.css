@@ -6,7 +6,7 @@
   border-radius: 10px;
   max-width: 900px;
   margin: 0 auto;
-  z-index: 1001;
+  z-index: 100;
 }
 
 /* Backdrop for the popup */
@@ -31,7 +31,7 @@
 
 /* Title styling in the header */
 .recipe-header h1 {
-  font-size: 32px;
+  font-size: 24px;
   margin: 0;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -39,6 +39,19 @@
   display: inline-block;
   padding-bottom: 5px;
 }
+
+.addTitle-button {
+  display: 'flex';
+  justify-Content: 'center';
+  width: '40px';
+  background: none;
+  cursor: 'pointer';
+  padding: '10px 20px';
+  border-color: #333;
+  border-radius: '10px';
+}
+
+
 
 /* Stats section in the header */
 .recipe-header .stats {
@@ -149,6 +162,7 @@
   padding: 0;
   line-height: 1;
   transition: transform 0.2s ease;
+  z-index: 1300;
 }
 
 .popup-close:hover {
@@ -166,4 +180,16 @@
   border-radius: 15px;
   border: none;
   background-color: #8E99DF;
+}
+
+
+.createnewpost {
+  text-Align: 'left'; 
+  margin-Left: '16px';
+  font-Weight: 'bold';
+
+}
+
+.addrecipe-main {
+  display: flex;
 }

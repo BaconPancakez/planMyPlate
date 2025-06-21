@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Explore from './pages/Explore';
 import Home from './pages/Home';
+import MyRecipe from './pages/MyRecipe.jsx'
 import NavBar from './components/NavBar';
 
 // The App component serves as the root component of the application
@@ -15,6 +16,7 @@ function App() {
         </header>
         <Routes> {/* Defines the routes for the application */}
           <Route path="/" element={<Home />} /> {/* Home page route */}
+          <Route path="/MyRecipe" element={<MyRecipe />} /> {/* MyRecipe page route */}
           <Route path="/Explore" element={<Explore />} /> {/* Explore page route */}
         </Routes>
       </main>

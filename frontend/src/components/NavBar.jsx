@@ -65,7 +65,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/MyRecipe">
               <div className={`nav-item ${isNavOpen ? "expanded" : "collapsed"}`}>
                 <FaUtensils /> {isNavOpen && <span>My Recipes</span>}
               </div>

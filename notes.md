@@ -1,0 +1,2 @@
+- routeing doesnt work for static image 
+-  
