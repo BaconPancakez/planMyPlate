@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'; // Add useEffect for calculated ingredients
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import IngredientGroup from '../components/IngredientGroup';
+import './IngredientsList.css';
 
 const IngredientsList = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const selectedRecipes = location.state?.selected || [];
+  const selectedRecipes = useMemo(() => location.state?.selected || [], [location.state]);
 
   const [servingSizes, setServingSizes] = useState(
     selectedRecipes.reduce((acc, recipe) => {
@@ -14,23 +15,19 @@ const IngredientsList = () => {
     }, {})
   );
 
-  // State to hold the aggregated ingredients for the shopping list
   const [aggregatedIngredients, setAggregatedIngredients] = useState([]);
 
-  // Calculate aggregated ingredients whenever servingSizes or selectedRecipes change
   useEffect(() => {
-    const aggregate = {}; // Use an object to sum quantities by ingredient name
+    const aggregate = {};
 
     selectedRecipes.forEach(recipe => {
       const currentServing = servingSizes[recipe.id] || 1;
       recipe.ingredients.forEach(ingredient => {
-        const key = ingredient.name.toLowerCase(); // Use lowercase name as key to avoid duplicates like "Tomato" and "tomato"
+        const key = ingredient.name.toLowerCase();
 
         if (aggregate[key]) {
-          // If ingredient already exists, add to its quantity
           aggregate[key].quantity += ingredient.quantity * currentServing;
         } else {
-          // Otherwise, add new ingredient
           aggregate[key] = {
             ...ingredient,
             quantity: ingredient.quantity * currentServing,
@@ -39,9 +36,8 @@ const IngredientsList = () => {
       });
     });
 
-    // Convert the aggregated object back to an array
     setAggregatedIngredients(Object.values(aggregate));
-  }, [selectedRecipes, servingSizes]); // Depend on these states
+  }, [selectedRecipes, servingSizes]);
 
   const handleChangeServing = (id, delta) => {
     setServingSizes((prev) => ({
@@ -51,8 +47,6 @@ const IngredientsList = () => {
   };
 
   const handleAddIngredientsToShoppingList = () => {
-    // Navigate to shopping list, passing the aggregated ingredients
-    // Note: This won't persist on refresh. For persistence, use Context/backend.
     navigate('/shopping-list', { state: { ingredientsToAdd: aggregatedIngredients } });
   };
 
@@ -77,11 +71,10 @@ const IngredientsList = () => {
         />
       ))}
 
-      {selectedRecipes.length > 0 && ( // Only show button if there are selected recipes
+      {selectedRecipes.length > 0 && (
         <button
           onClick={handleAddIngredientsToShoppingList}
-          className="primary-btn" // Use a class for consistent button styling
-          style={{ marginTop: '20px', padding: '10px 20px' }} // Add some inline style for spacing if needed
+          className="primary-btn"
         >
           Add to Shopping List
         </button>

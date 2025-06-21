@@ -124,3 +124,13 @@ a:focus, a:active, a:hover  {
   outline: none;
   text-decoration: none;
 }
+
+/* Navbar Container */
+.navbar-container {
+  position: relative;
+  z-index: 999;
+}
+
+.navbar-container.expanded {
+  z-index: 1100;
+}

@@ -4,11 +4,7 @@ import RecipeCard from '../components/RecipeCard';
 import RecipePopup from '../components/RecipePopup';
 import { useNavigate } from 'react-router-dom';
 import { dummyRecipes } from '../DummyData/dataAI';
-// No import for FoodCart.css if it doesn't have unique styles besides 'page'
-
-// const dummyRecipes = [
-//   // ... your dummy recipes
-// ];
+import './FoodCart.css';
 
 export default function FoodCart() {
   const [recipes, setRecipes] = useState(dummyRecipes);
@@ -32,7 +28,7 @@ export default function FoodCart() {
   };
 
   return (
-    <div className="page"> {/* This 'page' class comes from index.css (global) */}
+    <div className="page">
       <h1>Food Cart</h1>
       {recipes.map((recipe) => (
         <RecipeCard
@@ -45,7 +41,7 @@ export default function FoodCart() {
         />
       ))}
 
-      <button onClick={handleShowIngredients} className="primary-btn" style={{ marginTop: '20px' }}>
+      <button onClick={handleShowIngredients} className="primary-btn">
         Show Ingredients
       </button>
 
@@ -57,5 +53,5 @@ export default function FoodCart() {
       )}
     </div>
   );
-};
+}
 

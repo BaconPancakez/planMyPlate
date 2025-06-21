@@ -1,0 +1,25 @@
+.recipe-popup {
+  /* Add styles for the recipe popup */
+}
+
+.createnewpost {
+  /* Add styles for the create new post text */
+}
+
+.recipe-header .addTitle-button {
+  /* Add styles for the add title button */
+}
+
+.popup-container .addrecipe-main .left-bar .add-image button {
+  background: none;
+  width: 300px;
+  height: 200px;
+}
+
+.popup-container .post-button button {
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  background-color: #FEE7E7;
+  color: #000;
+}

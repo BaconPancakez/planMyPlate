@@ -1,0 +1,9 @@
+.search-bar-container input {
+  width: 500px;
+  max-width: 500px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: #D9D9D9;
+}

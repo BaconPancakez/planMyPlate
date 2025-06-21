@@ -11,7 +11,6 @@ import { SlCalender } from "react-icons/sl";
 // Refer to the .jsx for info
 import { UIContext } from "../contexts/UIContext";
 
-
 import "./NavBar.css";
 
 // The NavBar component represents the navigation bar with a collapsible sidebar
@@ -19,10 +18,7 @@ export default function NavBar() {
   const { isNavOpen, setIsNavOpen } = useContext(UIContext); // Accessing UI context for navigation state
 
   return (
-    <div
-      className="navbar-container"
-      style={{ position: "relative", zIndex: isNavOpen ? 1100 : 999 }}
-    >
+    <div className={`navbar-container ${isNavOpen ? "expanded" : "collapsed"}`}>
       {/* Toggle Button */}
       <button
         className="hamburger-btn"
