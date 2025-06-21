@@ -1,0 +1,85 @@
+/* src/components/RecipeCard.css */
+
+.rc-card {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.rc-checkbox-div {
+  margin-right: 15px;
+}
+
+.rc-checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.rc-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.rc-info {
+  flex-grow: 1;
+}
+
+.rc-title {
+  margin: 4px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.rc-warning { /* This style is for the warning text if you choose to display it */
+  font-size: 0.8rem;
+  color: #dc3545;
+  margin-top: 2px;
+}
+
+.rc-author { /* Added for displaying author, if you use this in RecipeCard.jsx */
+  font-size: 0.8rem;
+  color: #666; /* A softer color for author name */
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.rc-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 10px;
+}
+
+.rc-view-btn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.rc-view-btn:hover {
+  background-color: #218838;
+}
+
+.rc-delete-btn {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.rc-delete-btn:hover {
+  background-color: #c82333;
+}

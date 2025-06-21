@@ -1,0 +1,9 @@
+/* src/pages/ShoppingList.css */
+.sl-items-container { /* Renamed for clarity in plain CSS */
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+  }
+  /* No specific page-level styles beyond container for now */

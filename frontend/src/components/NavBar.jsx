@@ -79,14 +79,14 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/FoodCart">
               <div className={`nav-item ${isNavOpen ? "expanded" : "collapsed"} `}>
                 <SlCalender /> {isNavOpen && <span>My Meal Plan</span>}
               </div>
             </Link>
           </li>
-          <li>
-            <Link to="/">
+          <li>  
+            <Link to="/shopping-list">
               <div className={`nav-item ${isNavOpen ? "expanded" : "collapsed"}`}>
                 <FaShoppingCart /> {isNavOpen && <span>Shopping List</span>}
               </div>

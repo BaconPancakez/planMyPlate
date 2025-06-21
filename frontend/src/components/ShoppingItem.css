@@ -1,0 +1,27 @@
+/* src/components/ShoppingItem.css */
+.si-item {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    color: #333;
+  }
+  
+  .si-info {
+    flex-grow: 1;
+  }
+  
+  .si-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .si-details {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 4px;
+  }

@@ -1,0 +1,59 @@
+/* src/components/IngredientGroup.css */
+.ig-group {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    margin-bottom: 15px;
+    color: #333;
+  }
+  .ig-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .ig-group h2 {
+      font-size: 1.4em;
+      margin: 0;
+  }
+  .ig-serving-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #28a745;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+  .ig-serving-control button {
+    background: white;
+    color: #28a745;
+    border: none;
+    font-weight: bold;
+    padding: 2px 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    min-width: 28px;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .ig-serving-control button:hover {
+      background-color: #eee;
+      border-color: transparent;
+  }
+  .ig-serving-count {
+    min-width: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .ig-ingredient-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+  }
