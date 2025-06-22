@@ -1,0 +1,403 @@
+/*
+------------------------------------------------
+    GENERAL UI ELEMENTS STYLE
+------------------------------------------------
+*/
+
+.default-button
+{
+    border-radius: 10px;
+    border: 0;
+    padding: 0.6em 1.5em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #000000;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    color: white;
+}
+
+.default-button:hover {
+    background-color: #ffede2;
+    color: black;
+    transform: scale(1.1);
+}
+
+h2
+{
+    font-size: x-large;
+}
+
+p
+{
+    font-size: medium;
+}
+
+
+/*
+------------------------------------------------
+    INVENTORY CATEGORY PAGE [Inventory.jsx]
+------------------------------------------------
+*/
+
+.inventoryRoot {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header
+{
+    text-align: center;
+    z-index: 2;
+    padding: 30px;
+}
+
+.background-wrapper {
+    position: relative;
+    width: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+}
+
+.Inventory-background-container
+{
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.columns
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 75px;
+}
+
+.same-row
+{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.columns button
+{
+    border-radius: 10px;
+    border: 3px solid #000000;
+    padding: 0.7em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #000000;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    white-space: nowrap;
+    box-sizing: border-box;
+    color: white;
+
+    width: 200px;  /* adjust button width */
+}
+
+.columns button:hover {
+    box-shadow: 0 0 10px black;
+    background-color: rgba(255, 255, 255, 0.685);
+    color: black;
+    font-weight: 700;
+    transform: scale(1.1);
+}
+button:focus,
+button:focus-visible {
+    outline: 4px auto none;
+}
+
+.centered-fridge {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 10px 24px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+/*
+-------------------------------------------------------
+INVENTORY CONTENT [InventoryContent.jsx]
+-------------------------------------------------------
+*/
+
+.parent-mainBox
+{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../src/assets/OpenFridge.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.mainBox
+{
+    position: relative;    
+
+}
+
+.wholeContainer {
+    position: absolute;
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px;
+    padding-top: 20px;
+    padding-left: 150px;
+    padding-right: 150px;
+
+    /* Ensure it never exceeds screen width */
+    width: 100%;
+    max-height: 100%;
+    box-sizing: border-box;
+}
+
+.AddBtn
+{
+    padding: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #fff1e9;
+    box-shadow: 5px 5px 10px 0px rgba(0, 68, 9, 0.1);
+}
+
+
+.AddBtn img
+{
+    width: 60px;
+    height: 60px;
+    margin: 70px;
+}
+
+.AddBtn:hover
+{
+    transform: scale(1.1);
+}
+
+
+/*
+-------------------------------------------------------
+INVENTORY DISPLAY BOX [InventoryDisplayBox.jsx]
+-------------------------------------------------------
+*/
+
+.parent-box
+{    
+    border-radius: 10px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1b3d23;
+}
+
+.display-box
+{
+    padding: 10px;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 10px;
+
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
+    color: rgb(255, 255, 255);
+}
+
+.info
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 40px;
+}
+
+.display-box-quantity
+{
+    color: rgb(255, 232, 98);
+}
+
+.deleteBtn
+{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon-button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-button:hover
+{
+    background: none;
+    transform: scale(1.1);
+}
+
+.icon-button img {
+    width: 35px;
+    height: 35px;    
+}
+
+
+/*
+-------------------------------------------------------
+INVENTORY POP-UP [InventoryAddPopup.jsx]
+-------------------------------------------------------
+*/
+
+.popupOverlay
+{
+    display:flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    z-index: 1200;
+
+    background-color: rgba(0, 0, 0, 0.671);
+}
+
+
+.popupContent
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    background-color: #ffffff;
+    padding: 50px;
+    color: #333;
+    border-radius: 10px;
+    margin: 0 auto;
+    z-index: 1001;
+}
+
+#addInventory
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+}
+
+.input
+{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    font-size: large;
+}
+
+.input input,
+.input select {
+    padding: 10px;
+    width: 300px;
+    margin-top: 6px;
+    border-radius: 4px;
+    border: 2px solid #000000;
+    font-size: medium;
+
+    /* X-axis | Y-axis | Intensity | Around */
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.160);
+}
+
+.closeBtn
+{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 8px 12px;
+}
+
+.submitButtons .default-button
+{
+    background-color: green;
+}
+
+.submitButtons .default-button:hover
+{
+    color: white;    
+}
+
+
+
+/*
+-------------------------------------------------------
+OTHER ASPECT RATIOS
+-------------------------------------------------------
+*/
+
+@media (max-height: 600px), (max-width: 400px) {
+
+    /*
+    ------------------------------------------------
+        INVENTORY CATEGORY PAGE [Inventory.jsx]
+    ------------------------------------------------
+    */
+    .centered-fridge {
+        max-width: 130vw;
+        max-height: 130vh;
+    }
+
+    .columns
+    {
+        gap: 40px;
+    }
+
+    .background-wrapper
+    {
+        flex-grow: 0;
+        padding: 0px;
+    }
+
+    .inventory-wrapper 
+    {
+        gap: 30%;
+        padding-top: 30px;
+    }
+
+    .left-column 
+    {
+        height: 320px;
+    }
+    .right-column 
+    {
+        padding-top: 160%;
+    }
+
+    .columns button 
+    {
+        font-size: 0.9rem;
+        padding: 0.5em 0.8em;
+        min-width: 100px;
+    }
+}

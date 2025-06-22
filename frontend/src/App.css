@@ -1,8 +1,4 @@
 /* Styles for the main header */
-.main-header {
-  background-color: #658c79;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  font-size: 24px;
-  height: 60px;
+.header-padding {
+  padding: 30px;
 }

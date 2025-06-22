@@ -11,12 +11,12 @@
 
 /* Individual recipe box */
 .recipe-box {
-  background-color: #E1F8EE;
-  border-radius: 12px;
+  background-color: #1b3d23;
+  border-radius: 10px;
   width: 100%;
   margin: 20px 20px;
   padding-top: 100px;
-  color: black;
+  color: rgb(255, 255, 255);
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease;
@@ -54,7 +54,7 @@
 
 .recipe-details .author {
   font-size: 14px;
-  color: #6b7280;
+  color: rgb(255, 232, 98);
   margin: 4px 0;
 }
 
