@@ -50,8 +50,8 @@
   left: 0;
   height: 100vh;
   width: 80px;
-  background-color: #1f2533;
-  color: white;
+  background-color: #C7E1BA;
+  color: black;
   padding-top: 70px;
   transition: width 0.3s ease;
   z-index: 1000;
@@ -110,7 +110,7 @@
 .nav-item {
   display: flex;
   align-items: center;
-  color: white;
+  color: black;
   height: 40px;
   padding: 30px 20px;
 }
