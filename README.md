@@ -20,7 +20,7 @@ To run the frontend application:
     ```
     The application will typically be available at `http://localhost:5173`.
 
-## Running the Backend (Next.js/Supabase)
+## Running the Backend (Express/Supabase)
 
 To run the backend application:
 
@@ -32,19 +32,22 @@ To run the backend application:
     ```bash
     npm install
     ```
-3.  Start the development server:
+3.  Start the server:
 
-        ```bash
-        npm run dev
-        ```
+    ```bash
+    npm start
+    ```
 
-        The application will typically be available at `http://localhost:3000`.
+    The application will typically be available at `http://localhost:8080`.
 
-        **Note:** Ensure your Supabase instance is configured and running if the backend relies on it for database and authentication services. Refer to Supabase documentation for setup.
-        -> Required the
+    **Note:** Ensure your Supabase instance is configured and running if the backend relies on it for database and authentication services. Refer to Supabase documentation for setup.
 
-        PORT=8080
-        SUPABASE_URL=your_supabase_url_here
-        SUPABASE_ANON_KEY=your_supabase_anon_key_here
+## For Supabase
 
-    GOOGLE
+Required environment variables:
+
+    ```env
+    PORT=8080
+    SUPABASE_URL=your_supabase_url_here
+    SUPABASE_ANON_KEY=your_supabase_anon_key_here
+    ```
