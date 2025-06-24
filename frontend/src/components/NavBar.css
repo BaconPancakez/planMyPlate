@@ -33,8 +33,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #1f2533;
-  color: white;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
   transition: left 0.3s ease, right 0.3s ease;
 }
 
@@ -50,8 +50,8 @@
   left: 0;
   height: 100vh;
   width: 80px;
-  background-color: #C7E1BA;
-  color: black;
+  background-color: #1b1b1b;
+  color: white;
   padding-top: 70px;
   transition: width 0.3s ease;
   z-index: 1000;
@@ -83,7 +83,7 @@
 }
 
 .sidebar ul li:hover {
-  background-color: #2b3245;
+  background-color: #383838;
 }
 
 .sidebar ul li svg {

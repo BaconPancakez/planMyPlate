@@ -26,7 +26,7 @@
 /* Header section of the popup */
 .recipe-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 /* Title styling in the header */
@@ -37,7 +37,7 @@
   text-transform: uppercase;
   border-bottom: 2px solid #333;
   display: inline-block;
-  padding-bottom: 5px;
+  margin-bottom: 7px;
 }
 
 .addTitle-button {
@@ -59,8 +59,8 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
   flex-wrap: wrap;
+  margin: 15px;
 }
 
 .stats p {
@@ -149,39 +149,66 @@
 }
 
 /* Close Button */
-.popup-close {
-  position: absolute;
-  top: 20px;
-  right: 27px;
-  font-size: 40px;
-  font-weight: bold;
-  color: #333;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-  transition: transform 0.2s ease;
-  z-index: 1300;
+.popup-container .popup-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 1.6em 1.6em;
+
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.popup-container .popup-close img
+{
+    width: 35px;
+    height: 35px; 
 }
 
 .popup-close:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 /* Button below the recipes */
 .recipe-btn{
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center ;
+  padding-top: 20px;
 }
 
 .recipe-btn button{
-  padding: 10px 20px;
-  border-radius: 15px;
+  padding: 15px 30px;
+  border-radius: 10px;
   border: none;
-  background-color: #8E99DF;
+  background-color: #000000;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
+.recipe-btn .update-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #00517c;
+}
+
+.recipe-btn .delete-btn{
+  padding: 10px 20px;
+  border: none;
+  background-color: #a40000;
+}
+
+.recipe-btn button:hover
+{
+  transform: scale(1.1);
+}
 
 .createnewpost {
   text-Align: 'left'; 

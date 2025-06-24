@@ -30,11 +30,6 @@ export default function Postbox() {
         <div className = 'recipe-box addbox'
             onClick={() => openaddPopup()} // Opens the popup on click
         >
-            <img src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Plus_symbol.svg/1200px-Plus_symbol.svg.png' alt="Add post" /> {/* Add Post image */}
-            <div className="recipe-details"> {/* Recipe details */}
-                <h3>Add Post</h3>
-                
-            </div>
         </div>
 
         {showPopup  && (
@@ -73,9 +68,9 @@ export default function Postbox() {
             onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
           >
             <button className="popup-close" onClick={() => setShowPopup(false)}> {/* Close button */}
-              &times;
+              <img src="../src/assets/CloseBtn.png"/>
             </button>
-            <RecipePop recipe={activeRecipe} />
+            <RecipePop recipe={activeRecipe} isMyRecipe={true} />
           </div>
         </div>
       )}

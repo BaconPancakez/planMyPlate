@@ -2,7 +2,7 @@
 import "./RecipePop.css";
 
 // The RecipePop component displays detailed information about a selected recipe
-export default function RecipePop({ recipe }) {
+export default function RecipePop({ recipe, isMyRecipe }) {
   return (
     <div className="recipe-popup">
       <div className="recipe-header">
@@ -12,7 +12,7 @@ export default function RecipePop({ recipe }) {
             <span className="bar">|</span>
             <p>Dietary: {recipe.stats.dietary}</p>
             <span className="bar">|</span>
-            <p>Meal: {recipe.stats.meal}</p>
+            <p>Meal Type: {recipe.stats.meal}</p>
         </div>
         <div className="stats">
           <p>Prep Time: {recipe.stats.prepTime}</p>
@@ -42,8 +42,21 @@ export default function RecipePop({ recipe }) {
         </div>
       </div>
       <div className="recipe-btn">
-            <button>Add to Cart</button>
-      </div>
+          {isMyRecipe && (
+          <>
+          <button className= "update-btn">UPDATE</button>
+          </>
+          )}
+
+          <button className='add-btn'>ADD TO CART</button>
+
+          {isMyRecipe && (
+          <>
+          <button className="delete-btn">DELETE</button>
+          </>
+          )}
+          
+        </div>
     </div>
   );
 }

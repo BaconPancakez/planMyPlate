@@ -54,7 +54,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/Inventory">
               <div className={`nav-item ${isNavOpen ? "expanded" : "collapsed"}`}>
                 <RiFridgeFill /> {isNavOpen && <span>My Inventory</span>}
               </div>

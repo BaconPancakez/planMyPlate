@@ -4,9 +4,9 @@ import './Filter.css';
 export default function Filter() {
   const [open, setOpen] = useState(false);
   const [filters, setFilters] = useState({
+    'Dietary': false,
     Cuisine: false,
     'Meal Type': false,
-    'Dietery Filters': false,
     Calories: false,
     'Total Time': false,
   });
@@ -35,24 +35,28 @@ export default function Filter() {
   return (
     <div className="filter-container">
       <button className="filter-button" onClick={handleButtonClick}>
-        Apply Filters ▼
+        Add Filters ▼
       </button>
+      
       {open && (
-        <div className="dropdown">
-          {Object.keys(filters).map((option) => (
-            <label key={option} className="dropdown-label">
-              <input
-                type="checkbox"
-                checked={filters[option]}
-                onChange={() => handleCheckboxChange(option)}
-                className="dropdown-input"
-              />
-              {option}
-            </label>
-          ))}
-          <button className="dropdown-apply-button" onClick={handleApply}>
-            Apply
-          </button>
+        <div className='parent-dropdown'>
+          <div className="dropdown">
+            {Object.keys(filters).map((option) => (
+              <label key={option} className="dropdown-label">
+                <input
+                  type="checkbox"
+                  checked={filters[option]}
+                  onChange={() => handleCheckboxChange(option)}
+                  className="dropdown-input"
+                />
+                {option}
+              </label>
+            ))}
+            <button className="dropdown-apply-button" onClick={handleApply}>
+              Apply
+            </button>
+          </div>
+
         </div>
       )}
     </div>
