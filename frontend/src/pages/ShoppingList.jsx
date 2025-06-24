@@ -3,6 +3,9 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ShoppingItem from '../components/ShoppingItem';
 import './ShoppingList.css'; // Import the CSS file directly
+import { FaSearch } from "react-icons/fa";
+import { GiSaveArrow } from "react-icons/gi";
+import { MdClear } from "react-icons/md";
 
 const ShoppingList = () => {
   const location = useLocation();
@@ -26,9 +29,16 @@ const ShoppingList = () => {
         </div>
       )}
 
-      <button onClick={() => navigate(-1)} className="secondary-btn"> {/* Uses global class */}
-        ⬅️ Back to ingredients
-      </button>
+      <div className='shopping-btns'>
+        <button onClick={() => navigate(-1)} className="secondary-btn"> {/* Uses global class */}
+          <FaSearch /> BACK TO EXPLORE
+        </button>
+
+        <button  ><GiSaveArrow /> SAVE</button>
+
+        <button  ><MdClear /> CLEAR</button>
+
+      </div>
     </div>
   );
 };

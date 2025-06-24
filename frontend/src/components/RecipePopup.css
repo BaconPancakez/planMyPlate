@@ -182,9 +182,20 @@
   transition: transform 0.2s ease;
 }
 
+.recipe-btn button:hover
+{
+  background-color: #000000;
+  transform: scale(1.1);
+}
+
 .recipe-btn .update-btn {
   padding: 10px 20px;
   border: none;
+  background-color: #00517c;
+}
+
+.recipe-btn .update-btn:hover
+{
   background-color: #00517c;
 }
 
@@ -194,7 +205,7 @@
   background-color: #a40000;
 }
 
-.recipe-btn button:hover
+.recipe-btn .delete-btn:hover
 {
-  transform: scale(1.1);
+  background-color: #a40000
 }
