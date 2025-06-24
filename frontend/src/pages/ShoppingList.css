@@ -7,3 +7,34 @@
     padding: 10px 20px;
   }
   /* No specific page-level styles beyond container for now */
+
+.shopping-btns
+{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  padding-top: 20px;
+}
+
+.shopping-btns svg
+{
+  margin-right: 8px;
+}
+
+.shopping-btns button
+{
+  padding: 15px 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: #000000;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.shopping-btns button:hover
+{
+  transform: scale(1.1);
+}
