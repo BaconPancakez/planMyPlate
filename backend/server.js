@@ -95,7 +95,7 @@ async function createPost(Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal
   return data;
 }
 
-async function updatePost(Recipe_id, Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions) {
+async function updatePost(id, Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions) {
   const { data, error } = await supabase
     .from('CRUD-forRecipes')
     .update({ Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions })
@@ -149,17 +149,17 @@ app.get('/CRUD-forRecipes/:id', async (req, res) => {
 });
 
 // POST create new post
-app.post('/CRUD-forRecipes', async (req, res) => {
+app.post('/CRUD-forRecipes/posts', async (req, res) => {
   try {
     const { Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions } = req.body;
 
     // Log the incoming request body for debugging
     console.log('POST /CRUD-forRecipes body:', req.body);
 
-    if (!Tutorial_Group || !Student_ID || !School || !Name || !Gender || CGPA === undefined) {
+    if (!Recipe_Title || !Cuisine_type || !Image_url || !Diet_type || !Meal_type || !Prep_Time || !Cook_Time || !Total_Time || !Ingredients || !Directions === undefined) {
       return res.status(400).json({
         success: false,
-        error: 'All fields are required: Tutorial_Group, Student_ID, School, Name, Gender, CGPA'
+        error: 'All fields are required: Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions'
       });
     }
 
@@ -171,27 +171,27 @@ app.post('/CRUD-forRecipes', async (req, res) => {
     if (error.message && error.message.includes('duplicate key value')) {
       return res.status(409).json({
         success: false,
-        error: 'A student with this Student_ID already exists. Please use a unique Student_ID.'
-      });
+        error: 'A Recipe with this id already exists. Please create another Recipe.'
+      }); 
     }
     res.status(500).json({ success: false, error: 'Failed to create post', details: error.message || error });
   }
 });
 
 // PUT update post
-app.put('/introtocomp/:id', async (req, res) => {
+app.put('/CRUD-forRecipes/put/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { Tutorial_Group, Student_ID, School, Name, Gender, CGPA } = req.body;
+    const { Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions } = req.body;
 
-    if (!Tutorial_Group || !Student_ID || !School || !Name || !Gender || CGPA === undefined) {
+    if (!id || !Recipe_Title || !Cuisine_type || !Image_url || !Diet_type || !Meal_type || !Prep_Time || !Cook_Time || !Total_Time || !Ingredients || !Directions === undefined) {
       return res.status(400).json({
         success: false,
-        error: 'All fields are required: Tutorial_Group, Student_ID, School, Name, Gender, CGPA'
+        error: 'All fields are required: Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions'
       });
     }
 
-    const updatedPost = await updatePost(id, Tutorial_Group, Student_ID, School, Name, Gender, CGPA);
+    const updatedPost = await updatePost(id, Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions);
 
     if (!updatedPost) {
       return res.status(404).json({ success: false, error: 'Post not found' });
@@ -205,9 +205,11 @@ app.put('/introtocomp/:id', async (req, res) => {
 });
 
 // DELETE post
-app.delete('/introtocomp/:id', async (req, res) => {
+app.delete('/CRUD-forRecipes/delete/:id', async (req, res) => {
   try {
     const { id } = req.params;
+
+    console.log('DELETE /CRUD-forRecipes/delete/:id called with id:', id);
 
     // Check if post exists first
     const existingPost = await getPostById(id);
