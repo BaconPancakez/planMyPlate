@@ -1,0 +1,99 @@
+/* src/pages/HomePage.css */
+.home-wrapper {
+  display: flex;
+}
+
+.sidebar {
+  width: 220px;
+  transition: width 0.3s ease;
+}
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.home-content {
+  margin-left: 20px;
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Top: Image + About Us */
+.top-section {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.top-wrapper {
+  display: flex;
+  justify-content: center; 
+  gap: 40px;
+  align-items: center;
+}
+
+.image-section {
+  flex: 1;
+  text-align: center;
+}
+
+.image-section img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 20px;
+  display: block;
+  margin: 0 auto;
+}
+
+.caption {
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.about-section {
+  flex: 1;
+  max-width: 400px;
+  background-color: #F6E4CC;
+  padding: 20px;
+  border-radius: 20px;
+  color: black;
+}
+
+.about-section h2 {
+  margin-bottom: 10px;
+}
+
+/* Bottom recipe section */
+.recipe-section {
+  background-color: #F6E4CC;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  border-radius: 10px;
+}
+
+.recipe-card {
+  background-color: #e5aa7a;
+  padding: 30px;
+  flex: 1;
+  text-align: center;
+  border-radius: 15px;
+  font-weight: 500;
+  color: black
+}
+
+/* Footer */
+.footer {
+  background-color: #F6E4CC;
+  text-align: center;
+  padding: 15px;
+  border-radius: 5px;
+  color: black
+}

@@ -40,14 +40,14 @@ export default function NavBar() {
         {/* Navigation Items */}
         <ul>
           <li>
-            <Link to="/">
+            <Link to="/home">
               <div className={`nav-item ${isNavOpen ? "expanded" : "collapsed"}`}> {/* Navigation item */}
                 <FaHome /> {isNavOpen && <span>Home</span>}
               </div>
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/myprofile">
               <div className={`nav-item ${isNavOpen ? "expanded" : "collapsed"}`}>
                 <FaUser /> {isNavOpen && <span>My Profile</span>}
               </div>
