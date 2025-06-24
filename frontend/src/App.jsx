@@ -27,7 +27,7 @@ function App() {
       <main className="main-content"> {/* Main content area */}
 
         <Routes> {/* Defines the routes for the application */}
-          <Route path="/" element={<div className='header-padding'> <LoginPage /> </div>} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<div className='header-padding'> <HomePage /> </div>} />
           <Route path="/myprofile" element={<div className='header-padding'> <MyProfile /> </div>} />
           <Route path="/Inventory/*" element={ <Inventory />} /> {/* Inventory page route */}
