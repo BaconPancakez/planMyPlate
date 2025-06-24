@@ -3,8 +3,9 @@ const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
  
-const app = express();
+const app = express(); 
 const PORT = process.env.PORT || 8080;
+let count
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -26,14 +27,14 @@ app.get('/', (req, res) => {
 app.get('/test-db', async (req, res) => {
   try {
     const { data, error } = await supabase
-      .from('posts')
-      .select('count', { count: 'exact' });
+      .from('CRUD-forRecipes')
+      .select('Recipe_id', { count: 'exact' });
 
     if (error) throw error;
 
     res.json({
       message: 'Supabase connected successfully!',
-      posts_count: data[0].count
+      Recipe_id_count: data[0].count
     });
   } catch (error) {
     console.error('Supabase connection error:', error);
@@ -48,31 +49,45 @@ app.listen(PORT, () => {
 });
 
 
+
+
+
+
+
+
+
+
 // Database helper functions using Supabase
+  // Functions to interact with the 'CRUD-forRecipes' table
+  // These functions will be used in the routes later
+// Get all posts
 async function getAllPosts() {
   const { data, error } = await supabase
-    .from('introtocomp')
-    .select('*')
+    .from('CRUD-forRecipes')
+    .select('*') // Fetch all columns
 
   if (error) throw error;
   return data;
 }
 
+// Get a single post by ID
 async function getPostById(id) {
   const { data, error } = await supabase
-    .from('introtocomp')
+    .from('CRUD-forRecipes')
     .select('*')
-    .eq('Student_ID', id)
+    .eq('Recipe_id', id)
     .single();
 
   if (error) throw error;
   return data;
 }
 
-async function createPost(Tutorial_Group, Student_ID, School, Name, Gender, CGPA) {
+
+
+async function createPost(Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions) {
   const { data, error } = await supabase
-    .from('introtocomp')
-    .insert([{ Tutorial_Group, Student_ID, School, Name, Gender, CGPA }])
+    .from('CRUD-forRecipes')
+    .insert([{ Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions }])
     .select()
     .single();
 
@@ -80,11 +95,11 @@ async function createPost(Tutorial_Group, Student_ID, School, Name, Gender, CGPA
   return data;
 }
 
-async function updatePost(id, Tutorial_Group, Student_ID, School, Name, Gender, CGPA) {
+async function updatePost(Recipe_id, Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions) {
   const { data, error } = await supabase
-    .from('introtocomp')
-    .update({ Tutorial_Group, Student_ID, School, Name, Gender, CGPA })
-    .eq('Student_ID', id)
+    .from('CRUD-forRecipes')
+    .update({ Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions })
+    .eq('Recipe_id', id)
     .select()
     .single();
 
@@ -94,9 +109,9 @@ async function updatePost(id, Tutorial_Group, Student_ID, School, Name, Gender, 
 
 async function deletePost(id) {
   const { error } = await supabase
-    .from('introtocomp')
+    .from('CRUD-forRecipes')
     .delete()
-    .eq('Student_ID', id);
+    .eq('Recipe_id', id);
 
   if (error) throw error;
   return true;
@@ -106,7 +121,7 @@ async function deletePost(id) {
 // Routes
 
 // GET all posts
-app.get('/introtocomp', async (req, res) => {
+app.get('/CRUD-forRecipes', async (req, res) => {
   try {
     const posts = await getAllPosts();
     res.json({ success: true, posts });
@@ -117,7 +132,7 @@ app.get('/introtocomp', async (req, res) => {
 });
 
 // GET single post by ID
-app.get('/introtocomp/:id', async (req, res) => {
+app.get('/CRUD-forRecipes/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const post = await getPostById(id);
@@ -134,12 +149,12 @@ app.get('/introtocomp/:id', async (req, res) => {
 });
 
 // POST create new post
-app.post('/introtocomp', async (req, res) => {
+app.post('/CRUD-forRecipes', async (req, res) => {
   try {
-    const { Tutorial_Group, Student_ID, School, Name, Gender, CGPA } = req.body;
+    const { Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions } = req.body;
 
     // Log the incoming request body for debugging
-    console.log('POST /introtocomp body:', req.body);
+    console.log('POST /CRUD-forRecipes body:', req.body);
 
     if (!Tutorial_Group || !Student_ID || !School || !Name || !Gender || CGPA === undefined) {
       return res.status(400).json({
@@ -148,7 +163,7 @@ app.post('/introtocomp', async (req, res) => {
       });
     }
 
-    const newPost = await createPost(Tutorial_Group, Student_ID, School, Name, Gender, CGPA);
+    const newPost = await createPost(Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions);
     res.status(201).json({ success: true, post: newPost });
   } catch (error) {
     // Log the actual error for debugging
@@ -207,3 +222,6 @@ app.delete('/introtocomp/:id', async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to delete post' });
   }
 });
+
+
+
