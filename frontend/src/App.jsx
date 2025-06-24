@@ -12,7 +12,6 @@ import LoginPage from "./pages/LoginPage";
 import MyProfile from "./pages/MyProfile";
 import HomePage from "./pages/HomePage";
 
-
 // 👇 Actual app
 function App() {
   const location = useLocation();
@@ -22,12 +21,14 @@ function App() {
   const shouldHideNavBar = hideNavBarOnRoutes.includes(location.pathname);
 
   return (
+    
     <div className="layout"> {/* Layout container for the app */}
       {!shouldHideNavBar && <NavBar />} {/* Conditionally render NavBar */}
       <main className="main-content"> {/* Main content area */}
 
         <Routes> {/* Defines the routes for the application */}
           <Route path="/" element={<LoginPage />} />
+
           <Route path="/home" element={<div className='header-padding'> <HomePage /> </div>} />
           <Route path="/myprofile" element={<div className='header-padding'> <MyProfile /> </div>} />
           <Route path="/Inventory/*" element={ <Inventory />} /> {/* Inventory page route */}
@@ -41,6 +42,29 @@ function App() {
     </div>
   );
 }
+
+// Test function for localStorage
+function testLocalStorage() {
+  // Set a test item
+  localStorage.setItem("password", "abcdef");
+
+  // Retrieve the test item
+  const retrievedValue = localStorage.getItem("password");
+
+  // Log the result
+  console.log("Retrieved Value:", retrievedValue);
+
+  // Remove the test item
+  localStorage.removeItem("password");
+
+  // Verify removal
+  const afterRemoval = localStorage.getItem("password");
+  console.log("Value after removal:", afterRemoval);
+}
+
+// Call the test function
+console.log("Testing localStorage functionality:");
+testLocalStorage();
 
 export default App;
 
