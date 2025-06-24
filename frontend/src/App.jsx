@@ -11,11 +11,11 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import LoginPage from "./pages/LoginPage";
 import MyProfile from "./pages/MyProfile";
 import HomePage from "./pages/HomePage";
+import { localStorage } from './utils/localStorage';
 
 // 👇 Actual app
 function App() {
   const location = useLocation();
-
   // 👇 List of routes that shouldn't show the NavBar
   const hideNavBarOnRoutes = ["/", "/login"];
   const shouldHideNavBar = hideNavBarOnRoutes.includes(location.pathname);
@@ -43,29 +43,29 @@ function App() {
   );
 }
 
-// Test function for localStorage
-function testLocalStorage() {
-  // Set a test item
-  localStorage.setItem("password", "abcdef");
+// // Test function for localStorage
+// function testLocalStorage() {
+//   // Set a test item
+//   localStorage.setItem("password", "abcdef");
 
-  // Retrieve the test item
-  const retrievedValue = localStorage.getItem("password");
+//   // Retrieve the test item
+//   const retrievedValue = localStorage.getItem("password");
 
-  // Log the result
-  console.log("Retrieved Value:", retrievedValue);
+//   // Log the result
+//   console.log("Retrieved Value:", retrievedValue);
 
-  // Remove the test item
-  localStorage.removeItem("password");
+//   // Remove the test item
+//   localStorage.removeItem("password");
 
-  // Verify removal
-  const afterRemoval = localStorage.getItem("password");
-  console.log("Value after removal:", afterRemoval);
-}
+//   // Verify removal
+//   const afterRemoval = localStorage.getItem("password");
+//   console.log("Value after removal:", afterRemoval);
+// }
 
 // Call the test function
-console.log("Testing localStorage functionality:");
-testLocalStorage();
+// console.log("Testing localStorage functionality:");
+// testLocalStorage();
+localStorage.logAll();  
 
 export default App;
-
 

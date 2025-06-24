@@ -3,26 +3,25 @@ import "./LoginPage.css";
 import fruitImage from "../assets/login_page.jpg"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 import GoogleSignIn from "../components/GoogleSignIn";
+import { handleGoogleSignIn, handleManualLogin } from "../utils/authHandlers";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       alert("Please fill in both fields.");
       return;
     }
     console.log("Logging in:", { email, password });
-    navigate("/home");
+    await handleManualLogin(email, password, navigate);
   };
 
-  const handleGoogleSignIn = () => {
-    // Add your Google Sign-In logic here
-    console.log("Google Sign-In");
-    navigate("/home");
+  const handleGoogleSignInCallback = async (user) => {
+    await handleGoogleSignIn(user, navigate);
   };
   
   return (
@@ -55,7 +54,7 @@ const LoginPage = () => {
 
         <div className="or">OR</div>
         <div className="socials">
-          <GoogleSignIn onSignIn={handleGoogleSignIn} />
+          <GoogleSignIn onSignIn={handleGoogleSignInCallback} />
         </div>
       </div>
     </div>

@@ -194,6 +194,79 @@ async function getUserRecipesByProfileId(supabase, profileId) {
   }));
 }
 
+// Updated insertProfile function to handle missing password and validate img
+async function insertProfile(username, email, password = null, login_type, allergy = "None", about_me = "", img = "https://example.com/default-profile.jpg") {
+  try {
+    const { data, error } = await supabase
+      .from('profile_table')
+      .insert([{ username, email, password, login_type, allergy, about_me, img }])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Supabase insert error:', error);
+      throw error;
+    }
+
+    return data;
+  } catch (err) {
+    console.error('Error in insertProfile function:', err);
+    throw err;
+  }
+}
+
+// Example usage
+// (async () => {
+//   try {
+//     const newProfile = await insertProfile(
+//       'aliceTan',
+//       'alice@example.com',
+//       'abc123',
+//       'manual',
+//       null, // allergy not provided for manual login
+//       null, // about_me not provided for manual login
+//       null  // img not provided for manual login
+//     );
+//     console.log('Inserted profile:', newProfile);
+//   } catch (error) {
+//     console.error('Error inserting profile:', error);
+//   }
+// })();
+
+// // Example usage with conditional logic for login type
+// (async () => {
+//   try {
+//     const loginType = 'manual'; // Change to 'google' for Google login
+
+//     let newProfile;
+//     if (loginType === 'manual') {
+//       newProfile = await insertProfile(
+//         'aliceTan',
+//         'alice@example.com',
+//         'abc123',
+//         'manual',
+//         null, // allergy not provided for manual login
+//         null, // about_me not provided for manual login
+//         null  // img not provided for manual login
+//       );
+//     } else if (loginType === 'google') {
+//       newProfile = await insertProfile(
+//         'aliceTan',
+//         'alice@example.com',
+//         null, // password not provided for Google login
+//         'google',
+//         null, // allergy not provided for Google login
+//         null, // about_me not provided for Google login
+//         'https://example.com/img/alice.jpg' // img provided for Google login
+//       );
+//     }
+
+//     console.log('Inserted profile:', newProfile);
+//   } catch (error) {
+//     console.error('Error inserting profile:', error);
+//   }
+// })();
+
 // Routes
 
 // GET all posts
@@ -310,6 +383,134 @@ app.get('/user-recipes/:profileId', async (req, res) => {
   } catch (error) {
     console.error('Error fetching user recipes:', error);
     res.status(500).json({ success: false, error: 'Failed to fetch user recipes' });
+  }
+});
+
+// Endpoint to validate session token and fetch profile data
+app.post('/validate-session', async (req, res) => {
+  try {
+    const { sessionToken } = req.body;
+
+    if (!sessionToken) {
+      return res.status(400).json({ success: false, error: 'Session token is required' });
+    }
+
+    const { data, error } = await supabase
+      .from('profile_table')
+      .select('*')
+      .eq('id', sessionToken.id)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    if (data) {
+      res.json({ success: true, profile: data });
+    } else {
+      res.status(404).json({ success: false, error: 'Profile not found' });
+    }
+  } catch (error) {
+    console.error('Error validating session token:', error);
+    res.status(500).json({ success: false, error: 'Failed to validate session token' });
+  }
+});
+
+// Endpoint to handle Google Sign-In
+app.post('/google-signin', async (req, res) => {
+  try {
+    const { name, email, picture } = req.body;
+
+    const { data, error } = await supabase
+      .from('profile_table')
+      .upsert({ username: name, email, login_type: 'google', img: picture })
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    res.json({ success: true, profile: data });
+  } catch (error) {
+    console.error('Error handling Google Sign-In:', error);
+    res.status(500).json({ success: false, error: 'Failed to handle Google Sign-In' });
+  }
+});
+
+// Endpoint to handle manual login
+app.post('/manual-login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const { data, error } = await supabase
+      .from('profile_table')
+      .select('*')
+      .eq('email', email)
+      .eq('password', password)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    if (data) {
+      res.json({ success: true, profile: data });
+    } else {
+      res.status(404).json({ success: false, error: 'Invalid email or password' });
+    }
+  } catch (error) {
+    console.error('Error handling manual login:', error);
+    res.status(500).json({ success: false, error: 'Failed to handle manual login' });
+  }
+});
+
+// POST /profile endpoint
+app.post('/profile', async (req, res) => {
+  try {
+    const { username, email, password, login_type, allergy, about_me, img } = req.body;
+
+    if (!username || !email || !login_type) {
+      return res.status(400).json({
+        success: false,
+        error: 'Required fields: username, email, login_type',
+      });
+    }
+
+    // Check if email already exists
+    const existingProfile = await supabase
+      .from('profile_table')
+      .select('*')
+      .eq('email', email)
+      .single();
+
+    if (existingProfile.data) {
+      console.log('Email already exists, returning existing profile:', existingProfile.data);
+      return res.json({ success: true, id: existingProfile.data.id });
+    }
+
+    // Insert new profile
+    const profile = await insertProfile(
+      username,
+      email,
+      password,
+      login_type,
+      allergy,
+      about_me,
+      img
+    );
+
+    if (!profile) {
+      return res.status(500).json({
+        success: false,
+        error: 'Failed to insert profile',
+      });
+    }
+
+    res.json({ success: true, id: profile.id });
+  } catch (error) {
+    console.error('Error inserting profile:', error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 });
 

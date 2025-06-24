@@ -1,16 +1,22 @@
 import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { handleGoogleSignIn } from "../utils/authHandlers";
 
 export default function GoogleSignIn() {
   const navigate = useNavigate();
 
   const handleCredentialResponse = useCallback(
-    (response) => {
+    async (response) => {
       const base64Url = response.credential.split(".")[1];
       const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
       const user = JSON.parse(atob(base64));
       console.log("User Info:", user);
-      navigate("/home");
+
+      try {
+        await handleGoogleSignIn(user, navigate);
+      } catch (error) {
+        console.error("Error handling credential response:", error);
+      }
     },
     [navigate]
   );
@@ -22,7 +28,7 @@ export default function GoogleSignIn() {
     });
 
     window.google.accounts.id.renderButton(
-      document.getElementById("googleSignInDiv"),
+      document.getElementById("google-signin"),
       {
         theme: "outline",
         size: "large",
@@ -31,5 +37,5 @@ export default function GoogleSignIn() {
     );
   }, [handleCredentialResponse]);
 
-  return <div id="googleSignInDiv" className="google-sign-in"></div>;
+  return <div id="google-signin" className="google-sign-in"></div>;
 }
