@@ -67,13 +67,43 @@ app.listen(PORT, () => {
   // Functions to interact with the 'recipe_Table' table
   // These functions will be used in the routes later
 // Get all posts
-async function getAllPosts() {
+async function getAllPosts(supabase) {
   const { data, error } = await supabase
     .from('recipe_Table')
-    .select('*') // Fetch all columns
+    .select(`
+      title,
+      image,
+      cuisine,
+      dietary,
+      meal,
+      prep_time,
+      cook_time,
+      total_time,
+      ingredients,
+      directions,
+      profile_table (
+        username
+      )
+    `)
 
-  if (error) throw error;
-  return data;
+  if (error) {
+    throw error;
+  }
+
+  // Map the result to flatten username
+  return data.map(r => ({
+    title: r.title,
+    image: r.image,
+    username: r.profile_table?.username,
+    cuisine: r.cuisine,
+    dietary: r.dietary,
+    meal: r.meal,
+    prep_time: r.prep_time,
+    cook_time: r.cook_time,
+    total_time: r.total_time,
+    ingredients: r.ingredients,
+    directions: r.directions
+  }));
 }
 
 // Get a single post by ID
@@ -169,7 +199,7 @@ async function getUserRecipesByProfileId(supabase, profileId) {
 // GET all posts
 app.get('/recipe_Table', async (req, res) => {
   try {
-    const posts = await getAllPosts();
+    const posts = await getAllPosts(supabase);
     res.json({ success: true, posts });
   } catch (error) {
     console.error('Error getting posts:', error);
