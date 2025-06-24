@@ -161,9 +161,31 @@
   justify-content: center;
 }
 
-.recipe-btn button{
+.recipe-btn {
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: none;
+  
+}
+
+
+.add-btn {
   padding: 10px 20px;
   border-radius: 15px;
   border: none;
   background-color: #8E99DF;
+}
+
+.update-btn {
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: none;
+  background-color: #8edf9a;
+}
+
+.delete-btn{
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: none;
+  background-color: #dc1414;
 }

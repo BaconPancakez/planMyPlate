@@ -44,7 +44,7 @@ export default function RecipeList() {
             <button className="popup-close" onClick={() => setShowPopup(false)}> {/* Close button */}
               &times;
             </button>
-            <RecipePop recipe={activeRecipe} />
+            { <RecipePop recipe={activeRecipe} isMyRecipe={false}/> }
           </div>
         </div>
       )}

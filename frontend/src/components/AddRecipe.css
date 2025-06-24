@@ -1,25 +1,101 @@
+/* Styles for the AddRecipe component  */
+
+
 .recipe-popup {
   /* Add styles for the recipe popup */
 }
 
 .createnewpost {
   /* Add styles for the create new post text */
+  font-weight: bold;
 }
 
-.recipe-header .addTitle-button {
+.recipe-header .addTitle-input {
   /* Add styles for the add title button */
+  background-color: #ccc;
+  border-radius: 5px;
+  width: 200px;
+  height: 40px;
+  text-align: center;
 }
+
+.addCuisine-input , .addDietType-input, .addMealType-input, .addPrepTime-input, .addCookTime-input , .addTotalTime-input {
+  /* Add styles for the add categories input */
+  background-color: #ccc;
+  border-radius: 5px;
+  width: 150px;
+  height: 20px;
+  text-align: center;
+  
+}
+
+
+
+/* .add-image {
+  
+} */
+
+.popup-container {
+  position: relative;
+  border-radius: 10px;
+  z-index: 1001;
+  max-height: 90vh;
+  max-width: 800px;
+  width: 100%;
+  overflow-y: auto;
+  padding: 20px;
+  scrollbar-width: none; 
+}
+
+.popup-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.popup-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.popup-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 
 .popup-container .addrecipe-main .left-bar .add-image button {
   background: none;
   width: 300px;
-  height: 200px;
+  height: 300px;
 }
 
-.popup-container .post-button button {
+.popup-container .post-button .post-button-style {
   display: flex;
   justify-content: center;
   width: 100px;
+  height: 20px;
+  border: 1px solid #1b3d23;
+  border-radius: 10px;
   background-color: #FEE7E7;
   color: #000;
+}
+
+.post-button {
+  display: flex;
+  justify-content: right;
+  margin-top: 20px;
+}
+
+
+ .post-button-style :hover {     /*cant get this working */
+  background-color: #002fff;
+  color: #2e196d;
+}
+
+.addrecipe-main {
+  display: flex;
+  gap: 32px;
+}
+
+.left-bar {
+  /* Add styles for the left bar */
+  width: 50%;
 }

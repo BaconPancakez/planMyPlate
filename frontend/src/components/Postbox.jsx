@@ -75,7 +75,7 @@ export default function Postbox() {
             <button className="popup-close" onClick={() => setShowPopup(false)}> {/* Close button */}
               &times;
             </button>
-            <RecipePop recipe={activeRecipe} />
+            <RecipePop recipe={activeRecipe} isMyRecipe={true} />
           </div>
         </div>
       )}
