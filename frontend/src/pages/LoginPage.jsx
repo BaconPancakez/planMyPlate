@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import fruitImage from "../assets/login_page.jpg"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
-import GoogleSignIn from "../components/GoogleSignIn.jsx";
+import GoogleSignIn from "../components/GoogleSignIn";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -19,6 +19,12 @@ const LoginPage = () => {
     navigate("/home");
   };
 
+  const handleGoogleSignIn = () => {
+    // Add your Google Sign-In logic here
+    console.log("Google Sign-In");
+    navigate("/home");
+  };
+  
   return (
     <div
       className="login-background"
@@ -49,7 +55,7 @@ const LoginPage = () => {
 
         <div className="or">OR</div>
         <div className="socials">
-          {/* <GoogleSignIn /> */}
+          <GoogleSignIn onSignIn={handleGoogleSignIn} />
         </div>
       </div>
     </div>

@@ -56,8 +56,7 @@
   font-weight: bold;
 }
 
-.socials img {
-  width: 32px;
+.socials {
   margin: 0 8px;
   cursor: pointer;
 }

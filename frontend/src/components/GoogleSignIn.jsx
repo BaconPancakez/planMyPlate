@@ -1,9 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function GoogleSignIn() {
+  const navigate = useNavigate();
+
+  const handleCredentialResponse = useCallback(
+    (response) => {
+      const base64Url = response.credential.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const user = JSON.parse(atob(base64));
+      console.log("User Info:", user);
+      navigate("/home");
+    },
+    [navigate]
+  );
+
   useEffect(() => {
     window.google.accounts.id.initialize({
-      client_id: "930225097594-v2k0tm06ghn8cj3en92ckemelvl7eoqb.apps.googleusercontent.com",
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT,
       callback: handleCredentialResponse,
     });
 
@@ -15,16 +29,7 @@ export default function GoogleSignIn() {
         text: "signin_with",
       }
     );
-  }, []);
+  }, [handleCredentialResponse]);
 
-  function handleCredentialResponse(response) {
-    // console.log("Encoded JWT ID token: " + response.credential);
-
-    const base64Url = response.credential.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const user = JSON.parse(atob(base64));
-    console.log("User Info:", user);
-  }
-
-  return <button id="googleSignInDiv"></button>;
+  return <div id="googleSignInDiv" className="google-sign-in"></div>;
 }
