@@ -313,13 +313,14 @@ INVENTORY POP-UP [InventoryAddPopup.jsx]
     gap: 30px;
 }
 
-.input
+#addInventory .input
 {
     display: flex;
     flex-direction: column;
     padding: 10px;
 
     font-size: large;
+    color: black;
 }
 
 .input input,
