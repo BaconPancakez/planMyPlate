@@ -29,7 +29,7 @@ export const localStorage = {
             }
             return item.value
         } catch(err){
-            console.warn(`Invalid localStorage data ${err}`)
+            console.warn(`Invalid ${err}`)
             return null
         }
     },
