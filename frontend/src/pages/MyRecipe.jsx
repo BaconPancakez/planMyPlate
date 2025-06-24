@@ -1,5 +1,5 @@
 // Importing the RecipeList component to display a list of recipes
-import Postbox from "../components/postbox";
+import Postbox from "../components/Postbox";
 import Filter from "../components/Filter";
 import SearchBar from "../components/SearchBar";
 import "./MyRecipe.css";

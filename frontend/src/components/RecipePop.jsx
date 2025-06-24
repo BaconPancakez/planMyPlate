@@ -12,7 +12,7 @@ export default function RecipePop({ recipe, isMyRecipe }) {
             <span className="bar">|</span>
             <p>Dietary: {recipe.stats.dietary}</p>
             <span className="bar">|</span>
-            <p>Meal: {recipe.stats.meal}</p>
+            <p>Meal Type: {recipe.stats.meal}</p>
         </div>
         <div className="stats">
           <p>Prep Time: {recipe.stats.prepTime}</p>
@@ -42,14 +42,21 @@ export default function RecipePop({ recipe, isMyRecipe }) {
         </div>
       </div>
       <div className="recipe-btn">
-        {isMyRecipe && (
-        <>
-          <button className= "update-btn">Update</button>
-          <button className="delete-btn">Delete</button>
-        </>
-        )}
-        <button className='add-btn'>Add to Cart</button>
-      </div>
+          {isMyRecipe && (
+          <>
+          <button className= "update-btn">UPDATE</button>
+          </>
+          )}
+
+          <button className='add-btn'>ADD TO CART</button>
+
+          {isMyRecipe && (
+          <>
+          <button className="delete-btn">DELETE</button>
+          </>
+          )}
+          
+        </div>
     </div>
   );
 }

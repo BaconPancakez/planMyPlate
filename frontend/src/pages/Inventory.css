@@ -12,14 +12,13 @@
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #000000;
+    background-color: #1b1b1b;
     cursor: pointer;
     transition: transform 0.2s ease;
     color: white;
 }
 
 .default-button:hover {
-    background-color: #ffede2;
     color: black;
     transform: scale(1.1);
 }
@@ -90,12 +89,12 @@ p
 .columns button
 {
     border-radius: 10px;
-    border: 3px solid #000000;
+    border: 3px solid #1b1b1b;
     padding: 0.7em 1.2em;
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #000000;
+    background-color: #1b1b1b;
     cursor: pointer;
     transition: transform 0.2s ease;
     white-space: nowrap;
@@ -156,7 +155,7 @@ INVENTORY CONTENT [InventoryContent.jsx]
     position: absolute;
     
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 50px;
     padding-top: 20px;
     padding-left: 150px;
@@ -173,15 +172,16 @@ INVENTORY CONTENT [InventoryContent.jsx]
     padding: 0;
     width: 300px;
     height: 100%;
-    background-color: #fff1e9;
-    box-shadow: 5px 5px 10px 0px rgba(0, 68, 9, 0.1);
+    background-color: #ffffff;
+    border: 3px solid black;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
 }
 
 
 .AddBtn img
 {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     margin: 70px;
 }
 
@@ -204,7 +204,7 @@ INVENTORY DISPLAY BOX [InventoryDisplayBox.jsx]
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1b3d23;
+    background-color: #fffaf2;
 }
 
 .display-box
@@ -216,8 +216,8 @@ INVENTORY DISPLAY BOX [InventoryDisplayBox.jsx]
     width: 100%;
     border-radius: 10px;
 
-    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
-    color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+    color: rgb(94, 39, 0);
 }
 
 .info
@@ -231,7 +231,7 @@ INVENTORY DISPLAY BOX [InventoryDisplayBox.jsx]
 
 .display-box-quantity
 {
-    color: rgb(255, 232, 98);
+    color: rgb(0, 0, 0);
 }
 
 .deleteBtn
@@ -292,12 +292,17 @@ INVENTORY POP-UP [InventoryAddPopup.jsx]
     align-items: center;
     position: relative;
 
-    background-color: #ffffff;
+    background-color: #fffaf2;
     padding: 50px;
     color: #333;
     border-radius: 10px;
     margin: 0 auto;
     z-index: 1001;
+}
+
+.popupContent h2
+{
+    border-bottom: 2px solid #333;
 }
 
 #addInventory
@@ -335,12 +340,17 @@ INVENTORY POP-UP [InventoryAddPopup.jsx]
     position: absolute;
     top: 5px;
     right: 5px;
-    padding: 8px 12px;
+    padding: 2px 2px;
+}
+
+.submitButtons
+{
+    padding-top: 30px;
 }
 
 .submitButtons .default-button
 {
-    background-color: green;
+    background-color: green;    
 }
 
 .submitButtons .default-button:hover

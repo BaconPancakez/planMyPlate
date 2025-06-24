@@ -1,16 +1,6 @@
-.main-container {
-  /* Add styles for the main container */
-}
-
-.main-content {
-  /* Add styles for the main content area */
-}
-
 .sub-header {
-  padding-left: 40px;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  gap: 30px;
   align-items: center;
-  margin: 10px;
+  display: flex;
+  justify-content: center;
 }
