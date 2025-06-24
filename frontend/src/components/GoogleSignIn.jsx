@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export default function GoogleSignIn() {
   useEffect(() => {
     window.google.accounts.id.initialize({
-      client_id: process.env.GOOGLE_SIGN_IN,
+      client_id: "930225097594-v2k0tm06ghn8cj3en92ckemelvl7eoqb.apps.googleusercontent.com",
       callback: handleCredentialResponse,
     });
 

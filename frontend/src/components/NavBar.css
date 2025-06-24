@@ -79,7 +79,7 @@
 
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .sidebar ul li:hover {
@@ -93,6 +93,7 @@
 
 .sidebar ul li span {
   font-size: 16px;
+  text-decoration: none;
 }
 
 .sidebar.collapsed ul li {
@@ -110,7 +111,7 @@
 .nav-item {
   display: flex;
   align-items: center;
-  color: black;
+  color: rgb(255, 255, 255);
   height: 40px;
   padding: 30px 20px;
 }
@@ -120,8 +121,8 @@
   text-decoration: none;
 }
 
-a:focus, a:active, a:hover  {
-  outline: none;
+a:link a:focus, a:active, a:hover  {
+  
   text-decoration: none;
 }
 

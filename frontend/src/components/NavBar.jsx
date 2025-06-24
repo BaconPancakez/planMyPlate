@@ -70,7 +70,7 @@ export default function NavBar() {
           <li>
             <Link to="/Explore">
               <div className={`nav-item ${isNavOpen ? "expanded" : "collapsed"}`}>
-                <FaSearch /> {isNavOpen && <span>Explore</span>}
+                <FaSearch /> {isNavOpen && <div>Explore</div>}
               </div>
             </Link>
           </li>

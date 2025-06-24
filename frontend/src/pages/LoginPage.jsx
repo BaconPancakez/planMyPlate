@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import fruitImage from "../assets/login_page.jpg"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
+import GoogleSignIn from "../components/GoogleSignIn.jsx";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -48,7 +49,7 @@ const LoginPage = () => {
 
         <div className="or">OR</div>
         <div className="socials">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Google_favicon_2015.png" alt="Google" />
+          {/* <GoogleSignIn /> */}
         </div>
       </div>
     </div>

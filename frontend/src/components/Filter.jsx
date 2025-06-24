@@ -7,7 +7,6 @@ export default function Filter() {
     'Dietary': false,
     Cuisine: false,
     'Meal Type': false,
-    Calories: false,
     'Total Time': false,
   });
 

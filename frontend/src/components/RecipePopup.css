@@ -166,7 +166,7 @@
 .recipe-btn{
   display: flex;
   justify-content: space-evenly;
-  align-items: center ;
+  align-items: flex-end;
   padding-top: 20px;
 }
 
@@ -197,18 +197,4 @@
 .recipe-btn button:hover
 {
   transform: scale(1.1);
-}
-
-.update-btn {
-  padding: 10px 20px;
-  border-radius: 15px;
-  border: none;
-  background-color: #8edf9a;
-}
-
-.delete-btn{
-  padding: 10px 20px;
-  border-radius: 15px;
-  border: none;
-  background-color: #dc1414;
 }

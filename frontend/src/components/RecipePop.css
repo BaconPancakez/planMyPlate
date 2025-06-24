@@ -177,7 +177,7 @@
 .recipe-btn{
   display: flex;
   justify-content: space-evenly;
-  align-items: center ;
+  align-items: flex-end;
   padding-top: 20px;
 }
 
@@ -191,6 +191,11 @@
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s ease;
+}
+
+.recipe-btn .add-btn
+{
+  background-color: none;
 }
 
 .recipe-btn .update-btn {
