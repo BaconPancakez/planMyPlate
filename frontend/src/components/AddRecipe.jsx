@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './AddRecipe.css';
 import { localStorage } from "../utils/localStorage";
 
@@ -16,12 +16,16 @@ export default function AddRecipe() {
   const [ingredients, setIngredients] = useState([]); // state for ingredients
   const [directions, setDirections] = useState(''); // state for directions
 
+  const qtyRef = useRef(null);
+  const unitRef = useRef(null);
+  const nameRef = useRef(null);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title || !cuisine || !dietType || !mealType || !prepTime || !cookTime
-      || !totalTime || !imageUrl || !ingredients || !ingredients) {
+      || !totalTime || !imageUrl || !directions || !ingredients) {
       alert("Please fill in all fields.");
       return;
     }
@@ -60,6 +64,29 @@ export default function AddRecipe() {
       }
     } catch (err) {
       alert('Network error: ' + err.message);
+    }
+  };
+
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+
+      const quantity = qtyRef.current.value.trim();
+      const unit = unitRef.current.value.trim();
+      const name = nameRef.current.value.trim();
+
+      if (quantity && unit !== " " && name) {
+        const ingredientString = `${quantity} ${unit} ${name}`;
+        setIngredients([...ingredients, ingredientString]);
+        
+        // Clear inputs
+        qtyRef.current.value = '';
+        unitRef.current.value = '';
+        nameRef.current.value = '';
+      } else {
+        alert('Please fill in all fields before adding.');
+      }
     }
   };
 
@@ -135,7 +162,8 @@ export default function AddRecipe() {
 
             <div className='addInputs'>
               Select Meal Type
-              <select name="units" className="addMealType-input" defaultValue={"breakfast"} onChange={e => setMealType(e.target.value)}>
+              <select name="units" className="addMealType-input" value={mealType} onChange={e => setMealType(e.target.value)}>
+                <option value="">-- Select --</option>
                 <option value="breakfast">Breakfast</option>
                 <option value="lunch">Lunch</option>
                 <option value="dinner">Dinner</option>
@@ -190,20 +218,15 @@ export default function AddRecipe() {
 
               <h2>Ingredients</h2>
 
-              <div className='ingredients' onKeyDown={e => {
-                    if (e.key === 'Enter' && e.target.value) {
-                      e.preventDefault(); // prevent form submission
-                      setIngredients([...ingredients, e.target.value]);
-                      e.target.value = ''; // clear input after adding
-                    }
-                  }}>
+              <div className='ingredients' onKeyDown={handleKeyDown}>
                 <input
                   type='number'
+                  ref={qtyRef}
                   className='addIngreInput'
                   placeholder='Eg. 3'
                 />
 
-                <select name="units" defaultValue={"num"} className='addIngreInput'>
+                <select name="units" ref={unitRef} defaultValue={" "} className='addIngreInput'>
                   <option value=" ">Number</option>
                   <option value="g">Grams / g</option>
                   <option value="ml">Milliliter / ml</option>
@@ -211,15 +234,18 @@ export default function AddRecipe() {
 
                 <input
                   type='text'
+                  ref={nameRef}
                   className='addIngreInput'
                   placeholder='Eg. Eggs'                
                 />
               </div>
               
               <div className='ingredientList'>
-                {ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                ))}
+                 <ul>
+                    {ingredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))}
+                  </ul>
               </div>
 
             </div>
