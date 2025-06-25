@@ -36,7 +36,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url("../src/assets/Add.png");
+  background-image: url("/assets/Add.png");
 
   background-size: 25%;
   border: 2px solid #000000;
