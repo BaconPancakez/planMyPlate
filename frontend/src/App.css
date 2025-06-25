@@ -2,3 +2,8 @@
 .header-padding {
   padding: 30px;
 }
+
+::-webkit-input-placeholder {
+   font-style: italic;
+   color: rgb(189, 189, 189);
+}

@@ -1,8 +1,27 @@
 /* Styles for the AddRecipe component  */
 
+.recipe-popup-add
+{
+  background-color: #fffaf2;
+  padding: 30px;
+  color: #333;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 0 auto;
+  z-index: 1001;
+  text-align: center;
+}
 
-.recipe-popup {
-  /* Add styles for the recipe popup */
+.recipe-popup-add h1
+{
+  font-size: 24px;
+  margin: 0;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #333;
+  display: inline-block;
+  margin-bottom: 30px;
+  width: 100%;
 }
 
 .createnewpost {
@@ -10,30 +29,135 @@
   font-weight: bold;
 }
 
+.recipe-header
+{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.recipe-header .recipe-title
+{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.recipe-header .add-image-parent
+{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.add-image-parent .imageBox
+{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  gap: 20px;
+}
+
+.add-image-parent .recipe-image
+{
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.160);
+}
+
+.imageBox .addImageUrl-input
+{
+  width: 100%;
+
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 1px solid black;
+  height: 40px;
+  text-align: center;  
+}
+
+.imageBox .add-image-button
+{
+  padding: 10px 50px;
+
+  border-radius: 3px;
+  border: none;
+  background-color: #3d3d3d;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.imageBox .add-image-button:hover
+{
+  background-color: rgb(90, 90, 90);
+}
+
 .recipe-header .addTitle-input {
   /* Add styles for the add title button */
-  background-color: #ccc;
-  border-radius: 5px;
-  width: 200px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 1px solid black;
+  width: 100%;
   height: 40px;
   text-align: center;
+  margin: 10px;
+}
+
+.recipe-header .top-half
+{
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.recipe-header .top-half .addInputs
+{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.recipe-header .low-half
+{
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  gap: 20px;
+}
+
+.recipe-header .low-half .addInputs
+{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 .addCuisine-input , .addDietType-input, .addMealType-input, .addPrepTime-input, .addCookTime-input , .addTotalTime-input {
   /* Add styles for the add categories input */
-  background-color: #ccc;
-  border-radius: 5px;
-  width: 150px;
-  height: 20px;
-  text-align: center;
-  
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 1px solid black;
+  height: 50px;
+  text-align: center;  
+  margin-top: 8px;
 }
 
 
 
-/* .add-image {
-  
-} */
+/* .add-image */
 
 .popup-container {
   position: relative;
@@ -42,9 +166,6 @@
   max-height: 90vh;
   max-width: 800px;
   width: 100%;
-  overflow-y: auto;
-  padding: 20px;
-  scrollbar-width: none; 
 }
 
 .popup-container::-webkit-scrollbar {
@@ -58,13 +179,6 @@
 
 .popup-container::-webkit-scrollbar-track {
   background: transparent;
-}
-
-
-.popup-container .addrecipe-main .left-bar .add-image button {
-  background: none;
-  width: 300px;
-  height: 300px;
 }
 
 .popup-container .post-button .post-button-style {
@@ -92,10 +206,68 @@
 
 .addrecipe-main {
   display: flex;
-  gap: 32px;
+  gap: 30px;
+  margin-top: 30px;
 }
 
 .left-bar {
   /* Add styles for the left bar */
   width: 50%;
+  text-align: left;
+}
+
+.right-bar
+{
+  text-align: left;
+}
+
+.ingredients li
+{
+  margin: 10px;
+}
+
+.left-bar .ingredients .addIngreInput
+{
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 1px solid black;
+  width: 100%;
+  height: 40px;
+  text-align: center;  
+}
+
+.directions .directions-textarea
+{
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 1px solid black;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  font-family: Helvetica;
+  font-size: 14px;
+} 
+
+.post-button
+{
+  display: flex;
+  justify-content: center;
+}
+
+.post-button button
+{
+  padding: 15px 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: green;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.post-button button:hover
+{
+  transform: scale(1.1);
 }
