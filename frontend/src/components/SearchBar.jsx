@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SearchBar.css';
 
-export default function SearchBar() {
-  const [searchQuery, setSearchQuery] = useState('');
-
+export default function SearchBar({ searchQuery, setSearchQuery, onSearch }) {
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      // Trigger search functionality
-      console.log('Searching for:', searchQuery);
-      // You can replace this with your search logic
+      onSearch();
     }
   };
 
@@ -16,10 +12,10 @@ export default function SearchBar() {
     <div className="search-bar-container">
       <input
         type="text"
-        placeholder="Search for recipes"
+        placeholder="Search for recipes by title"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        onKeyDown={handleKeyDown} // Handle Enter key press
+        onKeyDown={handleKeyDown}
         className="search-bar-input"
       />
     </div>

@@ -552,6 +552,79 @@ app.delete('/user-recipes/delete/:title', async (req, res) => {
   }
 });
 
+// add endpoint to get user recipes by dietary, meal, and total_time
+app.get('/user-recipes/filter', async (req, res) => {
+  try {
+    let { author, dietary, meal, total_time, searchTerm } = req.query;
+
+    // Debug log to see what filters are being received
+    console.log('Received filters:', { author, dietary, meal, total_time, searchTerm });
+
+    // Accept comma-separated values for multi-select
+    let query = supabase.from('recipe_Table').select(`
+      id,
+      title,
+      image,
+      cuisine,
+      dietary,
+      meal,
+      prep_time,
+      cook_time,
+      total_time,
+      ingredients,
+      directions,
+      profile_table (
+        username
+      )
+    `);
+
+    if (author) {
+      query = query.eq('author', author);
+    }
+    if (dietary) {
+      const arr = dietary.split(',').map(v => v.trim()).filter(v => v);
+      if (arr.length > 0) query = query.in('dietary', arr);
+    }
+    if (meal) {
+      const arr = meal.split(',').map(v => v.trim()).filter(v => v);
+      if (arr.length > 0) query = query.in('meal', arr);
+    }
+    if (total_time) {
+      const arr = total_time.split(',').map(v => v.trim()).filter(v => v);
+      if (arr.length > 0) query = query.in('total_time', arr);
+    }
+    if (searchTerm) {
+      query = query.ilike('title', `%${searchTerm}%`);
+    }
+
+    const { data, error } = await query;
+    if (error) {
+      throw error;
+    }
+
+    // Map the result to flatten username, consistent with other endpoints
+    const recipes = data.map(r => ({
+      id: r.id,
+      title: r.title,
+      image: r.image,
+      username: r.profile_table?.username,
+      cuisine: r.cuisine,
+      dietary: r.dietary,
+      meal: r.meal,
+      prep_time: r.prep_time,
+      cook_time: r.cook_time,
+      total_time: r.total_time,
+      ingredients: r.ingredients,
+      directions: r.directions
+    }));
+
+    res.json({ success: true, recipes: recipes });
+  } catch (error) {
+    console.error('Error fetching user recipes by filters:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch user recipes by filters' });
+  }
+});
+
 // Add endpoint to get user recipes by profileId
 app.get('/user-recipes/:profileId', async (req, res) => {
   try {
