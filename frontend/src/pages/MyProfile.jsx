@@ -9,7 +9,7 @@ const MyProfile = () => {
     id: null,
     username: '',
     email: '',
-    password: '', // Consider if password should be in state
+    // password: '', // Consider if password should be in state
     login_type: '',
     allergy: [],
     about_me: '',
@@ -61,7 +61,46 @@ const MyProfile = () => {
     setProfile({ ...profile, allergy: updated }); // Update profile.allergy
   };
 
-  const toggleEdit = () => setEditing(!editing);
+  const handleUpdateProfile = async () => {
+    if (!profileId) {
+      alert('User not logged in. Cannot update profile.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_LINK}/update-profile/${profileId}`, {
+      // const response = await fetch(`http://localhost:8080/update-profile/${profileId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(profile), // Send the current profile state
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('Profile updated successfully:', data.profile);
+        alert('Profile updated successfully!');
+        // Optionally, update local storage or re-fetch profile data
+      } else {
+        console.error('Failed to update profile:', data.error);
+        alert(`Failed to update profile: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('An error occurred while updating the profile.');
+    }
+  };
+
+  const toggleEdit = () => {
+    if (editing) {
+      // If currently editing, save the information
+      handleUpdateProfile();
+    }
+    // Toggle editing state
+    setEditing(!editing);
+  };
 
   // Render loading state or profile data
   if (loading) {

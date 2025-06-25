@@ -824,5 +824,76 @@ app.get('/search-recipes/:searchTerm', async (req, res) => {
   }
 });
 
-app.get('')
+// Function to update a profile
+async function updateProfile(supabase, profileData) {
+  const { id, username, email, password, login_type, allergy, about_me, img } = profileData;
+
+  if (!id) {
+    throw new Error('Profile ID is required for update.');
+  }
+
+  const { data, error } = await supabase
+    .from('profile_table')
+    .update({
+      username,
+      email,
+      password,
+      login_type,
+      allergy,
+      about_me,
+      img
+    })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Supabase update profile error:', error);
+    throw error;
+  }
+  return data;
+}
+
+// PUT endpoint to update a profile by ID
+app.put('/update-profile/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const profileData = req.body;
+
+    // Ensure the ID from params matches the ID in the body if present, or use params ID
+    if (profileData.id && profileData.id !== parseInt(id, 10)) {
+         return res.status(400).json({ success: false, error: 'Profile ID in body does not match ID in URL.' });
+    }
+    profileData.id = parseInt(id, 10); // Use the ID from URL params
+
+    // Basic validation for required fields for update (can be adjusted based on requirements)
+    if (!profileData.id || !profileData.username || !profileData.email || !profileData.login_type) {
+         return res.status(400).json({ success: false, error: 'Required fields for update: id, username, email, login_type' });
+    }
+
+    console.log('Attempting to update profile for ID:', profileData.id);
+    const updatedProfile = await updateProfile(supabase, profileData);
+    console.log('Profile update result:', updatedProfile);
+
+    if (updatedProfile) {
+      res.json({ success: true, profile: updatedProfile });
+    } else {
+      // This case might occur if the ID doesn't exist
+      res.status(404).json({ success: false, error: 'Profile not found or failed to update.' });
+    }
+
+  } catch (error) {
+    console.error('Error updating profile in endpoint:', error);
+    const errorMessage = error.message || 'An unknown error occurred during profile update.';
+    const errorDetails = error.details || null;
+    const errorCode = error.code || null;
+
+    res.status(500).json({
+      success: false,
+      error: errorMessage,
+      details: errorDetails,
+      code: errorCode
+    });
+  }
+});
 
