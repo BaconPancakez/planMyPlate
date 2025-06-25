@@ -146,13 +146,15 @@ async function getRecipesBySearch(supabase, searchTerm) {
   }));
 }
 
-async function getProflie(id,username) {
+async function getProflie(supabase,id) {
   const {data , error} = await supabase
     .from('profile_table')
-    .select('*')
+    .select()
     .eq('id', id)
-    .eq('username', username);
-    
+  if (error) {
+    throw error;
+  }
+  return data
 }
 
 async function createPost(Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions) {
@@ -256,9 +258,21 @@ app.get('/recipe_Table', async (req, res) => {
   try {
     const posts = await getAllPosts(supabase);
     res.json({ success: true, posts });
-  } catch (error) {
+  } catch (error) { 
     console.error('Error getting posts:', error);
     res.status(500).json({ success: false, error: 'Failed to get posts' });
+  }
+});
+
+//GET proflie
+app.get('/GETprofile/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const profile = await getProflie(supabase,id) ;
+    res.json({ success: true, profile });
+  } catch (error) {
+    console.error('Error getting profile:', error);
+    res.status(500).json({ success: false, error: 'Failed to get profile' });
   }
 });
 
