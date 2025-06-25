@@ -19,11 +19,15 @@ export default function MyRecipe() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
+        console.log('Fetching initial recipes for profileId:', profileId);
         const response = await fetch(`http://localhost:8080/user-recipes/${profileId}`);
         const data = await response.json();
         if (data.success) {
+          console.log('Fetched recipes:', data.recipes);
           setAllRecipes(data.recipes);
           setFilteredRecipes(data.recipes);
+        } else {
+          console.error('Failed to fetch recipes:', data.error);
         }
       } catch (error) {
         console.error('Error fetching recipes:', error);
@@ -31,44 +35,48 @@ export default function MyRecipe() {
         setLoading(false);
       }
     };
-    fetchRecipes();
+    if (profileId) {
+        fetchRecipes();
+    } else {
+        setLoading(false);
+        console.log("No profileId found, not fetching recipes.");
+    }
   }, [profileId]);
 
-  const handleApplyFilters = (newFilters) => {
+  const handleApplyFilters = async (newFilters) => {
+    console.log('Applying filters:', newFilters);
     setFilters(newFilters);
-    let filtered = allRecipes;
+    // If no filters, show all
+    if (!newFilters.dietary.length && !newFilters.meal.length && !newFilters.total_time.length) {
+      console.log('No filters applied, showing all recipes.');
+      setFilteredRecipes(allRecipes);
+      return;
+    }
+    // Build query string for filter endpoint
+    const params = new URLSearchParams();
+    if (newFilters.dietary.length) params.append('dietary', newFilters.dietary.join(','));
+    if (newFilters.meal.length) params.append('meal', newFilters.meal.join(','));
+    if (newFilters.total_time.length) params.append('total_time', newFilters.total_time.join(','));
+    // Always filter by current user
+    if (profileId) params.append('author', profileId);
 
-    // Helper to normalize values for comparison
-    const normalize = v => (Array.isArray(v) ? v.map(x => String(x).toLowerCase().trim()) : String(v).toLowerCase().trim());
+    const fetchUrl = `http://localhost:8080/user-recipes/filter?${params.toString()}`;
+    console.log('Fetching filtered recipes from:', fetchUrl);
 
-    // Dietary filter (handles array or string in recipe)
-    if (newFilters.dietary.length) {
-      const selected = newFilters.dietary.map(v => v.toLowerCase().trim());
-      filtered = filtered.filter(r => {
-        const val = normalize(r.dietary);
-        if (Array.isArray(val)) return val.some(v => selected.includes(v));
-        return selected.includes(val);
-      });
+    try {
+      const response = await fetch(fetchUrl);
+      const data = await response.json();
+      if (data.success) {
+        console.log('Filtered recipes received:', data.recipes);
+        setFilteredRecipes(data.recipes);
+      } else {
+        console.error('Failed to fetch filtered recipes:', data.error);
+        setFilteredRecipes([]);
+      }
+    } catch (error) {
+      console.error('Error fetching filtered recipes:', error);
+      setFilteredRecipes([]);
     }
-    // Meal filter
-    if (newFilters.meal.length) {
-      const selected = newFilters.meal.map(v => v.toLowerCase().trim());
-      filtered = filtered.filter(r => {
-        const val = normalize(r.meal);
-        if (Array.isArray(val)) return val.some(v => selected.includes(v));
-        return selected.includes(val);
-      });
-    }
-    // Total time filter
-    if (newFilters.total_time.length) {
-      const selected = newFilters.total_time.map(v => v.toLowerCase().trim());
-      filtered = filtered.filter(r => {
-        const val = normalize(r.total_time);
-        if (Array.isArray(val)) return val.some(v => selected.includes(v));
-        return selected.includes(val);
-      });
-    }
-    setFilteredRecipes(filtered);
   };
 
   return (

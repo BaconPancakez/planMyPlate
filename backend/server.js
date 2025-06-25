@@ -54,58 +54,6 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-
-
-
-
-
-
-
-
-
-// Database helper functions using Supabase
-  // Functions to interact with the 'recipe_Table' table
-  // These functions will be used in the routes later
-// Get all posts
-// async function getAllPosts(supabase) {
-//   const { data, error } = await supabase
-//     .from('recipe_Table')
-//     .select(`
-//       title,
-//       image,
-//       cuisine,
-//       dietary,
-//       meal,
-//       prep_time,
-//       cook_time,
-//       total_time,
-//       ingredients,
-//       directions,
-//       profile_table (
-//         username
-//       )
-//     `)
-
-//   if (error) {
-//     throw error;
-//   }
-
-//   // Map the result to flatten username
-//   return data.map(r => ({
-//     title: r.title,
-//     image: r.image,
-//     username: r.profile_table?.username,
-//     cuisine: r.cuisine,
-//     dietary: r.dietary,
-//     meal: r.meal,
-//     prep_time: r.prep_time,
-//     cook_time: r.cook_time,
-//     total_time: r.total_time,
-//     ingredients: r.ingredients,
-//     directions: r.directions
-//   }));
-// }
-
 async function getAllRecipes(supabase) {
   const { data, error } = await supabase
     .from('recipe_Table')
@@ -335,14 +283,6 @@ app.get('/recipe_Table', async (req, res) => {
 //GET proflie
 app.get('/GETprofile/:id', async (req, res) => {
   try {
-//     const {id } = req.params;
-//     const post = await getPostById(id);
-
-//     if (!post) {
-//       return res.status(404).json({ success: false, error: 'Post not found' });
-//     }
-
-//     res.json({ success: true, post });
     const { id } = req.params;
     const profile = await getProflie(supabase,id) ;
     res.json({ success: true, profile });
@@ -476,6 +416,76 @@ app.delete('/user-recipes/delete/:title', async (req, res) => {
   } catch (error) {
     console.error('Error deleting post:', error);
     res.status(500).json({ success: false, error: 'Failed to delete post' });
+  }
+});
+
+// add endpoint to get user recipes by dietary, meal, and total_time
+app.get('/user-recipes/filter', async (req, res) => {
+  try {
+    let { author, dietary, meal, total_time } = req.query;
+
+    // Debug log to see what filters are being received
+    console.log('Received filters:', { author, dietary, meal, total_time });
+
+    // Accept comma-separated values for multi-select
+    let query = supabase.from('recipe_Table').select(`
+      id,
+      title,
+      image,
+      cuisine,
+      dietary,
+      meal,
+      prep_time,
+      cook_time,
+      total_time,
+      ingredients,
+      directions,
+      profile_table (
+        username
+      )
+    `);
+
+    if (author) {
+      query = query.eq('author', author);
+    }
+    if (dietary) {
+      const arr = dietary.split(',').map(v => v.trim()).filter(v => v);
+      if (arr.length > 0) query = query.in('dietary', arr);
+    }
+    if (meal) {
+      const arr = meal.split(',').map(v => v.trim()).filter(v => v);
+      if (arr.length > 0) query = query.in('meal', arr);
+    }
+    if (total_time) {
+      const arr = total_time.split(',').map(v => v.trim()).filter(v => v);
+      if (arr.length > 0) query = query.in('total_time', arr);
+    }
+
+    const { data, error } = await query;
+    if (error) {
+      throw error;
+    }
+
+    // Map the result to flatten username, consistent with other endpoints
+    const recipes = data.map(r => ({
+      id: r.id,
+      title: r.title,
+      image: r.image,
+      username: r.profile_table?.username,
+      cuisine: r.cuisine,
+      dietary: r.dietary,
+      meal: r.meal,
+      prep_time: r.prep_time,
+      cook_time: r.cook_time,
+      total_time: r.total_time,
+      ingredients: r.ingredients,
+      directions: r.directions
+    }));
+
+    res.json({ success: true, recipes: recipes });
+  } catch (error) {
+    console.error('Error fetching user recipes by filters:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch user recipes by filters' });
   }
 });
 

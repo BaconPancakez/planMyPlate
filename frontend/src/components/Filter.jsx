@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Filter.css';
 
-export default function Filter() {
+export default function Filter({ onApplyFilters }) {
   const [open, setOpen] = useState(false);
   // Separate state for each filter group
   const [dietary, setDietary] = useState({ Vegetarian: false, Vegan: false, Halal: false });
@@ -24,20 +24,15 @@ export default function Filter() {
     const selectedDietary = Object.entries(dietary).filter(([, checked]) => checked).map(([name]) => name);
     const selectedMealType = Object.entries(mealType).filter(([, checked]) => checked).map(([name]) => name);
     const selectedTotalTime = Object.entries(totalTime).filter(([, checked]) => checked).map(([name]) => name);
-    alert(
-      'Filters applied:\n' +
-        'Dietary: ' + (selectedDietary.join(', ') || 'None') + '\n' +
-        'Meal Type: ' + (selectedMealType.join(', ') || 'None') + '\n' +
-        'Total Time: ' + (selectedTotalTime.join(', ') || 'None')
-    );
-    // Call the onApplyFilters function with the selected filters
-    onApplyFilters({
-      dietary: selectedDietary,
-      meal: selectedMealType,
-      total_time: selectedTotalTime,
-    });
+    // Remove alert, just call onApplyFilters
+    if (onApplyFilters) {
+      onApplyFilters({
+        dietary: selectedDietary,
+        meal: selectedMealType,
+        total_time: selectedTotalTime,
+      });
+    }
     setOpen(false);
-    // insert logic here to filter recipes
   };
 
   return (
