@@ -35,8 +35,8 @@
 }
 
 .upload-btn {
-  background-color: #1d3557;
-  color: rgb(0, 0, 0);
+  background-color: #00517C;
+  color: rgb(255, 255, 255);
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
@@ -73,7 +73,7 @@
   border: none;
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.1);
-  color: white;
+  color: rgb(23, 40, 230);
 }
 
 .input::placeholder {
@@ -89,7 +89,7 @@
 
 .update-btn {
   margin-top: 20px;
-  background-color: #1d3557;
+  background-color: #00517C;
   color: white;
   padding: 10px 18px;
   border: none;

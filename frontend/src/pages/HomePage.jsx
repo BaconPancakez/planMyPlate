@@ -1,17 +1,31 @@
-// src/pages/HomePage.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
-import placeholderImage from "../assets/placeholder.jpg";
-import Postbox from "../components/Postbox";
+import QuoteGenerator from "../components/QuoteGenerator";
 
 const HomePage = () => {
+  const [foodImage, setFoodImage] = useState("");
+
+  // Fetch image from Foodish API once when component mounts
+  useEffect(() => {
+    const fetchRandomFoodImage = async () => {
+      try {
+        const response = await fetch("https://foodish-api.com/api/");
+        const data = await response.json();
+        setFoodImage(data.image);
+      } catch (error) {
+        console.error("Error fetching food image:", error);
+      }
+    };
+
+    fetchRandomFoodImage();
+  }, []);
+
   return (
     <div className="home-wrapper">
       <div className="home-content">
         <div className="top-wrapper">
           <div className="image-section">
-            <img src={placeholderImage} alt="Random dish" />
-            <p className="caption">Random picture every log in</p>
+              <img src={foodImage} alt="Random food image" className="food-img" />
           </div>
           <div className="about-section">
             <h2>About Us</h2>
@@ -19,8 +33,8 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="recipe-section horizontal-recipes">
-          <Postbox limit={3} showAddBox={false} />
+        <div className="quote-section">
+          <QuoteGenerator />
         </div>
 
         <footer className="footer">@BitByBit</footer>

@@ -8,11 +8,9 @@ import './index.css';
 
 // Rendering the root component of the application
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
     <BrowserRouter> {/* Enables routing in the application */}
       <UIProvider> {/* Provides UI context to the application */}
         <App /> {/* Main application component */}
       </UIProvider>
-    </BrowserRouter>
-  </StrictMode>,
+    </BrowserRouter>,
 );
