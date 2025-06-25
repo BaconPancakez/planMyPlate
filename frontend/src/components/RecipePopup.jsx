@@ -116,7 +116,7 @@ export default function RecipePopup({ recipe, onClose }) {
 
     // Handle cases where quantity is not a valid number
     if (isNaN(quantity)) {
-        return `${name.toUpperCase()}`; // Just display name if quantity is invalid
+        return `${name}`; // Just display name if quantity is invalid
     }
 
     // Prepare unit for display, adding a space if it's present and not "null"/"undefined" string
