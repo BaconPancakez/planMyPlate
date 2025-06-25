@@ -1,16 +1,28 @@
 // pages/FoodCart.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RecipeCard from '../components/RecipeCard';
 import RecipePopup from '../components/RecipePopup';
 import { useNavigate } from 'react-router-dom';
-import { dummyRecipes } from '../DummyData/dataAI';
 import './FoodCart.css';
 
 export default function FoodCart() {
-  const [recipes, setRecipes] = useState(dummyRecipes);
+  const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [checkedItems, setCheckedItems] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Get owner_id from localStorage (or set your own logic)
+    const owner_id = localStorage.getItem('id');
+    if (!owner_id) return;
+    fetch(`/api/foodcart/${owner_id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('Fetched food cart recipes:', data);
+        setRecipes(data.recipes || []);
+      })
+      .catch((err) => console.error('Failed to fetch food cart recipes:', err));
+  }, []);
 
   const toggleCheck = (id) => {
     setCheckedItems((prev) =>

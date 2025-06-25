@@ -447,6 +447,68 @@ app.post('/foodCart/:recipe_id/:owner_id', async (req, res) => {
   }
 });
 
+// GET all recipes in food cart for a given owner_id
+app.get('/api/foodcart/:owner_id', async (req, res) => {
+  try {
+    let { owner_id } = req.params;
+    const parsedOwnerId = parseInt(owner_id, 10);
+
+    if (isNaN(parsedOwnerId)) {
+      console.error(`Invalid owner_id received: "${owner_id}". It must be a number.`);
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid owner ID format. Owner ID must be a valid number.'
+      });
+    }
+
+    owner_id = parsedOwnerId;
+
+    const { data: cartRows, error: cartError } = await supabase
+      .from('foodCart_table')
+      .select('recipe_id')
+      .eq('owner_id', owner_id);
+
+    console.log('cartRows:', cartRows);
+    if (cartError) {
+      console.error('Supabase cart fetch error:', cartError);
+      throw cartError;
+    }
+
+    if (!cartRows || cartRows.length === 0) {
+      return res.json({ success: true, recipes: [] });
+    }
+
+    const recipeIds = cartRows
+      .map(row => parseInt(row.recipe_id, 10))
+      .filter(id => !isNaN(id));
+
+    console.log('Filtered recipeIds:', recipeIds, 'types:', recipeIds.map(id => typeof id));
+
+    if (recipeIds.length === 0) {
+      return res.json({ success: true, recipes: [] });
+    }
+
+    const { data: recipes, error: recipeError } = await supabase
+      .from('recipe_Table')
+      .select('*')
+      .in('id', recipeIds);
+
+    if (recipeError) {
+      console.error('Supabase recipe fetch error:', recipeError);
+      throw recipeError;
+    }
+
+    res.json({ success: true, recipes });
+
+  } catch (error) {
+    console.error('Error fetching food cart recipes:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch food cart recipes due to an internal server error.'
+    });
+  }
+});
+
 
 // DELETE post by title
 app.delete('/user-recipes/delete/:title', async (req, res) => {
@@ -648,5 +710,5 @@ app.get('/search-recipes/:searchTerm', async (req, res) => {
   }
 });
 
-
+app.get('')
 

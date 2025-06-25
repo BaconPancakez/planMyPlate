@@ -90,12 +90,6 @@ export default function RecipePopup({ recipe, onClose }) {
               )}
             </div>
           </div>
-
-          {/* The "Add to Cart" button and its container are removed */}
-          {/* <div className="recipe-btn">
-            <button className="primary-btn">Add to Cart</button>
-          </div> */}
-
         </div> {/* End recipe-popup */}
       </div> {/* End popup-container */}
     </div> // End popup-backdrop
