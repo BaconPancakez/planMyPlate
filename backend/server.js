@@ -106,19 +106,54 @@ async function getAllPosts(supabase) {
   }));
 }
 
-// Get a single post by ID
-async function getPostById(id) {
+async function getRecipesBySearch(supabase, searchTerm) {
   const { data, error } = await supabase
     .from('recipe_Table')
-    .select('*')
-    .eq('Recipe_id', id)
-    .single();
+    .select(`
+      title,
+      image,
+      cuisine,
+      dietary,
+      meal,
+      prep_time,
+      cook_time,
+      total_time,
+      ingredients,
+      directions,
+      profile_table (
+        username
+      )
+    `)
+    .ilike('title', `%${searchTerm}%`); // Case-insensitive search by title
 
-  if (error) throw error;
-  return data;
+  if (error) {
+    throw error;
+  }
+
+  // Map the result to flatten username
+  return data.map(r => ({
+    title: r.title,
+    image: r.image,
+    username: r.profile_table?.username,
+    cuisine: r.cuisine,
+    dietary: r.dietary,
+    meal: r.meal,
+    prep_time: r.prep_time,
+    cook_time: r.cook_time,
+    total_time: r.total_time,
+    ingredients: r.ingredients,
+    directions: r.directions
+  }));
 }
 
-
+async function getProflie(id,username) {
+  const {data , error} = await supabase
+    .from('profile_table')
+    .select('*')
+    .eq('id', id)
+    .eq('username', username);
+    
+}
 
 async function createPost(Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions) {
   const { data, error } = await supabase
@@ -215,59 +250,6 @@ async function insertProfile(username, email, password = null, login_type, aller
   }
 }
 
-// Example usage
-// (async () => {
-//   try {
-//     const newProfile = await insertProfile(
-//       'aliceTan',
-//       'alice@example.com',
-//       'abc123',
-//       'manual',
-//       null, // allergy not provided for manual login
-//       null, // about_me not provided for manual login
-//       null  // img not provided for manual login
-//     );
-//     console.log('Inserted profile:', newProfile);
-//   } catch (error) {
-//     console.error('Error inserting profile:', error);
-//   }
-// })();
-
-// // Example usage with conditional logic for login type
-// (async () => {
-//   try {
-//     const loginType = 'manual'; // Change to 'google' for Google login
-
-//     let newProfile;
-//     if (loginType === 'manual') {
-//       newProfile = await insertProfile(
-//         'aliceTan',
-//         'alice@example.com',
-//         'abc123',
-//         'manual',
-//         null, // allergy not provided for manual login
-//         null, // about_me not provided for manual login
-//         null  // img not provided for manual login
-//       );
-//     } else if (loginType === 'google') {
-//       newProfile = await insertProfile(
-//         'aliceTan',
-//         'alice@example.com',
-//         null, // password not provided for Google login
-//         'google',
-//         null, // allergy not provided for Google login
-//         null, // about_me not provided for Google login
-//         'https://example.com/img/alice.jpg' // img provided for Google login
-//       );
-//     }
-
-//     console.log('Inserted profile:', newProfile);
-//   } catch (error) {
-//     console.error('Error inserting profile:', error);
-//   }
-// })();
-
-// Routes
 
 // GET all posts
 app.get('/recipe_Table', async (req, res) => {
@@ -280,22 +262,6 @@ app.get('/recipe_Table', async (req, res) => {
   }
 });
 
-// GET single post by ID
-app.get('/recipe_Table/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const post = await getPostById(id);
-
-    if (!post) {
-      return res.status(404).json({ success: false, error: 'Post not found' });
-    }
-
-    res.json({ success: true, post });
-  } catch (error) {
-    console.error('Error getting post:', error);
-    res.status(500).json({ success: false, error: 'Failed to get post' });
-  }
-});
 
 // POST create new post
 app.post('/recipe_Table/posts', async (req, res) => {
@@ -511,6 +477,26 @@ app.post('/profile', async (req, res) => {
   } catch (error) {
     console.error('Error inserting profile:', error);
     res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+});
+
+// Endpoint to search recipes by title
+app.get('/search-recipes/:searchTerm', async (req, res) => {
+  try {
+    const { searchTerm } = req.params;
+
+    if (!searchTerm) {
+      return res.status(400).json({
+        success: false,
+        error: 'Search term is required',
+      });
+    }
+
+    const recipes = await getRecipesBySearch(supabase, searchTerm);
+    res.json({ success: true, recipes });
+  } catch (error) {
+    console.error('Error searching recipes:', error);
+    res.status(500).json({ success: false, error: 'Failed to search recipes' });
   }
 });
 

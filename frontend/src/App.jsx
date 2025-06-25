@@ -19,6 +19,7 @@ import { validateUserSession } from "./utils/authHandlers";
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
+  const username = localStorage.get("username");
 
   useEffect(() => {
     validateUserSession(navigate);
@@ -31,7 +32,7 @@ function App() {
   return (
     
     <div className="layout"> {/* Layout container for the app */}
-      {!shouldHideNavBar && <NavBar />} {/* Conditionally render NavBar */}
+      {!shouldHideNavBar && <NavBar username={username}/>} {/* Conditionally render NavBar */}
       <main className="main-content"> {/* Main content area */}
 
         <Routes> {/* Defines the routes for the application */}

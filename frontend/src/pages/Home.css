@@ -74,20 +74,13 @@
   background-color: #F6E4CC;
   padding: 20px;
   display: flex;
-  justify-content: space-around;
+  flex-direction: row;
+  justify-content: center;
   gap: 20px;
   border-radius: 10px;
+  height: 300px;
 }
 
-.recipe-card {
-  background-color: #e5aa7a;
-  padding: 30px;
-  flex: 1;
-  text-align: center;
-  border-radius: 15px;
-  font-weight: 500;
-  color: black
-}
 
 /* Footer */
 .footer {

@@ -8,11 +8,10 @@ import './RecipeList.css';
 import data from '../data.js';
 
 // The RecipeList component displays a list of recipes and handles popup interactions
-export default function Postbox() {
-  const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
-  const [activeRecipe, setActiveRecipe] = useState(null); // State to store the active recipe
+export default function Postbox({ limit = null , showAddBox = true}) {
+  const [showPopup, setShowPopup] = useState(false);
+  const [activeRecipe, setActiveRecipe] = useState(null);
 
-  // Function to open the popup with the selected recipe
   const openPopup = (recipe) => {
     setActiveRecipe(recipe);
     setShowPopup(true);
@@ -23,37 +22,37 @@ export default function Postbox() {
     setShowPopup(true);
   };
 
-
+  // Use limit if provided
+  const recipesToShow = limit ? data.slice(0, limit) : data;
 
   return (
-    <div className="recipes-container"> {/* Container for the list of recipes */}
-        <div className = 'recipe-box addbox'
-            onClick={() => openaddPopup()} // Opens the popup on click
-        >
-        </div>
+    <div className="recipes-container">
+      {showAddBox && (
+       <div className="recipe-box addbox" onClick={() => openaddPopup()}></div>
+      )}
 
-        {showPopup  && (
-        <div className="popup-backdrop" onClick={() => setShowPopup(false)}> {/* Popup backdrop */}
-          <div
-            className="popup-container" // Popup container
-            onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
-          >
-            <button className="popup-close" onClick={() => setShowPopup(false)}> {/* Close button */}
+
+      {/* Add Recipe Popup */}
+      {showPopup && !activeRecipe && (
+        <div className="popup-backdrop" onClick={() => setShowPopup(false)}>
+          <div className="popup-container" onClick={(e) => e.stopPropagation()}>
+            <button className="popup-close" onClick={() => setShowPopup(false)}>
               &times;
             </button>
-            <AddRecipe  />
+            <AddRecipe />
           </div>
         </div>
       )}
 
-      {data.map((recipe) => (
+      {/* Recipes */}
+      {recipesToShow.map((recipe) => (
         <div
-          className="recipe-box" // Individual recipe box
+          className="recipe-box"
           key={recipe.id}
-          onClick={() => openPopup(recipe)} // Opens the popup on click
+          onClick={() => openPopup(recipe)}
         >
-          <img src={recipe.image} alt="Recipe" /> {/* Recipe image */}
-          <div className="recipe-details"> {/* Recipe details */}
+          <img src={recipe.image} alt="Recipe" />
+          <div className="recipe-details">
             <h3>{recipe.title}</h3>
             <p className="author">By {recipe.author}</p>
             <p className="desc">{recipe.description}</p>
@@ -61,14 +60,12 @@ export default function Postbox() {
         </div>
       ))}
 
+      {/* View Recipe Popup */}
       {showPopup && activeRecipe && (
-        <div className="popup-backdrop" onClick={() => setShowPopup(false)}> {/* Popup backdrop */}
-          <div
-            className="popup-container" // Popup container
-            onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
-          >
-            <button className="popup-close" onClick={() => setShowPopup(false)}> {/* Close button */}
-              <img src="../src/assets/CloseBtn.png"/>
+        <div className="popup-backdrop" onClick={() => setShowPopup(false)}>
+          <div className="popup-container" onClick={(e) => e.stopPropagation()}>
+            <button className="popup-close" onClick={() => setShowPopup(false)}>
+              <img src="../src/assets/CloseBtn.png" />
             </button>
             <RecipePop recipe={activeRecipe} isMyRecipe={true} />
           </div>

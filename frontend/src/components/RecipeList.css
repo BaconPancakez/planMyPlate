@@ -61,6 +61,7 @@
 /* Details section in recipe box */
 .recipe-details {
   padding: 15px 15px;
+  height: 100px;
 }
 
 .recipe-details h3 {
@@ -77,4 +78,12 @@
 .recipe-details .desc {
   font-size: 14px;
   color: #4b5563;
+}
+.horizontal-recipes .recipes-container{
+  display: flex !important;
+  flex-direction: row;
+  gap: 40px;
+  padding: 40px;
+  justify-content: center;
+  align-items: flex-start;
 }
