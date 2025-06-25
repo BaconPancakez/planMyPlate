@@ -52,9 +52,8 @@ const IngredientsList = () => {
 
   return (
     <div className="page ingredients-list-page">
-      <div className="header">
-        <button onClick={() => navigate(-1)} className="back-button">←</button>
-        <h1>Ingredients List</h1>
+      <div className="header">        
+        <h1>INGREDIENTS LIST</h1>
       </div>
 
       {selectedRecipes.length === 0 && (
@@ -71,14 +70,20 @@ const IngredientsList = () => {
         />
       ))}
 
-      {selectedRecipes.length > 0 && (
-        <button
-          onClick={handleAddIngredientsToShoppingList}
-          className="primary-btn"
-        >
-          Add to Shopping List
-        </button>
-      )}
+      <div className='bottomButtons'>
+        <button onClick={() => navigate(-1)} className="back-button">← BACK</button>
+
+        {selectedRecipes.length > 0 && (
+          <button
+            onClick={handleAddIngredientsToShoppingList}
+            className="primary-btn"
+          >
+            ADD TO SHOPPING LIST
+          </button>
+        )}
+
+
+      </div>
     </div>
   );
 };
