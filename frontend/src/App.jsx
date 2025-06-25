@@ -22,7 +22,11 @@ function App() {
   const username = localStorage.get("username");
 
   useEffect(() => {
-    validateUserSession(navigate, location.pathname); // Pass current path to session validation
+    if (location.pathname === '/') {
+      validateUserSession(navigate, null); // Pass null to avoid automatic redirection
+    } else {
+      validateUserSession(navigate, location.pathname);
+    }
   }, [location.pathname, navigate]);
 
   // 👇 List of routes that shouldn't show the NavBar
