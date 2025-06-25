@@ -1,16 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RecipePop from './RecipePop.jsx';
-import AddRecipe from './AddRecipe.jsx'
+import AddRecipe from './AddRecipe.jsx';
 
 import './RecipeList.css';
 
 // Mock data
-import data from '../data.js';
+// import data from '../data.js';
 
 // The RecipeList component displays a list of recipes and handles popup interactions
-export default function Postbox({ limit = null , showAddBox = true}) {
-  const [showPopup, setShowPopup] = useState(false);
-  const [activeRecipe, setActiveRecipe] = useState(null);
+export default function Postbox({ profileId}) {
+  const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
+  const [activeRecipe, setActiveRecipe] = useState(null); // State to store the active recipe
+  const [recipes, setRecipes] = useState([]); // State to store the list of recipes
+  const [loading, setLoading] = useState(true); // State to indicate loading state
+// export default function Postbox({ limit = null , showAddBox = true}) {
+//   const [showPopup, setShowPopup] = useState(false);
+//   const [activeRecipe, setActiveRecipe] = useState(null);
 
   const openPopup = (recipe) => {
     setActiveRecipe(recipe);
@@ -22,8 +27,59 @@ export default function Postbox({ limit = null , showAddBox = true}) {
     setShowPopup(true);
   };
 
+  // Fetch recipes from the backend
+  useEffect(() => {
+    fetch(`http://localhost:8080/user-recipes/${profileId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setRecipes(data.recipes);
+        }
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [profileId]);
+
+  if (loading) return <div>Loading...</div>;
+
+  // Function to get the recipe ID
+  const getRecipeID = (recipe) => {
+    return recipe.Recipe_id || recipe.id  || recipe._id || null;
+  }
+
+  // Delete handler
+  const handleDeleteRecipe = async (recipe) => {
+    if (!window.confirm('Are you sure you want to delete this recipe?')) return;
+    try {
+      console.log('Recipe object:', recipe);
+      const id = recipe.title; // Get the recipe ID from the recipe object
+      // If the recipe object does not have an id, try to get it from the getRecipeID function  
+      console.log('Deleting recipe with id:', id);
+
+      if (!id) {
+        alert('No recipe id found!');
+        return;
+      } 
+      const response = await fetch(`http://localhost:8080/user-recipes/delete/${id}`, {
+        method: 'DELETE',
+        // headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({ authorId: profileId })
+      });
+      const result = await response.json();
+      if (result.success) {
+        setRecipes(recipes.filter(r => (r.id) !== id));
+        setShowPopup(false);
+        alert('Recipe deleted!');
+      } else {
+        alert('Error: ' + (result.error || 'Failed to delete recipe'));
+      }
+    } catch (err) {
+      alert('Network error: ' + err.message);
+    }
+  };
+
   // Use limit if provided
-  const recipesToShow = limit ? data.slice(0, limit) : data;
+//   const recipesToShow = limit ? data.slice(0, limit) : data;
 
   return (
     <div className="recipes-container">
@@ -44,8 +100,9 @@ export default function Postbox({ limit = null , showAddBox = true}) {
         </div>
       )}
 
+      {recipes.map((recipe) => (
       {/* Recipes */}
-      {recipesToShow.map((recipe) => (
+//       {recipesToShow.map((recipe) => (
         <div
           className="recipe-box"
           key={recipe.id}
@@ -54,8 +111,8 @@ export default function Postbox({ limit = null , showAddBox = true}) {
           <img src={recipe.image} alt="Recipe" />
           <div className="recipe-details">
             <h3>{recipe.title}</h3>
-            <p className="author">By {recipe.author}</p>
-            <p className="desc">{recipe.description}</p>
+            <p className="author">By {recipe.username}</p>
+            {/* <p className="desc">{recipe.description}</p> */}
           </div>
         </div>
       ))}
@@ -67,7 +124,7 @@ export default function Postbox({ limit = null , showAddBox = true}) {
             <button className="popup-close" onClick={() => setShowPopup(false)}>
               <img src="../src/assets/CloseBtn.png" />
             </button>
-            <RecipePop recipe={activeRecipe} isMyRecipe={true} />
+            <RecipePop recipe={activeRecipe} isMyRecipe={true} onDelete={handleDeleteRecipe} />
           </div>
         </div>
       )}
