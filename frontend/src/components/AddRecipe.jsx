@@ -18,6 +18,12 @@ export default function AddRecipe() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!title || !cuisine || !dietType || !mealType || !prepTime || !cookTime
+      || !totalTime || !imageUrl || !ingredients || !ingredients) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
     // Prepare directions as an array (if you want to split by newlines)
     const directionsArray = directions
       ? directions.split('\n').map(line => line.trim()).filter(Boolean)
@@ -65,175 +71,175 @@ export default function AddRecipe() {
     
       <form onSubmit ={handleSubmit}>
 
-      <div className="recipe-header">
+        <div className="recipe-header">
 
-        <div className='recipe-title'>
-          Enter Recipe Name
-          <input
-            className='addTitle-input'
-            type='text'
-            placeholder='Eg. Greek Salad'
-            value={title}
-            onChange={e => setTitle(e.target.value)} // update title state on change          
-          />
-        </div>
-
-        <div className='add-image-parent'>
-          Enter Image URL
-          <div className='imageBox'>
-
+          <div className='recipe-title'>
+            Enter Recipe Name
             <input
-                type='text'
-                className='addImageUrl-input'
-                placeholder='Eg. https://cdn.loveandlemons.com/wp-content/uploads/2024/07/avocado-salad.jpg'
-                value={imageUrl}
-                onChange={e => setImageUrl(e.target.value)}
-              />
-
-            <button
-              className='add-image-button'
-              type='button'
-              onClick={() => setDisplayedImageUrl(imageUrl)}
-              >
-              ADD
-            </button>
-            
-          </div>
-          {displayedImageUrl && <img src={displayedImageUrl} alt='Recipe' className='recipe-image' />}
-        </div>
-
-        <div className='top-half'>
-          <div className='addInputs'>
-            Enter Cuisine Type
-            <input
-              className='addCuisine-input'
+              className='addTitle-input'
               type='text'
-              placeholder='Eg. Mediterranean Cuisine'
-              value={cuisine}
-              onChange={e => setCuisine(e.target.value)} // update cuisine state on change
-              /> 
-          </div>
-          
-          <div className='addInputs'>
-            Enter Diet Type
-            <input
-              className='addDietType-input'
-              type='text'
-              placeholder='Eg. Vegetarian, Halal'
-              value={dietType}
-              onChange={e => setDietType(e.target.value)} // update diet type state on change
+              placeholder='Eg. Greek Salad'
+              value={title}
+              onChange={e => setTitle(e.target.value)} // update title state on change          
             />
           </div>
 
-          <div className='addInputs'>
-            Select Meal Type
-            <select name="units" className="addMealType-input" defaultValue={"breakfast"} onChange={e => setMealType(e.target.value)}>
-              <option value="breakfast">Breakfast</option>
-              <option value="lunch">Lunch</option>
-              <option value="dinner">Dinner</option>
-            </select>
-          </div>
+          <div className='add-image-parent'>
+            Enter Image URL
+            <div className='imageBox'>
 
-        </div>
-
-        <div className='low-half'>
-
-          <div className='addInputs'>          
-            Enter Prep Time  
-            <input
-              className='addPrepTime-input'
-              type='text'
-              placeholder='Eg. 2 minutes'
-              value={prepTime}
-              onChange={e => setPrepTime(e.target.value)} // update prep time state on change
-            />
-          </div>
-
-          <div className='addInputs'>
-            Enter Cook Time
-            <input
-              className='addCookTime-input'
-              type='text'
-              placeholder='Eg. 3 minutes'
-              value={cookTime}
-              onChange={e => setCookTime(e.target.value)} // update cook time state on change
-            />
-          </div>
-
-          <div className='addInputs'>
-            Enter Total Time
-            <input
-              className='addTotalTime-input'
-              type='text'
-              placeholder='Eg. 5 minutes'
-              value={totalTime}
-              onChange={e => setTotalTime(e.target.value)} // update total time state on change
-            />
-          </div>
-
-        </div>
-
-      </div>
-
-      <div className="popup-container-add">
-        <div className="addrecipe-main">
-          
-          <div className='left-bar'>
-
-            <h2>Ingredients</h2>
-
-            <div className='ingredients' onKeyDown={e => {
-                  if (e.key === 'Enter' && e.target.value) {
-                    e.preventDefault(); // prevent form submission
-                    setIngredients([...ingredients, e.target.value]);
-                    e.target.value = ''; // clear input after adding
-                  }
-                }}>
               <input
-                type='number'
-                className='addIngreInput'
-                placeholder='Eg. 3'
-              />
+                  type='text'
+                  className='addImageUrl-input'
+                  placeholder='Eg. https://cdn.loveandlemons.com/wp-content/uploads/2024/07/avocado-salad.jpg'
+                  value={imageUrl}
+                  onChange={e => setImageUrl(e.target.value)}
+                />
 
-              <select name="units" defaultValue={"num"} className='addIngreInput'>
-                <option value=" ">Number</option>
-                <option value="g">Grams / g</option>
-                <option value="ml">Milliliter / ml</option>
+              <button
+                className='add-image-button'
+                type='button'
+                onClick={() => setDisplayedImageUrl(imageUrl)}
+                >
+                ADD
+              </button>
+              
+            </div>
+            {displayedImageUrl && <img src={displayedImageUrl} alt='Recipe' className='recipe-image' />}
+          </div>
+
+          <div className='top-half'>
+            <div className='addInputs'>
+              Enter Cuisine Type
+              <input
+                className='addCuisine-input'
+                type='text'
+                placeholder='Eg. Mediterranean Cuisine'
+                value={cuisine}
+                onChange={e => setCuisine(e.target.value)} // update cuisine state on change
+                /> 
+            </div>
+            
+            <div className='addInputs'>
+              Enter Diet Type
+              <input
+                className='addDietType-input'
+                type='text'
+                placeholder='Eg. Vegetarian, Halal'
+                value={dietType}
+                onChange={e => setDietType(e.target.value)} // update diet type state on change
+              />
+            </div>
+
+            <div className='addInputs'>
+              Select Meal Type
+              <select name="units" className="addMealType-input" defaultValue={"breakfast"} onChange={e => setMealType(e.target.value)}>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
               </select>
+            </div>
 
+          </div>
+
+          <div className='low-half'>
+
+            <div className='addInputs'>          
+              Enter Prep Time  
               <input
+                className='addPrepTime-input'
                 type='text'
-                className='addIngreInput'
-                placeholder='Eg. Eggs'                
+                placeholder='Eg. 2 minutes'
+                value={prepTime}
+                onChange={e => setPrepTime(e.target.value)} // update prep time state on change
               />
             </div>
-            
-            <div className='ingredientList'>
-              {ingredients.map((ingredient, index) => (
-                  <li key={index}>{ingredient}</li>
-              ))}
+
+            <div className='addInputs'>
+              Enter Cook Time
+              <input
+                className='addCookTime-input'
+                type='text'
+                placeholder='Eg. 3 minutes'
+                value={cookTime}
+                onChange={e => setCookTime(e.target.value)} // update cook time state on change
+              />
+            </div>
+
+            <div className='addInputs'>
+              Enter Total Time
+              <input
+                className='addTotalTime-input'
+                type='text'
+                placeholder='Eg. 5 minutes'
+                value={totalTime}
+                onChange={e => setTotalTime(e.target.value)} // update total time state on change
+              />
             </div>
 
           </div>
 
-          <div className='directions right-bar'>
-            <h2>Directions</h2>
-            <textarea
-              placeholder='1. Make the dressing: In a small bowl, whisk together the olive oil, vinegar, garlic, oregano, mustard, salt, and several grinds of pepper.'
-              value={directions}
-              onChange={e => setDirections(e.target.value)} // update directions state on change
-              rows='10'
-              className='directions-textarea'
-            ></textarea>
+        </div>
+
+        <div className="popup-container-add">
+          <div className="addrecipe-main">
+            
+            <div className='left-bar'>
+
+              <h2>Ingredients</h2>
+
+              <div className='ingredients' onKeyDown={e => {
+                    if (e.key === 'Enter' && e.target.value) {
+                      e.preventDefault(); // prevent form submission
+                      setIngredients([...ingredients, e.target.value]);
+                      e.target.value = ''; // clear input after adding
+                    }
+                  }}>
+                <input
+                  type='number'
+                  className='addIngreInput'
+                  placeholder='Eg. 3'
+                />
+
+                <select name="units" defaultValue={"num"} className='addIngreInput'>
+                  <option value=" ">Number</option>
+                  <option value="g">Grams / g</option>
+                  <option value="ml">Milliliter / ml</option>
+                </select>
+
+                <input
+                  type='text'
+                  className='addIngreInput'
+                  placeholder='Eg. Eggs'                
+                />
+              </div>
+              
+              <div className='ingredientList'>
+                {ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                ))}
+              </div>
+
+            </div>
+
+            <div className='directions right-bar'>
+              <h2>Directions</h2>
+              <textarea
+                placeholder='1. Make the dressing: In a small bowl, whisk together the olive oil, vinegar, garlic, oregano, mustard, salt, and several grinds of pepper.'
+                value={directions}
+                onChange={e => setDirections(e.target.value)} // update directions state on change
+                rows='10'
+                className='directions-textarea'
+              ></textarea>
+            </div>
+          </div>
+
+          <div className='post-button'>
+            
+            <button type='submit'>POST</button>
+
           </div>
         </div>
-
-        <div className='post-button'>
-          
-          <button type='submit'>POST</button>
-
-        </div>
-      </div>
       </form>
     </div>
   );
