@@ -61,7 +61,12 @@
 
 .allergy-section h4 {
   font-size: 14px;
-  margin-bottom: 6px;
+  margin-bottom: 20px;
+}
+
+.allergy-section input
+{
+  padding: 10px;
 }
 
 .profile-right {
@@ -129,9 +134,8 @@
 
 .allergy-row {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 10px;
-  margin-bottom: 8px;
 }
 
 .add-btn, .remove-btn {

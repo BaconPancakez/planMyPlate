@@ -20,8 +20,8 @@ export default function RecipeCard({ recipe, isChecked, onToggleCheck, onView, o
         {recipe.warning && <p className="rc-warning">⚠️ {recipe.warning}</p>}
       </div>
       <div className="rc-actions">
-        <button onClick={onView} className="rc-view-btn">👀 View Recipe</button>
-        <button onClick={onDelete} className="rc-delete-btn">🗑 Delete</button>
+        <button onClick={onView} className="rc-view-btn">View Recipe</button>
+        <button onClick={onDelete} className="rc-delete-btn">Delete</button>
       </div>
     </div>
   );
