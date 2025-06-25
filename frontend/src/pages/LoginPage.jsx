@@ -37,8 +37,7 @@ const LoginPage = () => {
       style={{ backgroundImage: `url(${fruitImage})` }}
     >
       <div className="login-form">
-        <h2>Welcome Back!</h2>
-        <p>Don't have an account? <a href="#">Sign Up</a></p>
+        <h2>WELCOME!</h2>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -55,8 +54,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <a href="#" className="forgot">Forgot your password?</a>
-          <button type="submit">Sign In</button>
+          <button type="submit">SIGN IN</button>
         </form>
 
         <div className="or">OR</div>
