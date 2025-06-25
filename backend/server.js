@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
-
-
  
 const app = express(); 
 const PORT = process.env.PORT || 8080;
@@ -14,10 +12,6 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
- 
-
-
-
 
 // Middleware
 app.use(cors());
@@ -47,7 +41,6 @@ app.get('/test-db', async (req, res) => {
     res.status(500).json({ error: 'Failed to connect to Supabase' });
   }
 });
-
 
 // Start server
 app.listen(PORT, () => {

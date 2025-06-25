@@ -17,7 +17,7 @@ export default function Explore() {
     const fetchRecipes = async () => {
       try {
         console.log('Fetching all recipes for Explore page');
-        const response = await fetch(`http://localhost:8080/recipe_Table`);
+        const response = await fetch(`${import.meta.env.VITE_API_LINK}/recipe_Table`);
         const data = await response.json();
         if (data.success) {
           console.log('Fetched recipes:', data.posts);

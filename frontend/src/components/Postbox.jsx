@@ -21,7 +21,7 @@ export default function Postbox({ recipes = [] }) {
     if (!window.confirm('Are you sure you want to delete this recipe?')) return;
     
     try {
-       const response = await fetch(`${import.meta.env.VITE_API_LINK}/delete/${recipe.title}`, {
+       const response = await fetch(`${import.meta.env.VITE_API_LINK}/user-recipes/delete/${recipe.title}`, {
       //const response = await fetch(`http://localhost:8080/user-recipes/delete/${recipe.title}`, {
         method: 'DELETE',
       });
