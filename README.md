@@ -81,6 +81,7 @@ planMyPlate/
 ├── frontend/               # Frontend code (React/Vite)
 │   ├── public/            # Static assets
 │   ├── src/               # Application source code
+|   ├── vercel.json
 │   ├── package.json       # Frontend dependencies
 │   └── README.md          # Frontend-specific instructions
 ├── README.md               # Project-level instructions
@@ -91,7 +92,7 @@ planMyPlate/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/planMyPlate.git
+   git clone https://github.com/BaconPancakez/planMyPlate
    ```
 2. Navigate to the project directory:
    ```bash
