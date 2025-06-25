@@ -49,7 +49,11 @@ export default function Postbox({ profileId}) {
   const handleDeleteRecipe = async (recipe) => {
     if (!window.confirm('Are you sure you want to delete this recipe?')) return;
     try {
-      const id = {recipe.id};
+      console.log('Recipe object:', recipe);
+      const id = recipe.title; // Get the recipe ID from the recipe object
+      // If the recipe object does not have an id, try to get it from the getRecipeID function  
+      console.log('Deleting recipe with id:', id);
+
       if (!id) {
         alert('No recipe id found!');
         return;
@@ -61,7 +65,7 @@ export default function Postbox({ profileId}) {
       });
       const result = await response.json();
       if (result.success) {
-        setRecipes(recipe.filter(r => (r.id) !== id));
+        setRecipes(recipes.filter(r => (r.id) !== id));
         setShowPopup(false);
         alert('Recipe deleted!');
       } else {

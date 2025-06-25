@@ -319,23 +319,30 @@ app.put('/recipe_Table/put/:id', async (req, res) => {
   }
 });
 
-// DELETE post
-app.delete('/user-recipes/delete/:id', async (req, res) => {
+// DELETE post by title
+app.delete('/user-recipes/delete/:title', async (req, res) => {
   try {
-    const { id } = req.params;
-
-    console.log('DELETE /delete/:id called with id:', id);
+    const { title } = req.params;
+    console.log('DELETE /delete/:title called with title:', title);
 
     // Check if post exists first
-    const existingPost = await getUserRecipesByProfileId(supabase, 1);// Assuming '1' is the profileId for the user making the request
+    const { data: existingPost, error: getError } = await supabase
+      .from('recipe_Table')
+      .select('*')
+      .eq('title', title)
+      .single();
+    if (getError) throw getError;
     if (!existingPost) {
       return res.status(404).json({ success: false, error: 'Post not found' });
     }
-    
 
     // Proceed to delete the post
+    const { error: deleteError } = await supabase
+      .from('recipe_Table')
+      .delete()
+      .eq('title', title);
+    if (deleteError) throw deleteError;
 
-    await deletePost(id);
     res.json({ success: true, message: 'Post deleted successfully' });
   } catch (error) {
     console.error('Error deleting post:', error);
