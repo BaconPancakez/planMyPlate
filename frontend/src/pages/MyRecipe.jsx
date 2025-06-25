@@ -61,7 +61,7 @@ export default function MyRecipe() {
     if (currentSearchQuery) params.append('searchTerm', currentSearchQuery);
     if (profileId) params.append('author', profileId);
 
-    const fetchUrl = `http://localhost:8080/user-recipes/filter?${params.toString()}`;
+    const fetchUrl = `${import.meta.env.VITE_API_LINK}/user-recipes/filter?${params.toString()}`;
     console.log('Fetching filtered recipes from:', fetchUrl);
 
     try {
