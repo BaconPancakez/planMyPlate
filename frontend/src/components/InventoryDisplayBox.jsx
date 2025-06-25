@@ -13,7 +13,7 @@ function DisplayBox({name, quantity, units, onDelete})
                 <div className='deleteBtn'>
                     {/*<button onClick={onDelete}>Delete</button>*/}
                     <button onClick={onDelete} className='icon-button default-button'>
-                        <img src="../src/assets/bin.png"/>                 
+                        <img src="/assets/bin.png"/>                 
                     </button>
                 </div>
             </div>

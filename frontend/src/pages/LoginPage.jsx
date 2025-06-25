@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
-import fruitImage from "../assets/login_page.jpg";
+import fruitImage from "/assets/login_page.jpg";
 import { useNavigate } from "react-router-dom";
 import GoogleSignIn from "../components/GoogleSignIn";
 import { handleGoogleSignIn, handleManualLogin } from "../utils/authHandlers";

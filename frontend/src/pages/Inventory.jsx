@@ -18,7 +18,7 @@ function Inventory(){
 
                         {/* Background Container with Image + Buttons */}
                         <div className="background-wrapper">
-                            <img src="./src/assets/Inventory.png" className="centered-fridge" />
+                            <img src="/assets/Inventory.png" className="centered-fridge" />
 
                             <div className='Inventory-background-container'>
                                 <Link to="content" className="columns">                                
