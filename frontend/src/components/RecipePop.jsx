@@ -76,12 +76,6 @@ export default function RecipePop({ recipe, isMyRecipe, onDelete }) {
         </div>
       </div>
       <div className="recipe-btn">
-          {isMyRecipe && (
-          <>
-          <button className= "update-btn">UPDATE</button>
-          </>
-          )}
-
           <button className='add-btn' onClick={handleAddToCart}>ADD TO CART</button>
 
           {isMyRecipe && (

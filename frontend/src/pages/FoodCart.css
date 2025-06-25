@@ -13,7 +13,13 @@
   padding-bottom: 20px;
 }
 
-.primary-btn {
+.foodcart-actions
+{
+  display: flex;
+  justify-content: center;
+}
+
+.foodcart-actions .primary-btn {
   border-radius: 10px;
   border: 3px solid #1b1b1b;
   padding: 0.7em 1.2em;
@@ -29,10 +35,6 @@
 
   width: 200px;  /* adjust button width */
   text-transform: uppercase;
-  
-  display: flex;
-  justify-content: center;
-  align-self: center;
   margin: 30px;
 }
 

@@ -47,7 +47,7 @@ export default function AddRecipe() {
       total_time: totalTime,
       ingredients: ingredients,
       directions: directionsArray,
-    };
+    };  
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_LINK}/insert-Recipe`, {

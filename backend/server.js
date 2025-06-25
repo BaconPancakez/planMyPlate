@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
-
-
  
 const app = express(); 
 const PORT = process.env.PORT || 8080;
@@ -14,10 +12,6 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
- 
-
-
-
 
 // Middleware
 app.use(cors());
@@ -47,7 +41,6 @@ app.get('/test-db', async (req, res) => {
     res.status(500).json({ error: 'Failed to connect to Supabase' });
   }
 });
-
 
 // Start server
 app.listen(PORT, () => {
@@ -410,6 +403,7 @@ app.post('/foodCart/:recipe_id/:owner_id', async (req, res) => {
   }
 });
 
+// FoodCart endpoint to get all recipes in food cart for a given owner_id
 // GET all recipes in food cart for a given owner_id
 app.get('/api/foodcart/:owner_id', async (req, res) => {
   try {
@@ -482,6 +476,42 @@ async function insertIngredient(ingredient) {
   if (error) throw error;
   return data;
 }
+
+// New DELETE endpoint for food cart items
+app.delete('/api/foodcart/:owner_id/:recipe_id', async (req, res) => {
+  try {
+    const { owner_id, recipe_id } = req.params;
+
+    const parsedOwnerId = parseInt(owner_id, 10);
+    const parsedRecipeId = parseInt(recipe_id, 10);
+
+    if (isNaN(parsedOwnerId) || isNaN(parsedRecipeId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid owner ID or recipe ID format. Both must be valid numbers.'
+      });
+    }
+
+    // Delete the entry from foodCart_table
+    const { error } = await supabase
+      .from('foodCart_table')
+      .delete()
+      .eq('owner_id', parsedOwnerId)
+      .eq('recipe_id', parsedRecipeId);
+
+    if (error) {
+      console.error('Supabase delete food cart item error:', error);
+      throw error;
+    }
+
+    res.json({ success: true, message: 'Item removed from food cart successfully.' });
+
+  } catch (error) {
+    console.error('Error deleting food cart item:', error);
+    res.status(500).json({ success: false, error: 'Failed to remove item from food cart', details: error.message });
+  }
+});
+//end of food cart
 
 // Endpoint to insert a new ingredient
 app.post('/insert-ingredient', async (req, res) => {
