@@ -1,18 +1,13 @@
 // Importing necessary libraries, components, and styles
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import RecipePop from './RecipePop';
 
 import './RecipeList.css';
 
-// Mock data
-// import data from '../data.js';
-
 // The RecipeList component displays a list of recipes and handles popup interactions
-export default function RecipeList() {
+export default function RecipeList({ recipes }) {
   const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
   const [activeRecipe, setActiveRecipe] = useState(null); // State to store the active recipe
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // Function to open the popup with the selected recipe
   const openPopup = (recipe) => {
@@ -20,20 +15,13 @@ export default function RecipeList() {
     setShowPopup(true);
   };
 
-   useEffect(() => {
-    // Replace with your backend URL and port if different
-    fetch('http://localhost:8080/recipe_Table')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setRecipes(data.posts);
-        }
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+  if (!recipes) {
+    return <div>Loading...</div>;
+  }
 
-  if (loading) return <div>Loading...</div>;
+  if (recipes.length === 0) {
+    return <div>No recipes found.</div>;
+  }
 
   return (
     <div className="recipes-container"> {/* Container for the list of recipes */}

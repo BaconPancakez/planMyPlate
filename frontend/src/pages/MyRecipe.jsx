@@ -13,6 +13,7 @@ export default function MyRecipe() {
   const [allRecipes, setAllRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [filters, setFilters] = useState({ dietary: [], meal: [], total_time: [] });
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const profileId = localStorage.get('id'); // later change to the user token
 
@@ -43,21 +44,18 @@ export default function MyRecipe() {
     }
   }, [profileId]);
 
-  const handleApplyFilters = async (newFilters) => {
-    console.log('Applying filters:', newFilters);
-    setFilters(newFilters);
-    // If no filters, show all
-    if (!newFilters.dietary.length && !newFilters.meal.length && !newFilters.total_time.length) {
-      console.log('No filters applied, showing all recipes.');
+  const fetchAndFilterRecipes = async (currentFilters, currentSearchQuery) => {
+    if (!currentFilters.dietary.length && !currentFilters.meal.length && !currentFilters.total_time.length && !currentSearchQuery) {
+      console.log('No filters or search query, showing all recipes.');
       setFilteredRecipes(allRecipes);
       return;
     }
-    // Build query string for filter endpoint
+
     const params = new URLSearchParams();
-    if (newFilters.dietary.length) params.append('dietary', newFilters.dietary.join(','));
-    if (newFilters.meal.length) params.append('meal', newFilters.meal.join(','));
-    if (newFilters.total_time.length) params.append('total_time', newFilters.total_time.join(','));
-    // Always filter by current user
+    if (currentFilters.dietary.length) params.append('dietary', currentFilters.dietary.join(','));
+    if (currentFilters.meal.length) params.append('meal', currentFilters.meal.join(','));
+    if (currentFilters.total_time.length) params.append('total_time', currentFilters.total_time.join(','));
+    if (currentSearchQuery) params.append('searchTerm', currentSearchQuery);
     if (profileId) params.append('author', profileId);
 
     const fetchUrl = `http://localhost:8080/user-recipes/filter?${params.toString()}`;
@@ -79,12 +77,27 @@ export default function MyRecipe() {
     }
   };
 
+  const handleApplyFilters = (newFilters) => {
+    console.log('Applying filters:', newFilters);
+    setFilters(newFilters);
+    fetchAndFilterRecipes(newFilters, searchQuery);
+  };
+
+  const handleSearch = () => {
+    console.log('Searching for:', searchQuery);
+    fetchAndFilterRecipes(filters, searchQuery);
+  };
+
   return (
     <>
       <div className="main-container"> {/* Main container for the content */}
         <main className="main-content"> {/* Main content area */}
           <div className="sub-header"> {/* Sub-header for search and filter */}
-            <SearchBar />  
+            <SearchBar 
+              searchQuery={searchQuery} 
+              setSearchQuery={setSearchQuery} 
+              onSearch={handleSearch} 
+            />  
             <Filter onApplyFilters={handleApplyFilters}/>
           </div>
           {loading ? (

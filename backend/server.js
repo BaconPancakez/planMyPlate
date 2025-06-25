@@ -555,10 +555,10 @@ app.delete('/user-recipes/delete/:title', async (req, res) => {
 // add endpoint to get user recipes by dietary, meal, and total_time
 app.get('/user-recipes/filter', async (req, res) => {
   try {
-    let { author, dietary, meal, total_time } = req.query;
+    let { author, dietary, meal, total_time, searchTerm } = req.query;
 
     // Debug log to see what filters are being received
-    console.log('Received filters:', { author, dietary, meal, total_time });
+    console.log('Received filters:', { author, dietary, meal, total_time, searchTerm });
 
     // Accept comma-separated values for multi-select
     let query = supabase.from('recipe_Table').select(`
@@ -592,6 +592,9 @@ app.get('/user-recipes/filter', async (req, res) => {
     if (total_time) {
       const arr = total_time.split(',').map(v => v.trim()).filter(v => v);
       if (arr.length > 0) query = query.in('total_time', arr);
+    }
+    if (searchTerm) {
+      query = query.ilike('title', `%${searchTerm}%`);
     }
 
     const { data, error } = await query;
