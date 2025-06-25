@@ -58,7 +58,7 @@ export default function Postbox({ recipes = [] }) {
         <div className="popup-backdrop" onClick={() => setShowPopup(false)}>
           <div className="popup-container" onClick={(e) => e.stopPropagation()}>
             <button className="popup-close" onClick={() => setShowPopup(false)}>
-              <img src="../src/assets/CloseBtn.png"/>
+              <img src="/assets/CloseBtn.png"/>
             </button>
             {activeRecipe ? (
               <RecipePop recipe={activeRecipe} isMyRecipe={true} onDelete={handleDeleteRecipe} />
