@@ -10,7 +10,6 @@ const IngredientItem = ({ ingredient, servingSize }) => {
 
   return (
     <div className="ii-item"> {/* Use the prefixed class name */}
-      {/* <img src={image} alt={name} className="ii-image" /> Use the prefixed class name */}
       <div className="ii-info"> {/* Use the prefixed class name */}
         <div className="ii-name">{name.toUpperCase()}</div> {/* Use the prefixed class name */}
       </div>

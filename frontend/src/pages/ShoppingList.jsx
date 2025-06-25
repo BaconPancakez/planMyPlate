@@ -1,5 +1,5 @@
 // pages/ShoppingList.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ShoppingItem from '../components/ShoppingItem';
 import './ShoppingList.css'; // Import the CSS file directly
@@ -10,7 +10,30 @@ import { MdClear } from "react-icons/md";
 const ShoppingList = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const ingredientsToAdd = location.state?.ingredientsToAdd || [];
+  const [ingredientsToAdd, setIngredientsToAdd] = useState(() => {
+    try {
+      const savedList = localStorage.getItem('shoppingList');
+      return savedList ? JSON.parse(savedList) : location.state?.ingredientsToAdd || [];
+    } catch (error) {
+      console.error('Error parsing shopping list from localStorage:', error);
+      return location.state?.ingredientsToAdd || [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('shoppingList', JSON.stringify(ingredientsToAdd));
+  }, [ingredientsToAdd]);
+
+  const handleSave = () => {
+    localStorage.setItem('shoppingList', JSON.stringify(ingredientsToAdd));
+    alert('Shopping list saved!');
+  };
+
+  const handleClear = () => {
+    localStorage.removeItem('shoppingList');
+    alert('Shopping list clear!');
+    setIngredientsToAdd([]);
+  };
 
   return (
     <div className="page"> {/* Uses global 'page' class */}
@@ -30,14 +53,13 @@ const ShoppingList = () => {
       )}
 
       <div className='shopping-btns'>
-        <button onClick={() => navigate(-1)} className="secondary-btn"> {/* Uses global class */}
+        <button onClick={() => navigate('/home')} className="secondary-btn"> {/* Uses global class */}
           <FaSearch /> BACK TO EXPLORE
         </button>
 
-        <button  ><GiSaveArrow /> SAVE</button>
+        <button onClick={handleSave}><GiSaveArrow /> SAVE</button>
 
-        <button  ><MdClear /> CLEAR</button>
-
+        <button onClick={handleClear}><MdClear /> CLEAR</button>
       </div>
     </div>
   );

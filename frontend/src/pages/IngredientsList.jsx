@@ -190,6 +190,10 @@ const IngredientsList = () => {
       ...ing,
       quantity: parseFloat(ing.quantity) || 0 // Re-parse or ensure it's a number
     }));
+
+    // Save the aggregated list to localStorage
+    localStorage.setItem('shoppingList', JSON.stringify(ingredientsToAdd));
+
     navigate('/shopping-list', { state: { ingredientsToAdd: ingredientsToAdd } });
   };
 
