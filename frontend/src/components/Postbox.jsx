@@ -39,7 +39,7 @@ export default function Postbox() {
             onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
           >
             <button className="popup-close" onClick={() => setShowPopup(false)}> {/* Close button */}
-              &times;
+              <img src="../src/assets/CloseBtn.png"/>
             </button>
             <AddRecipe  />
           </div>
