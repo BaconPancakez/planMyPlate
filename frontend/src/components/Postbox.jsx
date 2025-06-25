@@ -100,13 +100,11 @@ export default function Postbox({ profileId}) {
           </div>
         </div>
       )}
-
-      {recipes.map((recipe) => (
       {/* Recipes */}
-//       {recipesToShow.map((recipe) => (
+      {recipes.map((recipe) => (
         <div
           className="recipe-box"
-          key={recipe.id}
+          key={recipe.title}
           onClick={() => openPopup(recipe)}
         >
           <img src={recipe.image} alt="Recipe" />
