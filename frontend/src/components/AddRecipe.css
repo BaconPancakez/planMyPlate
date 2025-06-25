@@ -221,9 +221,20 @@
   text-align: left;
 }
 
+.ingredients
+{
+  display: flex;
+  gap: 8px;
+}
+
 .ingredients li
 {
   margin: 10px;
+}
+
+.left-bar .ingredientList
+{
+  margin-top: 10px;
 }
 
 .left-bar .ingredients .addIngreInput
