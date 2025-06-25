@@ -1,8 +1,37 @@
 // Importing the CSS file for styling the RecipePop component
 import "./RecipePop.css";
+import { localStorage } from '../utils/localStorage';
 
 // The RecipePop component displays detailed information about a selected recipe
 export default function RecipePop({ recipe, isMyRecipe, onDelete }) {
+  
+  const handleAddToCart = async () => {
+    const ownerId = localStorage.get('id');
+    const recipeId = recipe.id;
+    console.log(ownerId)
+    console.log(recipeId)
+
+    if (!ownerId || !recipeId) {
+      console.error('Missing ownerId or recipeId');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/foodCart/${recipeId}/${ownerId}`, {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add to cart');
+      }
+
+      const data = await response.json();
+      console.log('Added to cart:', data);
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
+  };
+
   return (
     <div className="recipe-popup">
       <div className="recipe-header">
@@ -52,7 +81,7 @@ export default function RecipePop({ recipe, isMyRecipe, onDelete }) {
           </>
           )}
 
-          <button className='add-btn'>ADD TO CART</button>
+          <button className='add-btn' onClick={handleAddToCart}>ADD TO CART</button>
 
           {isMyRecipe && (
           <>

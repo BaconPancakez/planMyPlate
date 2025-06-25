@@ -58,6 +58,7 @@ async function getAllRecipes(supabase) {
   const { data, error } = await supabase
     .from('recipe_Table')
     .select(`
+      id,
       title,
       image,
       cuisine,
@@ -78,6 +79,7 @@ async function getAllRecipes(supabase) {
 
   // Map the result to flatten username
   return data.map(r => ({
+    id: r.id,
     title: r.title,
     image: r.image,
     username: r.profile_table?.username,
@@ -98,6 +100,7 @@ async function getRecipesBySearch(supabase, searchTerm) {
   const { data, error } = await supabase
     .from('recipe_Table')
     .select(`
+      id,
       title,
       image,
       cuisine,
@@ -120,6 +123,7 @@ async function getRecipesBySearch(supabase, searchTerm) {
 
   // Map the result to flatten username
   return data.map(r => ({
+    id:r.id,
     title: r.title,
     image: r.image,
     username: r.profile_table?.username,
@@ -183,6 +187,7 @@ async function getUserRecipesByProfileId(supabase, profileId) {
   const { data, error } = await supabase
     .from('recipe_Table')
     .select(`
+      id,
       title,
       image,
       cuisine,
@@ -205,6 +210,7 @@ async function getUserRecipesByProfileId(supabase, profileId) {
 
   // Map the result to flatten username
   return data.map(r => ({
+    id: r.id,
     title: r.title,
     image: r.image,
     username: r.profile_table?.username,
@@ -294,7 +300,6 @@ app.get('/GETprofile/:id', async (req, res) => {
   }
 });
 
-
 // POST create new post
 app.post('/recipe_Table/posts', async (req, res) => {
   try {
@@ -360,6 +365,36 @@ app.put('/recipe_Table/put/:id', async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to update post' });
   }
 });
+
+// For the add to cart button in the recipes
+app.post('/foodCart/:recipe_id/:owner_id', async (req, res) => {
+  try {
+    const { recipe_id, owner_id } = req.params;
+
+    if (!recipe_id || !owner_id) {
+      return res.status(400).json({
+        success: false,
+        error: 'Both recipe_id and owner_id are required',
+      });
+    }
+
+    const { data, error } = await supabase
+      .from('foodCart_table')
+      .insert([{ recipe_id, owner_id }])
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    res.status(201).json({ success: true, foodCartEntry: data });
+  } catch (error) {
+    console.error('Error inserting into foodCart_table:', error);
+    res.status(500).json({ success: false, error: 'Failed to insert into foodCart_table', details: error.message });
+  }
+});
+
 
 // DELETE post by title
 app.delete('/user-recipes/delete/:title', async (req, res) => {
