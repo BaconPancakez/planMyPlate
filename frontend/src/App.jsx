@@ -22,8 +22,8 @@ function App() {
   const username = localStorage.get("username");
 
   useEffect(() => {
-    validateUserSession(navigate);
-  }, []);
+    validateUserSession(navigate, location.pathname); // Pass current path to session validation
+  }, [location.pathname, navigate]);
 
   // 👇 List of routes that shouldn't show the NavBar
   const hideNavBarOnRoutes = ["/", "/login"];
@@ -51,29 +51,6 @@ function App() {
     </div>
   );
 }
-
-// // Test function for localStorage
-// function testLocalStorage() {
-//   // Set a test item
-//   localStorage.setItem("password", "abcdef");
-
-//   // Retrieve the test item
-//   const retrievedValue = localStorage.getItem("password");
-
-//   // Log the result
-//   console.log("Retrieved Value:", retrievedValue);
-
-//   // Remove the test item
-//   localStorage.removeItem("password");
-
-//   // Verify removal
-//   const afterRemoval = localStorage.getItem("password");
-//   console.log("Value after removal:", afterRemoval);
-// }
-
-// Call the test function
-// console.log("Testing localStorage functionality:");
-// testLocalStorage();
 localStorage.logAll();  
 
 export default App;
