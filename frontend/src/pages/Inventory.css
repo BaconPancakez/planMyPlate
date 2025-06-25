@@ -302,7 +302,7 @@ INVENTORY POP-UP [InventoryAddPopup.jsx]
 
 .popupContent h2
 {
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #000000;
 }
 
 #addInventory

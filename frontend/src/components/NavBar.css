@@ -118,11 +118,12 @@
 
 .nav-item a {
   color: white;
-  text-decoration: none;
 }
 
-a:link a:focus, a:active, a:hover  {
-  
+/* Remove outline */
+a:-webkit-any-link
+{
+  outline: none;
   text-decoration: none;
 }
 
