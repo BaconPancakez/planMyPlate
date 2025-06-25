@@ -350,6 +350,39 @@ app.delete('/user-recipes/delete/:title', async (req, res) => {
   }
 });
 
+// DELETE post by title and author
+app.delete('/user-recipes/delete/:title/:author', async (req, res) => {
+  try {
+    const { title, author } = req.params;
+    console.log('DELETE /delete/:title/:author called with title:', title, 'and author:', author);
+
+    // Check if post exists first
+    const { data: existingPost, error: getError } = await supabase
+      .from('recipe_Table')
+      .select('*')
+      .eq('title', title)
+      .eq('author', author)
+      .single();
+    if (getError) throw getError;
+    if (!existingPost) {
+      return res.status(404).json({ success: false, error: 'Post not found' });
+    }
+
+    // Proceed to delete the post
+    const { error: deleteError } = await supabase
+      .from('recipe_Table')
+      .delete()
+      .eq('title', title)
+      .eq('author', author);
+    if (deleteError) throw deleteError;
+
+    res.json({ success: true, message: 'Post deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    res.status(500).json({ success: false, error: 'Failed to delete post' });
+  }
+});
+
 // Add endpoint to get user recipes by profileId
 app.get('/user-recipes/:profileId', async (req, res) => {
   try {

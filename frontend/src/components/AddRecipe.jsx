@@ -13,6 +13,7 @@ export default function AddRecipe() {
   const [displayedImageUrl, setDisplayedImageUrl] = useState(''); // state for displayed image URL
   const [ingredients, setIngredients] = useState([]); // state for ingredients
   const [directions, setDirections] = useState(''); // state for directions
+  // const [id, setId] = useState(); // state for recipe ID
 
 
   const handleSubmit = async (e) => {
@@ -24,6 +25,7 @@ export default function AddRecipe() {
       : [];
 
     const recipeData = {
+      // id: id, // Assuming you have a way to generate or get the recipe ID
       title: title,
       image: displayedImageUrl || imageUrl,
       author: '1', // Assuming '1' is the profileId of the user posting the recipe

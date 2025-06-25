@@ -50,22 +50,23 @@ export default function Postbox({ profileId}) {
     if (!window.confirm('Are you sure you want to delete this recipe?')) return;
     try {
       console.log('Recipe object:', recipe);
-      const id = recipe.title; // Get the recipe ID from the recipe object
+      const title = recipe.title; // Get the recipe ID from the recipe object
       // If the recipe object does not have an id, try to get it from the getRecipeID function  
-      console.log('Deleting recipe with id:', id);
+      const author = recipe.author || profileId; // Get the author ID from the recipe object or use profileId
 
-      if (!id) {
-        alert('No recipe id found!');
+
+      if (!title || !author) {
+        alert('Missing title or author!');
         return;
       } 
-      const response = await fetch(`http://localhost:8080/user-recipes/delete/${id}`, {
+      const response = await fetch(`http://localhost:8080/user-recipes/delete/${encodeURIComponent(title)}/${author}`, {
         method: 'DELETE',
         // headers: { 'Content-Type': 'application/json' },
         // body: JSON.stringify({ authorId: profileId })
       });
       const result = await response.json();
       if (result.success) {
-        setRecipes(recipes.filter(r => (r.id) !== id));
+        setRecipes(recipes.filter(r =>!(r.title === title && (r.author || profileId) === author)));
         setShowPopup(false);
         alert('Recipe deleted!');
       } else {
