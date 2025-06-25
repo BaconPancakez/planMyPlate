@@ -54,58 +54,6 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-
-
-
-
-
-
-
-
-
-// Database helper functions using Supabase
-  // Functions to interact with the 'recipe_Table' table
-  // These functions will be used in the routes later
-// Get all posts
-// async function getAllPosts(supabase) {
-//   const { data, error } = await supabase
-//     .from('recipe_Table')
-//     .select(`
-//       title,
-//       image,
-//       cuisine,
-//       dietary,
-//       meal,
-//       prep_time,
-//       cook_time,
-//       total_time,
-//       ingredients,
-//       directions,
-//       profile_table (
-//         username
-//       )
-//     `)
-
-//   if (error) {
-//     throw error;
-//   }
-
-//   // Map the result to flatten username
-//   return data.map(r => ({
-//     title: r.title,
-//     image: r.image,
-//     username: r.profile_table?.username,
-//     cuisine: r.cuisine,
-//     dietary: r.dietary,
-//     meal: r.meal,
-//     prep_time: r.prep_time,
-//     cook_time: r.cook_time,
-//     total_time: r.total_time,
-//     ingredients: r.ingredients,
-//     directions: r.directions
-//   }));
-// }
-
 async function getAllRecipes(supabase) {
   const { data, error } = await supabase
     .from('recipe_Table')
@@ -195,6 +143,17 @@ async function getProflie(supabase,id) {
     .from('profile_table')
     .select()
     .eq('id', id)
+  if (error) {
+    throw error;
+  }
+  return data
+}
+
+async function getInventoryById(supabase,id) {
+  const {data , error} = await supabase
+    .from('ingredients_table')
+    .select()
+    .eq('owner_id', id)
   if (error) {
     throw error;
   }
@@ -332,17 +291,21 @@ app.get('/recipe_Table', async (req, res) => {
   }
 });
 
+//get Inventory By Id(uses owner id)
+app.get('/GETinventory/:id', async(req, res) => {
+  try {
+    const { id } = req.params;
+    const inventory = await getInventoryById(supabase, id);
+    res.json({ success: true, inventory });
+  } catch (error) {
+    console.error('Error getting inventory:', error);
+    res.status(500).json({ success: false, error: 'Failed to get inventory' });
+  }
+})
+
 //GET proflie
 app.get('/GETprofile/:id', async (req, res) => {
   try {
-//     const {id } = req.params;
-//     const post = await getPostById(id);
-
-//     if (!post) {
-//       return res.status(404).json({ success: false, error: 'Post not found' });
-//     }
-
-//     res.json({ success: true, post });
     const { id } = req.params;
     const profile = await getProflie(supabase,id) ;
     res.json({ success: true, profile });
@@ -509,6 +472,55 @@ app.get('/api/foodcart/:owner_id', async (req, res) => {
   }
 });
 
+// Function to insert new Ingredient
+async function insertIngredient(ingredient) {
+  const { data, error } = await supabase
+    .from('ingredients_table')
+    .insert([ingredient])
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+// Endpoint to insert a new ingredient
+app.post('/insert-ingredient', async (req, res) => {
+  try {
+    const ingredient = req.body;
+
+    // Basic validation (can be expanded)
+    if (!ingredient.quantity || !ingredient.name || !ingredient.owner_id) {
+      return res.status(400).json({
+        success: false,
+        error: 'Required fields: quantity, name, owner_id',
+      });
+    }
+
+    const newIngredient = await insertIngredient(ingredient);
+
+    if (newIngredient) {
+      res.status(201).json({ success: true, newIngredient });
+    } else {
+      // This case should ideally not be reached if insertIngredient is successful and single() works
+      res.status(500).json({ success: false, error: 'Failed to retrieve inserted ingredient data.' });
+    }
+
+  } catch (error) {
+    console.error('Error inserting ingredient in endpoint:', error);
+    // Check if the error is a Supabase error object and extract details
+    const errorMessage = error.message || 'An unknown error occurred during ingredient insertion.';
+    const errorDetails = error.details || null;
+    const errorCode = error.code || null;
+
+    res.status(500).json({
+      success: false,
+      error: errorMessage,
+      details: errorDetails,
+      code: errorCode
+    });
+  }
+});
 
 // DELETE post by title
 app.delete('/user-recipes/delete/:title', async (req, res) => {

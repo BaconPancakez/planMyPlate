@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { localStorage } from '../utils/localStorage';
 
 import InventoryDisplayBox from '../components/InventoryDisplayBox.jsx';
 import InventoryAddPopup from "../components/InventoryAddPopup.jsx";
@@ -8,15 +9,25 @@ import '../pages/Inventory.css';
 function InventoryContent()
 {
     const [showPopup, setPopup] = useState(false);
-        
+    const [loading, setLoading] = useState(true);
+    // const profileId = localStorage.get('id'); // later change to the user token
+    const profileId = localStorage.get('id'); // later change to the user token
+
     // Function setIngredient : 
-    const [ingredients, setIngredient] = useState([
-        {id: 1, name: "Apple", quantity: "7", units: " "},
-        {id: 2, name: "Sugar", quantity: "90", units: "grams"},
-        {id: 3, name: "Honey", quantity: "120", units: "ml"},
-        {id: 4, name: "Pineapple", quantity: "1",  units: " "},
-        {id: 5, name: "Eggs", quantity: "3",  units: " "},
-    ])
+    const [ingredients, setIngredient] = useState([])
+
+    useEffect(() => {
+    // Replace with your backend URL and port if different
+    fetch(`http://localhost:8080/GETinventory/${profileId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setIngredient(data.inventory);
+        }
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [profileId]);
 
     // Deletion Logic
     const deleteDisplayBox = (id) => {
