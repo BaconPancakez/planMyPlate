@@ -24,7 +24,7 @@ export default function FoodCart() {
       }
 
       // Ensure the URL points to your backend server
-      const url = `${import.meta.env.VITE_API_LINK}api/foodcart/${owner_id}`;
+      const url = `${import.meta.env.VITE_API_LINK}/api/foodcart/${owner_id}`;
       console.log('[FoodCart] Fetching:', url);
 
       try {
