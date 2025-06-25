@@ -7,11 +7,11 @@
 }
 
 .profile-title {
-  font-size: 20px;
+  font-size: 2em;
   font-weight: bold;
   margin-bottom: 25px;
   color: rgb(0, 0, 0);
-  padding-left: 10px;
+  text-align: center;
 }
 
 .profile-flex {
@@ -23,30 +23,39 @@
 
 .profile-left {
   flex: 1;
-  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .avatar {
   width: 100px;
   height: 100px;
   object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .upload-btn {
   background-color: #00517C;
   color: rgb(255, 255, 255);
   border: none;
-  padding: 6px 12px;
+  padding: 12px 15px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
   margin-bottom: 20px;
+  text-transform: uppercase;
+  transition: transform 0.2s ease;
+}
+
+.upload-btn button:hover
+{
+  transform: scale(1.1);
 }
 
 .allergy-section {
-  text-align: left;
+  text-align: center;
   margin-top: 10px;
 }
 
@@ -59,6 +68,12 @@
   flex: 2;
 }
 
+.profile-right label
+{
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
 .profile-right label {
   font-weight: bold;
   display: block;
@@ -66,14 +81,20 @@
   margin-bottom: 5px;
 }
 
+.allergy-section h4
+{
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
 .input {
   width: 100%;
-  padding: 8px 10px;
+  padding: 20px;
   margin-bottom: 10px;
   border: none;
   border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: rgb(23, 40, 230);
+  background-color: #fffaf2;
+  color: rgb(0, 0, 0);
 }
 
 .input::placeholder {
@@ -81,8 +102,8 @@
 }
 
 .readonly {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 8px 10px;
+  background-color: rgba(255, 255, 255, 0.272);
+  padding: 20px;
   border-radius: 4px;
   margin-bottom: 10px;
 }
@@ -91,15 +112,19 @@
   margin-top: 20px;
   background-color: #00517C;
   color: white;
-  padding: 10px 18px;
+  padding: 15px 20px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  font-size: 1em;
+  transition: transform 0.2s ease;
+
+  text-transform: uppercase;
 }
 
 .update-btn:hover {
-  background-color: #457b9d;
+  transform: scale(1.1);
 }
 
 .allergy-row {
@@ -113,23 +138,25 @@
   background-color: #e63946;
   color: white;
   border: none;
-  padding: 6px 10px;
+  padding: 12px 12px;
   border-radius: 4px;
   font-size: 12px;
   cursor: pointer;
+  transition: transform 0.2s ease;
+  text-transform: uppercase;
 }
 
 .add-btn {
   background-color: #000000;
-  margin-top: 8px;
+  margin-top: 20px;
 }
 
 .add-btn:hover {
-  background-color: #21867a;
+  transform: scale(1.1);
 }
 
 .remove-btn:hover {
-  background-color: #d62828;
+  transform: scale(1.1);
 }
 
 

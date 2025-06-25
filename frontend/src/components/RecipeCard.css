@@ -3,17 +3,17 @@
 .rc-card {
   display: flex;
   align-items: center;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 20px;
+  margin: 7px 0px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #fff;
   color: #333;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.078);
 }
 
 .rc-checkbox-div {
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .rc-checkbox {
@@ -55,31 +55,39 @@
 .rc-actions {
   margin-top: 6px;
   display: flex;
-  gap: 10px;
+  gap: 15px;
 }
 
 .rc-view-btn {
-  background-color: #28a745;
-  color: #fff;
-  padding: 4px 8px;
+  padding: 10px 15px;
+  border-radius: 5px;
   border: none;
-  border-radius: 4px;
+  background-color: #0c7300;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+  text-transform: uppercase;
 }
+
 .rc-view-btn:hover {
-  background-color: #218838;
+  transform: scale(1.1);
 }
 
 .rc-delete-btn {
-  background-color: #dc3545;
-  color: #fff;
-  padding: 4px 8px;
+  padding: 10px 15px;
+  border-radius: 5px;
   border: none;
-  border-radius: 4px;
+  background-color: #a40000;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+  text-transform: uppercase;
 }
+
 .rc-delete-btn:hover {
-  background-color: #c82333;
+  transform: scale(1.1);
 }

@@ -1,18 +1,41 @@
 .page {
   /* Add global page styles */
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-transform: uppercase;  
+}
+
+.page h1
+{
+  text-transform: uppercase;
+  text-align: center;
+  padding-bottom: 20px;
 }
 
 .primary-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  font-size: 16px;
+  border-radius: 10px;
+  border: 3px solid #1b1b1b;
+  padding: 0.7em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1b1b1b;
   cursor: pointer;
+  transition: transform 0.2s ease;
+  white-space: nowrap;
+  box-sizing: border-box;
+  color: white;
+
+  width: 200px;  /* adjust button width */
+  text-transform: uppercase;
+  
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin: 30px;
 }
 
 .primary-btn:hover {
-  background-color: #0056b3;
+  transform: scale(1.1);
 }

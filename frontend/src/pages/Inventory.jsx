@@ -21,21 +21,8 @@ function Inventory(){
                             <img src="./src/assets/Inventory.png" className="centered-fridge" />
 
                             <div className='Inventory-background-container'>
-                                <Link to="content" className="columns">
-                                <button>Spices & Condiments</button>
-                                <button>Fruits</button>
-
-                                <div className='same-row'>
-                                    <button>Vegetables</button>
-                                    <button>Grains</button>
-                                </div>
-
-                                <button>Dairy</button>
-
-                                <div className='same-row'>
-                                    <button>Meat</button>
-                                    <button>VIEW ALL</button>
-                                </div>
+                                <Link to="content" className="columns">                                
+                                <button>VIEW ALL</button>
                                 </Link>     
                             </div>
                         </div>

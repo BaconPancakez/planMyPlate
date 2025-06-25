@@ -75,7 +75,7 @@ const MyProfile = () => {
 
   return (
     <div className="profile-full">
-      <h2 className="profile-title">PROFILE</h2>
+      <h1 className="profile-title">PROFILE</h1>
 
       <div className="profile-flex">
         {/* Left Side */}
