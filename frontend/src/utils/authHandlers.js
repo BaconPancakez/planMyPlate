@@ -88,37 +88,48 @@ const handleGoogleSignIn = async (userInfo, navigate) => {
   }
 };
 
-// Updated manual login logic
+// Updated manual login logic to use the /manual-login endpoint and check password
 const handleManualLogin = async (email, password, navigate) => {
   try {
-    const profileResponse = await fetch(`${BASE_URL}/profile`, {
+    const response = await fetch(`${BASE_URL}/manual-login`, { // Use the correct manual-login endpoint
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        username: email.split("@")[0],
-        email,
-        password,
-        login_type: "manual",
-        allergy: [],
-        about_me: "",
-        img: "https://example.com/default-profile.jpg",
-      }),
+      body: JSON.stringify({ email, password }), // Send only email and password
     });
 
-    const profileData = await profileResponse.json();
+    // Check for specific status codes
+    if (response.status === 404) {
+      // Invalid email or password
+      const errorData = await response.json();
+      alert(errorData.error || "Invalid email or password.");
+      return; // Stop execution
+    }
 
-    if (profileData && profileData.id) {
-      localStorage.set("id", profileData.id);
-      localStorage.set("username", email.split("@")[0]);
-      localStorage.set("sessionToken", profileData.sessionToken);
-      navigate("/myprofile"); // Redirect to myprofile
+    if (!response.ok) {
+      // Handle other potential HTTP errors
+      console.error("HTTP error during manual login:", response.status);
+      alert("Wrong username or password");
+      return; // Stop execution
+    }
+
+    const profileData = await response.json();
+
+    // Check if login was successful based on the response structure
+    if (profileData && profileData.success && profileData.profile) {
+      localStorage.set("id", profileData.profile.id); // Store id from the returned profile
+      localStorage.set("username", profileData.profile.username); // Store username from the returned profile
+      // localStorage.set("sessionToken", profileData.sessionToken); // Only set if backend provides a session token
+      navigate("/home"); // Redirect to myprofile or desired page after successful login
     } else {
-      console.error("Error handling profile response:", profileData);
+      // This case might happen if the response is 200 but doesn't have the expected structure
+      console.error("Unexpected response structure during manual login:", profileData);
+      alert("Login failed due to unexpected server response.");
     }
   } catch (error) {
     console.error("Error handling manual login:", error);
+    alert("An error occurred during login. Please try again.");
   }
 };
 
