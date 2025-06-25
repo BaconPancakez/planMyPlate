@@ -15,7 +15,7 @@ import { UIContext } from "../contexts/UIContext";
 import "./NavBar.css";
 
 // The NavBar component represents the navigation bar with a collapsible sidebar
-export default function NavBar(props) {
+export default function NavBar() {
   const { isNavOpen, setIsNavOpen } = useContext(UIContext); // Accessing UI context for navigation state
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ export default function NavBar(props) {
         {isNavOpen && (
           <div className="profile"> {/* Profile section displayed when sidebar is expanded */}
             <img src="./src/assets/pfp.png" alt="Profile" />
-            <p>{props.username}</p>
+            <p>Plan My Plate</p>
           </div>
         )}
 

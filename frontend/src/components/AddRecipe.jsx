@@ -25,8 +25,8 @@ export default function AddRecipe() {
     e.preventDefault();
 
     if (!title || !cuisine || !dietType || !mealType || !prepTime || !cookTime
-      || !totalTime || !imageUrl || !directions || !ingredients) {
-      alert("Please fill in all fields.");
+      || !totalTime || !imageUrl || !directions || !ingredients || ingredients.length === 0) { // Added check for empty ingredients array
+      alert("Please fill in all fields, including at least one ingredient.");
       return;
     }
 
@@ -38,20 +38,20 @@ export default function AddRecipe() {
     const recipeData = {
       title: title,
       image: displayedImageUrl || imageUrl,
-      author: localStorage.get('id'), // Assuming '1' is the profileId of the user posting the recipe
+      author: localStorage.get('id'), // Assuming 'id' from localStorage is the profileId
       cuisine: cuisine,
       dietary: dietType,
       meal: mealType,
       prep_time: prepTime,
       cook_time: cookTime,
       total_time: totalTime,
-      ingredients: ingredients,
+      ingredients: ingredients, // ingredients array already has { qty, unit, name }
       directions: directionsArray,
-    };  
+    };
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_LINK}/insert-Recipe`, {
-      // const response = await fetch('http://localhost:8080/insert-Recipe', {
+      // const response = await fetch('http://localhost:8080/insert-Recipe', { // Keep for local testing if needed
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(recipeData),
@@ -60,6 +60,8 @@ export default function AddRecipe() {
       if (result.success) {
         alert('Recipe posted!');
         // Optionally reset form or close popup here
+        // Example: resetForm();
+        // Example: onClose(); // If this component is used in a popup
       } else {
         alert('Error: ' + (result.error || 'Failed to post recipe'));
       }
@@ -68,36 +70,58 @@ export default function AddRecipe() {
     }
   };
 
+  // Optional: Add a function to reset the form fields
+  // const resetForm = () => {
+  //   setTitle('');
+  //   setCuisine('');
+  //   setDietType('');
+  //   setMealType('');
+  //   setPrepTime('');
+  //   setCookTime('');
+  //   setTotalTime('');
+  //   setImageUrl('');
+  //   setDisplayedImageUrl('');
+  //   setIngredients([]);
+  //   setDirections('');
+  //   if (qtyRef.current) qtyRef.current.value = '';
+  //   if (unitRef.current) unitRef.current.value = ' ';
+  //   if (nameRef.current) nameRef.current.value = '';
+  // };
+
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
 
-      const quantity = qtyRef.current.value.trim();
+      const quantityString = qtyRef.current.value.trim();
       const unit = unitRef.current.value;
       const name = nameRef.current.value.trim();
 
-      if (quantity && unit && name) {
-        const newIngredient = { quantity, unit, name };
+      // Convert quantity to integer and validate
+      const quantityInt = parseInt(quantityString, 10); // Use a different variable name for the integer value
+
+      // Check if quantityString is not empty and quantityInt is a valid number
+      if (quantityString && !isNaN(quantityInt) && unit && name) {
+        // Use 'qty' as the key for the quantity
+        const newIngredient = { qty: quantityInt, unit, name };
         setIngredients([...ingredients, newIngredient]);
-        
+
         // Clear inputs
         qtyRef.current.value = '';
-        unitRef.current.value = 'numbers';
+        unitRef.current.value = ' '; // Reset select to default empty value
         nameRef.current.value = '';
       } else {
-        alert('Please fill in all ingredient fields (quantity, unit, name) before adding.');
+        alert('Please fill in all ingredient fields (quantity, unit, name) with valid values before adding.');
       }
     }
   };
 
 
-
   return (
     <div className='recipe-popup-add'>
-      
+
       <h1>Create New Post</h1>
-    
+
       <form onSubmit ={handleSubmit}>
 
         <div className="recipe-header">
@@ -109,7 +133,7 @@ export default function AddRecipe() {
               type='text'
               placeholder='Eg. Greek Salad'
               value={title}
-              onChange={e => setTitle(e.target.value)} // update title state on change          
+              onChange={e => setTitle(e.target.value)} // update title state on change
             />
           </div>
 
@@ -132,7 +156,7 @@ export default function AddRecipe() {
                 >
                 ADD
               </button>
-              
+
             </div>
             {displayedImageUrl && <img src={displayedImageUrl} alt='Recipe' className='recipe-image' />}
           </div>
@@ -146,9 +170,9 @@ export default function AddRecipe() {
                 placeholder='Eg. Mediterranean Cuisine'
                 value={cuisine}
                 onChange={e => setCuisine(e.target.value)} // update cuisine state on change
-                /> 
+                />
             </div>
-            
+
             <div className='addInputs'>
               Enter Diet Type
               <input
@@ -174,8 +198,8 @@ export default function AddRecipe() {
 
           <div className='low-half'>
 
-            <div className='addInputs'>          
-              Enter Prep Time  
+            <div className='addInputs'>
+              Enter Prep Time
               <input
                 className='addPrepTime-input'
                 type='text'
@@ -213,7 +237,7 @@ export default function AddRecipe() {
 
         <div className="popup-container-add">
           <div className="addrecipe-main">
-            
+
             <div className='left-bar'>
 
               <h2>Ingredients</h2>
@@ -226,8 +250,8 @@ export default function AddRecipe() {
                   placeholder='Eg. 3'
                 />
 
-                <select name="units" ref={unitRef} defaultValue={"numbers"} className='addIngreInput'>
-                  <option value="numbers">Number</option>
+                <select name="units" ref={unitRef} defaultValue={" "} className='addIngreInput'>
+                  <option value=" ">Number</option>
                   <option value="g">Grams / g</option>
                   <option value="ml">Milliliter / ml</option>
                 </select>
@@ -236,15 +260,15 @@ export default function AddRecipe() {
                   type='text'
                   ref={nameRef}
                   className='addIngreInput'
-                  placeholder='Eg. Eggs'                
+                  placeholder='Eg. Eggs'
                 />
               </div>
-              
+
               <div className='ingredientList'>
                  <ul>
                     {ingredients.map((ingredient, index) => (
                       <li key={index}>
-                        {ingredient.quantity} {ingredient.unit} {ingredient.name}
+                        {ingredient.qty} {ingredient.unit} {ingredient.name} {/* Corrected to use ingredient.qty */}
                       </li>
                     ))}
                   </ul>
@@ -265,7 +289,7 @@ export default function AddRecipe() {
           </div>
 
           <div className='post-button'>
-            
+
             <button type='submit'>POST</button>
 
           </div>
