@@ -6,16 +6,24 @@ import Inventory from './pages/Inventory';
 import FoodCart from './pages/FoodCart.jsx';
 import IngredientsList from './pages/IngredientsList';
 import ShoppingList from './pages/ShoppingList';
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import EntryPage from './pages/EntryPage.jsx';
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import MyProfile from "./pages/MyProfile";
 import HomePage from "./pages/HomePage";
 import { localStorage } from './utils/localStorage';
+import { validateUserSession } from "./utils/authHandlers";
 
 // 👇 Actual app
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    validateUserSession(navigate);
+  }, []);
+
   // 👇 List of routes that shouldn't show the NavBar
   const hideNavBarOnRoutes = ["/", "/login"];
   const shouldHideNavBar = hideNavBarOnRoutes.includes(location.pathname);
@@ -27,8 +35,8 @@ function App() {
       <main className="main-content"> {/* Main content area */}
 
         <Routes> {/* Defines the routes for the application */}
-          <Route path="/" element={<LoginPage />} />
-
+          <Route path="/" element={<EntryPage />} />
+          <Route path="/Login" element={<LoginPage />} />
           <Route path="/home" element={<div className='header-padding'> <HomePage /> </div>} />
           <Route path="/myprofile" element={<div className='header-padding'> <MyProfile /> </div>} />
           <Route path="/Inventory/*" element={ <Inventory />} /> {/* Inventory page route */}

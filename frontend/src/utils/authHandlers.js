@@ -10,8 +10,9 @@ const validateUserSession = async (navigate) => {
     let username = localStorage.get("username");
 
     if (!id) {
-      navigate("/login"); // Redirect to login if no session data
-      return;
+      console.warn("Missing user ID in localStorage.");
+      navigate("/login");
+      return false;
     }
 
     // Fetch username if missing
@@ -30,19 +31,22 @@ const validateUserSession = async (navigate) => {
         username = data.username;
         localStorage.set("username", username);
       } else {
-        console.error("Failed to fetch username");
+        console.error("Failed to fetch username from backend.");
         localStorage.remove("id");
         navigate("/login");
-        return;
+        return false;
       }
     }
 
-    console.log("User session validated successfully");
+    navigate("/home");
+    console.log("User session validated successfully.");
+    return true;
   } catch (error) {
     console.error("Error validating user session:", error);
     localStorage.remove("id");
     localStorage.remove("username");
     navigate("/login");
+    return false;
   }
 };
 

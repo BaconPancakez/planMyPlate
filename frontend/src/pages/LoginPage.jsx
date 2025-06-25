@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
-import fruitImage from "../assets/login_page.jpg"; // adjust path if needed
+import fruitImage from "../assets/login_page.jpg";
 import { useNavigate } from "react-router-dom";
 import GoogleSignIn from "../components/GoogleSignIn";
 import { handleGoogleSignIn, handleManualLogin } from "../utils/authHandlers";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,14 +16,21 @@ const LoginPage = () => {
       alert("Please fill in both fields.");
       return;
     }
-    console.log("Logging in:", { email, password });
-    await handleManualLogin(email, password, navigate);
+    try {
+      await handleManualLogin(email, password, navigate);
+    } catch {
+      alert("Login failed. Please try again.");
+    }
   };
 
   const handleGoogleSignInCallback = async (user) => {
-    await handleGoogleSignIn(user, navigate);
+    try {
+      await handleGoogleSignIn(user, navigate);
+    } catch {
+      alert("Google Sign-In failed. Please try again.");
+    }
   };
-  
+
   return (
     <div
       className="login-background"

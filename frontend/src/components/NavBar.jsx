@@ -95,7 +95,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/" onClick={(e) => {
+            <Link to="/Login" onClick={(e) => {
               e.preventDefault();
               handleLogout();
             }}>
