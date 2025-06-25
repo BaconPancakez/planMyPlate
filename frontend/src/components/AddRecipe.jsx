@@ -74,23 +74,22 @@ export default function AddRecipe() {
       e.preventDefault();
 
       const quantity = qtyRef.current.value.trim();
-      const unit = unitRef.current.value.trim();
+      const unit = unitRef.current.value;
       const name = nameRef.current.value.trim();
 
-      if (quantity && unit !== " " && name) {
-        const ingredientString = `${quantity} ${unit} ${name}`;
-        setIngredients([...ingredients, ingredientString]);
+      if (quantity && unit && name) {
+        const newIngredient = { quantity, unit, name };
+        setIngredients([...ingredients, newIngredient]);
         
         // Clear inputs
         qtyRef.current.value = '';
-        unitRef.current.value = '';
+        unitRef.current.value = 'numbers';
         nameRef.current.value = '';
       } else {
-        alert('Please fill in all fields before adding.');
+        alert('Please fill in all ingredient fields (quantity, unit, name) before adding.');
       }
     }
   };
-
 
 
 
@@ -227,8 +226,8 @@ export default function AddRecipe() {
                   placeholder='Eg. 3'
                 />
 
-                <select name="units" ref={unitRef} defaultValue={" "} className='addIngreInput'>
-                  <option value=" ">Number</option>
+                <select name="units" ref={unitRef} defaultValue={"numbers"} className='addIngreInput'>
+                  <option value="numbers">Number</option>
                   <option value="g">Grams / g</option>
                   <option value="ml">Milliliter / ml</option>
                 </select>
@@ -244,7 +243,9 @@ export default function AddRecipe() {
               <div className='ingredientList'>
                  <ul>
                     {ingredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient}</li>
+                      <li key={index}>
+                        {ingredient.quantity} {ingredient.unit} {ingredient.name}
+                      </li>
                     ))}
                   </ul>
               </div>
