@@ -1,30 +1,36 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
-import fruitImage from "../assets/login_page.jpg"; // adjust path if needed
+import fruitImage from "../assets/login_page.jpg";
 import { useNavigate } from "react-router-dom";
 import GoogleSignIn from "../components/GoogleSignIn";
+import { handleGoogleSignIn, handleManualLogin } from "../utils/authHandlers";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       alert("Please fill in both fields.");
       return;
     }
-    console.log("Logging in:", { email, password });
-    navigate("/home");
+    try {
+      await handleManualLogin(email, password, navigate);
+    } catch {
+      alert("Login failed. Please try again.");
+    }
   };
 
-  const handleGoogleSignIn = () => {
-    // Add your Google Sign-In logic here
-    console.log("Google Sign-In");
-    navigate("/home");
+  const handleGoogleSignInCallback = async (user) => {
+    try {
+      await handleGoogleSignIn(user, navigate);
+    } catch {
+      alert("Google Sign-In failed. Please try again.");
+    }
   };
-  
+
   return (
     <div
       className="login-background"
@@ -55,7 +61,7 @@ const LoginPage = () => {
 
         <div className="or">OR</div>
         <div className="socials">
-          <GoogleSignIn onSignIn={handleGoogleSignIn} />
+          <GoogleSignIn onSignIn={handleGoogleSignInCallback} />
         </div>
       </div>
     </div>

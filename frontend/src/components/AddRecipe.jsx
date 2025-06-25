@@ -15,10 +15,57 @@ export default function AddRecipe() {
   const [directions, setDirections] = useState(''); // state for directions
 
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Prepare directions as an array (if you want to split by newlines)
+    const directionsArray = directions
+      ? directions.split('\n').map(line => line.trim()).filter(Boolean)
+      : [];
+
+    const recipeData = {
+      title: title,
+      image: displayedImageUrl || imageUrl,
+      author: '1', // Assuming '1' is the profileId of the user posting the recipe
+      cuisine: cuisine,
+      dietary: dietType,
+      meal: mealType,
+      prep_time: prepTime,
+      cook_time: cookTime,
+      total_time: totalTime,
+      ingredients: ingredients,
+      directions: directionsArray,
+    };
+
+    try {
+      const response = await fetch('http://localhost:8080/insert-Recipe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recipeData),
+      });
+      const result = await response.json();
+      if (result.success) {
+        alert('Recipe posted!');
+        // Optionally reset form or close popup here
+      } else {
+        alert('Error: ' + (result.error || 'Failed to post recipe'));
+      }
+    } catch (err) {
+      alert('Network error: ' + err.message);
+    }
+  };
+
+
+
+
   return (
     <div className='recipe-popup-add'>
       
       <h1>Create New Post</h1>
+    //<div className='recipe-popup'>
+      //<p className='createnewpost'>Create New Post</p>
+    
+      <form onSubmit ={handleSubmit}>
 
       <div className="recipe-header">
 
@@ -143,6 +190,7 @@ export default function AddRecipe() {
                 placeholder='Eg. 1 Cucumber'
                 onKeyDown={e => {
                   if (e.key === 'Enter' && e.target.value) {
+                    e.preventDefault(); // prevent form submission
                     setIngredients([...ingredients, e.target.value]);
                     e.target.value = ''; // clear input after adding
                   }
@@ -169,9 +217,12 @@ export default function AddRecipe() {
         </div>
 
         <div className='post-button'>
+          
           <button type='submit'>POST</button>
+
         </div>
       </div>
+      </form>
     </div>
   );
 }

@@ -1,76 +1,94 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RecipePop from './RecipePop.jsx';
-import AddRecipe from './AddRecipe.jsx'
-
+import AddRecipe from './AddRecipe.jsx';
 import './RecipeList.css';
 
-// Mock data
-import data from '../data.js';
+export default function Postbox({ profileId }) {
+  const [showPopup, setShowPopup] = useState(false);
+  const [activeRecipe, setActiveRecipe] = useState(null);
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-// The RecipeList component displays a list of recipes and handles popup interactions
-export default function Postbox() {
-  const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
-  const [activeRecipe, setActiveRecipe] = useState(null); // State to store the active recipe
-
-  // Function to open the popup with the selected recipe
   const openPopup = (recipe) => {
     setActiveRecipe(recipe);
     setShowPopup(true);
   };
 
-  const openaddPopup = () => {
-    setActiveRecipe();
+  const openAddPopup = () => {
+    setActiveRecipe(null);
     setShowPopup(true);
   };
 
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/user-recipes/${profileId}`);
+        const data = await response.json();
+        if (data.success) {
+          setRecipes(data.recipes);
+        }
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchRecipes();
+  }, [profileId]);
+
+  const handleDeleteRecipe = async (recipe) => {
+    if (!window.confirm('Are you sure you want to delete this recipe?')) return;
+    
+    try {
+      const response = await fetch(`http://localhost:8080/user-recipes/delete/${recipe.title}`, {
+        method: 'DELETE',
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        setRecipes((prevRecipes) => prevRecipes.filter((r) => r.title !== recipe.title));
+        setShowPopup(false);
+        alert('Recipe deleted!');
+      } else {
+        alert(`Error: ${result.error || 'Failed to delete recipe'}`);
+      }
+    } catch (error) {
+      alert(`Network error: ${error.message}`);
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="recipes-container"> {/* Container for the list of recipes */}
-        <div className = 'recipe-box addbox'
-            onClick={() => openaddPopup()} // Opens the popup on click
-        >
-        </div>
+    <div className="recipes-container">
+      <div className="recipe-box addbox" onClick={openAddPopup}></div>
 
-        {showPopup  && (
-        <div className="popup-backdrop" onClick={() => setShowPopup(false)}> {/* Popup backdrop */}
-          <div
-            className="popup-container" // Popup container
-            onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
-          >
-            <button className="popup-close" onClick={() => setShowPopup(false)}> {/* Close button */}
-              <img src="../src/assets/CloseBtn.png"/>
-            </button>
-            <AddRecipe  />
-          </div>
-        </div>
-      )}
-
-      {data.map((recipe) => (
+      {recipes.map((recipe) => (
         <div
-          className="recipe-box" // Individual recipe box
-          key={recipe.id}
-          onClick={() => openPopup(recipe)} // Opens the popup on click
+          className="recipe-box"
+          key={recipe.title}
+          onClick={() => openPopup(recipe)}
         >
-          <img src={recipe.image} alt="Recipe" /> {/* Recipe image */}
-          <div className="recipe-details"> {/* Recipe details */}
+          <img src={recipe.image} alt="Recipe" />
+          <div className="recipe-details">
             <h3>{recipe.title}</h3>
-            <p className="author">By {recipe.author}</p>
-            <p className="desc">{recipe.description}</p>
+            <p className="author">By {recipe.username}</p>
           </div>
         </div>
       ))}
 
-      {showPopup && activeRecipe && (
-        <div className="popup-backdrop" onClick={() => setShowPopup(false)}> {/* Popup backdrop */}
-          <div
-            className="popup-container" // Popup container
-            onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
-          >
-            <button className="popup-close" onClick={() => setShowPopup(false)}> {/* Close button */}
+      {showPopup && (
+        <div className="popup-backdrop" onClick={() => setShowPopup(false)}>
+          <div className="popup-container" onClick={(e) => e.stopPropagation()}>
+            <button className="popup-close" onClick={() => setShowPopup(false)}>
               <img src="../src/assets/CloseBtn.png"/>
             </button>
-            <RecipePop recipe={activeRecipe} isMyRecipe={true} />
+            {activeRecipe ? (
+              <RecipePop recipe={activeRecipe} isMyRecipe={true} onDelete={handleDeleteRecipe} />
+            ) : (
+              <AddRecipe />
+            )}
           </div>
         </div>
       )}

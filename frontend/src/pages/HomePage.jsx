@@ -2,6 +2,7 @@
 import React from "react";
 import "./Home.css";
 import placeholderImage from "../assets/placeholder.jpg";
+import Postbox from "../components/Postbox";
 
 const HomePage = () => {
   return (
@@ -18,10 +19,8 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="recipe-section">
-          <div className="recipe-card">Public recipe 1 (best one)</div>
-          <div className="recipe-card">Public recipe 2nd best</div>
-          <div className="recipe-card">Public recipe 3rd best</div>
+        <div className="recipe-section horizontal-recipes">
+          <Postbox limit={3} showAddBox={false} />
         </div>
 
         <footer className="footer">@BitByBit</footer>

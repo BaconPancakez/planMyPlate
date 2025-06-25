@@ -1,6 +1,7 @@
 // Importing necessary libraries, components, and styles
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../utils/authHandlers";
 
 // Import Icon for nav bar
 // https://react-icons.github.io/react-icons/ <- if ya wanna change the icon
@@ -14,8 +15,16 @@ import { UIContext } from "../contexts/UIContext";
 import "./NavBar.css";
 
 // The NavBar component represents the navigation bar with a collapsible sidebar
-export default function NavBar() {
+export default function NavBar(props) {
   const { isNavOpen, setIsNavOpen } = useContext(UIContext); // Accessing UI context for navigation state
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(navigate);
+  };
+
+  
+  
 
   return (
     <div className={`navbar-container ${isNavOpen ? "expanded" : "collapsed"}`}>
@@ -33,7 +42,7 @@ export default function NavBar() {
         {isNavOpen && (
           <div className="profile"> {/* Profile section displayed when sidebar is expanded */}
             <img src="./src/assets/pfp.png" alt="Profile" />
-            <p>Username</p>
+            <p>{props.username}</p>
           </div>
         )}
 
@@ -89,7 +98,10 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/Login" onClick={(e) => {
+              e.preventDefault();
+              handleLogout();
+            }}>
               <div className={`nav-item ${isNavOpen ? "expanded" : "collapsed"}`}>
                 <FaSignOutAlt /> {isNavOpen && <span>Log Out</span>}
               </div>
