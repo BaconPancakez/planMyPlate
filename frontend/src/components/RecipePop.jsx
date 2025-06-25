@@ -2,24 +2,24 @@
 import "./RecipePop.css";
 
 // The RecipePop component displays detailed information about a selected recipe
-export default function RecipePop({ recipe, isMyRecipe }) {
+export default function RecipePop({ recipe, isMyRecipe, onDelete }) {
   return (
     <div className="recipe-popup">
       <div className="recipe-header">
         <h1>{recipe.title}</h1>
         <div className="stats">
-            <p>Cuisine: {recipe.stats.cuisine}</p>
+            <p>Cuisine: {recipe.cuisine}</p>
             <span className="bar">|</span>
-            <p>Dietary: {recipe.stats.dietary}</p>
+            <p>Dietary: {recipe.dietary}</p>
             <span className="bar">|</span>
-            <p>Meal Type: {recipe.stats.meal}</p>
+            <p>Meal Type: {recipe.meal}</p>
         </div>
         <div className="stats">
-          <p>Prep Time: {recipe.stats.prepTime}</p>
+          <p>Prep Time: {recipe.prep_time}</p>
           <span className="bar">|</span>
-          <p>Cook Time: {recipe.stats.cookTime}</p>
+          <p>Cook Time: {recipe.cook_time}</p>
           <span className="bar">|</span>
-          <p>Total Time: {recipe.stats.totalTime}</p>
+          <p>Total Time: {recipe.total_time}</p>
         </div>
       </div>
       <div className="recipe-main">
@@ -52,7 +52,7 @@ export default function RecipePop({ recipe, isMyRecipe }) {
 
           {isMyRecipe && (
           <>
-          <button className="delete-btn">DELETE</button>
+          <button className="delete-btn" onClick={() => onDelete(recipe)}>DELETE</button>
           </>
           )}
           

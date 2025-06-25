@@ -76,6 +76,44 @@ async function getAllPosts() {
   return data;
 }
 
+async function getAllRecipes(supabase) {
+  const { data, error } = await supabase
+    .from('recipe_Table')
+    .select(`
+      title,
+      image,
+      cuisine,
+      dietary,
+      meal,
+      prep_time,
+      cook_time,
+      total_time,
+      ingredients,
+      directions,
+      profile_table (
+        username
+      )
+    `)
+  if (error) {
+    throw error;
+  }
+
+  // Map the result to flatten username
+  return data.map(r => ({
+    title: r.title,
+    image: r.image,
+    username: r.profile_table?.username,
+    cuisine: r.cuisine,
+    dietary: r.dietary,
+    meal: r.meal,
+    prep_time: r.prep_time,
+    cook_time: r.cook_time,
+    total_time: r.total_time,
+    ingredients: r.ingredients,
+    directions: r.directions
+  }));
+}
+
 // Get a single post by ID
 async function getPostById(id) {
   const { data, error } = await supabase
@@ -117,7 +155,7 @@ async function deletePost(id) {
   const { error } = await supabase
     .from('recipe_Table')
     .delete()
-    .eq('Recipe_id', id);
+    .eq('id', id);
 
   if (error) throw error;
   return true;
@@ -164,12 +202,33 @@ async function getUserRecipesByProfileId(supabase, profileId) {
   }));
 }
 
+// Function to insert new Recipe
+async function insertSampleRecipe(recipe) {
+  const { data, error } = await supabase
+    .from('recipe_Table')
+    .insert([recipe])
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+// Helper function to get the id from a recipe object
+function getRecipeId(recipe) {
+  // Try common id fields, add more if needed
+  return recipe.id || recipe.Recipe_id || null;
+}
+
+
+
+
 // Routes
 
 // GET all posts
 app.get('/recipe_Table', async (req, res) => {
   try {
-    const posts = await getAllPosts();
+    const posts = await getAllRecipes(supabase);
     res.json({ success: true, posts });
   } catch (error) {
     console.error('Error getting posts:', error);
@@ -180,7 +239,7 @@ app.get('/recipe_Table', async (req, res) => {
 // GET single post by ID
 app.get('/recipe_Table/:id', async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id } = req.params;
     const post = await getPostById(id);
 
     if (!post) {
@@ -224,6 +283,16 @@ app.post('/recipe_Table/posts', async (req, res) => {
   }
 });
 
+app.post('/insert-Recipe', async (req, res) => {
+  try {
+    const recipe = req.body;
+    const newRecipe = await insertSampleRecipe(recipe);
+    res.status(201).json({ success: true, newRecipe });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // PUT update post
 app.put('/recipe_Table/put/:id', async (req, res) => {
   try {
@@ -251,17 +320,20 @@ app.put('/recipe_Table/put/:id', async (req, res) => {
 });
 
 // DELETE post
-app.delete('/recipe_Table/delete/:id', async (req, res) => {
+app.delete('/user-recipes/delete/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    console.log('DELETE /recipe_Table/delete/:id called with id:', id);
+    console.log('DELETE /delete/:id called with id:', id);
 
     // Check if post exists first
-    const existingPost = await getPostById(id);
+    const existingPost = await getUserRecipesByProfileId(supabase, 1);// Assuming '1' is the profileId for the user making the request
     if (!existingPost) {
       return res.status(404).json({ success: false, error: 'Post not found' });
     }
+    
+
+    // Proceed to delete the post
 
     await deletePost(id);
     res.json({ success: true, message: 'Post deleted successfully' });

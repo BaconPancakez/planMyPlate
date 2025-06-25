@@ -1,16 +1,18 @@
 // Importing necessary libraries, components, and styles
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RecipePop from './RecipePop';
 
 import './RecipeList.css';
 
 // Mock data
-import data from '../data.js';
+// import data from '../data.js';
 
 // The RecipeList component displays a list of recipes and handles popup interactions
 export default function RecipeList() {
   const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
   const [activeRecipe, setActiveRecipe] = useState(null); // State to store the active recipe
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Function to open the popup with the selected recipe
   const openPopup = (recipe) => {
@@ -18,9 +20,24 @@ export default function RecipeList() {
     setShowPopup(true);
   };
 
+   useEffect(() => {
+    // Replace with your backend URL and port if different
+    fetch('http://localhost:8080/recipe_Table')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setRecipes(data.posts);
+        }
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+
   return (
     <div className="recipes-container"> {/* Container for the list of recipes */}
-      {data.map((recipe) => (
+      {recipes.map((recipe) => (
         <div
           className="recipe-box" // Individual recipe box
           key={recipe.id}
@@ -29,7 +46,7 @@ export default function RecipeList() {
           <img src={recipe.image} alt="Recipe" /> {/* Recipe image */}
           <div className="recipe-details"> {/* Recipe details */}
             <h3>{recipe.title}</h3>
-            <p className="author">By {recipe.author}</p>
+            <p className="author">By {recipe.username}</p>
             <p className="desc">{recipe.description}</p>
           </div>
         </div>
