@@ -28,7 +28,11 @@ export default function RecipePop({ recipe, isMyRecipe, onDelete }) {
           <h2>Ingredients</h2>
           <ul>
             {recipe.ingredients.map((item, index) => (
-              <li key={index}>{item}</li>
+              <li key={index}>
+                {item.qty && `${item.qty} `}
+                {item.unit && `${item.unit} `}
+                {item.name}
+              </li>
             ))}
           </ul>
         </div>

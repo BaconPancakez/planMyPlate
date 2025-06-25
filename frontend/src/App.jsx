@@ -22,8 +22,8 @@ function App() {
   const username = localStorage.get("username");
 
   useEffect(() => {
-    validateUserSession(navigate);
-  }, []);
+    validateUserSession(navigate, location.pathname); // Pass current path to session validation
+  }, [location.pathname, navigate]);
 
   // 👇 List of routes that shouldn't show the NavBar
   const hideNavBarOnRoutes = ["/", "/login"];

@@ -14,7 +14,7 @@ export default function MyRecipe() {
             <SearchBar />  
             <Filter/>
           </div>
-          <Postbox profileId= {1} /> {/* Displays the list of recipes */}
+          <Postbox profileId= {2} /> {/* Displays the list of recipes */}
         </main> {/*later change to the user token*/}
       </div>
     </>

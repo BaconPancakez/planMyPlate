@@ -62,8 +62,8 @@ export default function AddRecipe() {
     <div className='recipe-popup-add'>
       
       <h1>Create New Post</h1>
-    //<div className='recipe-popup'>
-      //<p className='createnewpost'>Create New Post</p>
+    {/* //<div className='recipe-popup'>
+      //<p className='createnewpost'>Create New Post</p> */}
     
       <form onSubmit ={handleSubmit}>
 
