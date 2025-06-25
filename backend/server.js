@@ -54,6 +54,58 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
+
+
+
+
+
+
+
+
+
+// Database helper functions using Supabase
+  // Functions to interact with the 'recipe_Table' table
+  // These functions will be used in the routes later
+// Get all posts
+// async function getAllPosts(supabase) {
+//   const { data, error } = await supabase
+//     .from('recipe_Table')
+//     .select(`
+//       title,
+//       image,
+//       cuisine,
+//       dietary,
+//       meal,
+//       prep_time,
+//       cook_time,
+//       total_time,
+//       ingredients,
+//       directions,
+//       profile_table (
+//         username
+//       )
+//     `)
+
+//   if (error) {
+//     throw error;
+//   }
+
+//   // Map the result to flatten username
+//   return data.map(r => ({
+//     title: r.title,
+//     image: r.image,
+//     username: r.profile_table?.username,
+//     cuisine: r.cuisine,
+//     dietary: r.dietary,
+//     meal: r.meal,
+//     prep_time: r.prep_time,
+//     cook_time: r.cook_time,
+//     total_time: r.total_time,
+//     ingredients: r.ingredients,
+//     directions: r.directions
+//   }));
+// }
+
 async function getAllRecipes(supabase) {
   const { data, error } = await supabase
     .from('recipe_Table')

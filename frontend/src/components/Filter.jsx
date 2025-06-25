@@ -3,30 +3,39 @@ import './Filter.css';
 
 export default function Filter() {
   const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState({
-    'Dietary': false,
-    Cuisine: false,
-    'Meal Type': false,
-    'Total Time': false,
-  });
+  // Separate state for each filter group
+  const [dietary, setDietary] = useState({ Vegetarian: false, Vegan: false, Halal: false });
+  const [mealType, setMealType] = useState({ Breakfast: false, Lunch: false, Dinner: false });
+  const [totalTime, setTotalTime] = useState({ '< 30 min': false, '30-60 min': false, '> 1 Hr': false });
 
   const handleButtonClick = () => setOpen((prev) => !prev);
 
-  const handleCheckboxChange = (option) => {
-    setFilters((prev) => ({
-      ...prev,
-      [option]: !prev[option],
-    }));
+  const handleCheckboxChange = (group, option) => {
+    if (group === 'Dietary') {
+      setDietary((prev) => ({ ...prev, [option]: !prev[option] }));
+    } else if (group === 'Meal Type') {
+      setMealType((prev) => ({ ...prev, [option]: !prev[option] }));
+    } else if (group === 'Total Time') {
+      setTotalTime((prev) => ({ ...prev, [option]: !prev[option] }));
+    }
   };
 
   const handleApply = () => {
+    const selectedDietary = Object.entries(dietary).filter(([, checked]) => checked).map(([name]) => name);
+    const selectedMealType = Object.entries(mealType).filter(([, checked]) => checked).map(([name]) => name);
+    const selectedTotalTime = Object.entries(totalTime).filter(([, checked]) => checked).map(([name]) => name);
     alert(
-      'Filters applied: ' +
-        Object.entries(filters)
-          .filter(([, checked]) => checked)
-          .map(([name]) => name)
-          .join(', ') || 'None'
+      'Filters applied:\n' +
+        'Dietary: ' + (selectedDietary.join(', ') || 'None') + '\n' +
+        'Meal Type: ' + (selectedMealType.join(', ') || 'None') + '\n' +
+        'Total Time: ' + (selectedTotalTime.join(', ') || 'None')
     );
+    // Call the onApplyFilters function with the selected filters
+    onApplyFilters({
+      dietary: selectedDietary,
+      meal: selectedMealType,
+      total_time: selectedTotalTime,
+    });
     setOpen(false);
     // insert logic here to filter recipes
   };
@@ -36,16 +45,40 @@ export default function Filter() {
       <button className="filter-button" onClick={handleButtonClick}>
         Add Filters ▼
       </button>
-      
       {open && (
         <div className='parent-dropdown'>
           <div className="dropdown">
-            {Object.keys(filters).map((option) => (
+            <div className="dropdown-header" style={{ marginTop: 0 }}>Dietary</div>
+            {Object.keys(dietary).map((option) => (
               <label key={option} className="dropdown-label">
                 <input
                   type="checkbox"
-                  checked={filters[option]}
-                  onChange={() => handleCheckboxChange(option)}
+                  checked={dietary[option]}
+                  onChange={() => handleCheckboxChange('Dietary', option)}
+                  className="dropdown-input"
+                />
+                {option}
+              </label>
+            ))}
+            <div className="dropdown-header" style={{ marginTop: '1.5em' }}>Meal Type</div>
+            {Object.keys(mealType).map((option) => (
+              <label key={option} className="dropdown-label">
+                <input
+                  type="checkbox"
+                  checked={mealType[option]}
+                  onChange={() => handleCheckboxChange('Meal Type', option)}
+                  className="dropdown-input"
+                />
+                {option}
+              </label>
+            ))}
+            <div className="dropdown-header" style={{ marginTop: '1.5em' }}>Total Time</div>
+            {Object.keys(totalTime).map((option) => (
+              <label key={option} className="dropdown-label">
+                <input
+                  type="checkbox"
+                  checked={totalTime[option]}
+                  onChange={() => handleCheckboxChange('Total Time', option)}
                   className="dropdown-input"
                 />
                 {option}
@@ -55,7 +88,6 @@ export default function Filter() {
               Apply
             </button>
           </div>
-
         </div>
       )}
     </div>

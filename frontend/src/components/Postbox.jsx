@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import RecipePop from './RecipePop.jsx';
 import AddRecipe from './AddRecipe.jsx';
 import './RecipeList.css';
 
-export default function Postbox({ profileId }) {
+export default function Postbox({ recipes = [] }) {
   const [showPopup, setShowPopup] = useState(false);
   const [activeRecipe, setActiveRecipe] = useState(null);
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const openPopup = (recipe) => {
     setActiveRecipe(recipe);
@@ -19,24 +17,6 @@ export default function Postbox({ profileId }) {
     setShowPopup(true);
   };
 
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const response = await fetch(`http://localhost:8080/user-recipes/${profileId}`);
-        const data = await response.json();
-        if (data.success) {
-          setRecipes(data.recipes);
-        }
-      } catch (error) {
-        console.error('Error fetching recipes:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecipes();
-  }, [profileId]);
-
   const handleDeleteRecipe = async (recipe) => {
     if (!window.confirm('Are you sure you want to delete this recipe?')) return;
     
@@ -45,9 +25,8 @@ export default function Postbox({ profileId }) {
         method: 'DELETE',
       });
       const result = await response.json();
-
       if (result.success) {
-        setRecipes((prevRecipes) => prevRecipes.filter((r) => r.title !== recipe.title));
+        // Optionally, you can trigger a refresh in the parent component
         setShowPopup(false);
         alert('Recipe deleted!');
       } else {
@@ -58,12 +37,9 @@ export default function Postbox({ profileId }) {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-
   return (
     <div className="recipes-container">
       <div className="recipe-box addbox" onClick={openAddPopup}></div>
-
       {recipes.map((recipe) => (
         <div
           className="recipe-box"
@@ -77,7 +53,6 @@ export default function Postbox({ profileId }) {
           </div>
         </div>
       ))}
-
       {showPopup && (
         <div className="popup-backdrop" onClick={() => setShowPopup(false)}>
           <div className="popup-container" onClick={(e) => e.stopPropagation()}>
