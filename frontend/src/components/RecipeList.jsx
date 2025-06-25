@@ -15,21 +15,6 @@ export default function RecipeList({ recipes }) {
     setShowPopup(true);
   };
 
-   useEffect(() => {
-    // Replace with your backend URL and port if different
-    fetch(`${import.meta.env.VITE_API_LINK}/recipe_Table`)
-
-    // fetch('http://localhost:8080/recipe_Table')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setRecipes(data.posts);
-        }
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
   if (recipes.length === 0) {
     return <div>No recipes found.</div>;
   }
