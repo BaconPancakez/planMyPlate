@@ -19,7 +19,10 @@ export default function MyRecipe() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/user-recipes/${profileId}`);
+        
+        const response = await fetch(`${import.meta.env.VITE_API_LINK}/user-recipes/${profileId}`);
+
+        // const response = await fetch(`http://localhost:8080/user-recipes/${profileId}`);
         const data = await response.json();
         if (data.success) {
           setAllRecipes(data.recipes);

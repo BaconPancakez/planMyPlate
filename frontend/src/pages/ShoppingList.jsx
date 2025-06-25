@@ -3,7 +3,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ShoppingItem from '../components/ShoppingItem';
 import './ShoppingList.css'; // Import the CSS file directly
-import { IoMdArrowRoundBack } from "react-icons/io";
+import { FaSearch } from "react-icons/fa";
 import { GiSaveArrow } from "react-icons/gi";
 import { MdClear } from "react-icons/md";
 
@@ -31,7 +31,7 @@ const ShoppingList = () => {
 
       <div className='shopping-btns'>
         <button onClick={() => navigate(-1)} className="secondary-btn"> {/* Uses global class */}
-          <IoMdArrowRoundBack /> BACK
+          <FaSearch /> BACK TO EXPLORE
         </button>
 
         <button  ><GiSaveArrow /> SAVE</button>

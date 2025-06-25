@@ -24,7 +24,8 @@ function AddIngredient({isVisible, onClose, onAdd})
 
         try {
             // Update the fetch URL to point to the backend server (port 8080)
-            const response = await fetch('http://localhost:8080/insert-ingredient', {
+            const response = await fetch(`${import.meta.env.VITE_API_LINK}/insert-ingredient`, {
+            //const response = await fetch('http://localhost:8080/insert-ingredient', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

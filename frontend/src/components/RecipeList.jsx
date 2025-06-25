@@ -22,7 +22,9 @@ export default function RecipeList() {
 
    useEffect(() => {
     // Replace with your backend URL and port if different
-    fetch('http://localhost:8080/recipe_Table')
+    fetch(`${import.meta.env.VITE_API_LINK}/recipe_Table`)
+
+    // fetch('http://localhost:8080/recipe_Table')
       .then(res => res.json())
       .then(data => {
         if (data.success) {

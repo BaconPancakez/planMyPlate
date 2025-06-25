@@ -18,7 +18,8 @@ function InventoryContent()
 
     useEffect(() => {
     // Replace with your backend URL and port if different
-    fetch(`http://localhost:8080/GETinventory/${profileId}`)
+    fetch(`${import.meta.env.VITE_API_LINK}/GETinventory/${profileId}`)
+    // fetch(`http://localhost:8080/GETinventory/${profileId}`)
       .then(res => res.json())
       .then(data => {
         if (data.success) {

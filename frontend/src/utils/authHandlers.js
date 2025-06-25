@@ -1,7 +1,7 @@
 import { localStorage } from './localStorage';
 
 // Define the backend base URL
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = import.meta.env.VITE_API_LINK
 
 // Updated validation logic to fetch username if missing
 const validateUserSession = async (navigate, currentPath) => {

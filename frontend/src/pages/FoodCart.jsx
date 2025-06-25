@@ -20,7 +20,8 @@ export default function FoodCart() {
       console.warn('[FoodCart] No owner_id found in localStorage. Aborting fetch.');
       return;
     }
-    const url = `http://localhost:8080/api/foodcart/${owner_id}`;
+    const url = `${import.meta.env.VITE_API_LINK}/api/foodcart/${owner_id}`;
+    // const url = `http://localhost:8080/api/foodcart/${owner_id}`;
     console.log('[FoodCart] Fetching:', url);
     fetch(url)
       .then((res) => {

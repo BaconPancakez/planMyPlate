@@ -50,7 +50,8 @@ export default function AddRecipe() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/insert-Recipe', {
+      const response = await fetch(`${import.meta.env.VITE_API_LINK}/insert-Recipe`, {
+      // const response = await fetch('http://localhost:8080/insert-Recipe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(recipeData),

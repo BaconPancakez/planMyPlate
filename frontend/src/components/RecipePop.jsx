@@ -17,7 +17,8 @@ export default function RecipePop({ recipe, isMyRecipe, onDelete }) {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/foodCart/${recipeId}/${ownerId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_LINK}/foodCart/${recipeId}/${ownerId}`, {
+      // const response = await fetch(`http://localhost:8080/foodCart/${recipeId}/${ownerId}`, {
         method: 'POST',
       });
 
