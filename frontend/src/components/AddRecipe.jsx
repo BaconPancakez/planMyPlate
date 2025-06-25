@@ -62,8 +62,6 @@ export default function AddRecipe() {
     <div className='recipe-popup-add'>
       
       <h1>Create New Post</h1>
-    //<div className='recipe-popup'>
-      //<p className='createnewpost'>Create New Post</p>
     
       <form onSubmit ={handleSubmit}>
 
@@ -183,25 +181,39 @@ export default function AddRecipe() {
           <div className='left-bar'>
 
             <h2>Ingredients</h2>
-            <div className='ingredients'>
-              <input
-                type='text'
-                className='addIngreInput'
-                placeholder='Eg. 1 Cucumber'
-                onKeyDown={e => {
+
+            <div className='ingredients' onKeyDown={e => {
                   if (e.key === 'Enter' && e.target.value) {
                     e.preventDefault(); // prevent form submission
                     setIngredients([...ingredients, e.target.value]);
                     e.target.value = ''; // clear input after adding
                   }
-                }}
+                }}>
+              <input
+                type='number'
+                className='addIngreInput'
+                placeholder='Eg. 3'
               />
-              <ul>
-                {ingredients.map((ingredient, index) => (
-                  <li key={index}>{ingredient}</li>
-                ))}
-              </ul>
+
+              <select name="units" defaultValue={"num"} className='addIngreInput'>
+                <option value=" ">Number</option>
+                <option value="g">Grams / g</option>
+                <option value="ml">Milliliter / ml</option>
+              </select>
+
+              <input
+                type='text'
+                className='addIngreInput'
+                placeholder='Eg. Eggs'                
+              />
             </div>
+            
+            <div className='ingredientList'>
+              {ingredients.map((ingredient, index) => (
+                  <li key={index}>{ingredient}</li>
+              ))}
+            </div>
+
           </div>
 
           <div className='directions right-bar'>
