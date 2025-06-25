@@ -149,6 +149,17 @@ async function getProflie(supabase,id) {
   return data
 }
 
+async function getInventoryById(supabase,id) {
+  const {data , error} = await supabase
+    .from('ingredients_table')
+    .select()
+    .eq('owner_id', id)
+  if (error) {
+    throw error;
+  }
+  return data
+}
+
 async function createPost(Recipe_Title, Cuisine_type, Image_url, Diet_type, Meal_type, Prep_Time, Cook_Time, Total_Time, Ingredients, Directions) {
   const { data, error } = await supabase
     .from('recipe_Table')
@@ -280,6 +291,18 @@ app.get('/recipe_Table', async (req, res) => {
   }
 });
 
+//get Inventory By Id(uses owner id)
+app.get('/GETinventory/:id', async(req, res) => {
+  try {
+    const { id } = req.params;
+    const inventory = await getInventoryById(supabase, id);
+    res.json({ success: true, inventory });
+  } catch (error) {
+    console.error('Error getting inventory:', error);
+    res.status(500).json({ success: false, error: 'Failed to get inventory' });
+  }
+})
+
 //GET proflie
 app.get('/GETprofile/:id', async (req, res) => {
   try {
@@ -387,6 +410,116 @@ app.post('/foodCart/:recipe_id/:owner_id', async (req, res) => {
   }
 });
 
+// GET all recipes in food cart for a given owner_id
+app.get('/api/foodcart/:owner_id', async (req, res) => {
+  try {
+    let { owner_id } = req.params;
+    const parsedOwnerId = parseInt(owner_id, 10);
+
+    if (isNaN(parsedOwnerId)) {
+      console.error(`Invalid owner_id received: "${owner_id}". It must be a number.`);
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid owner ID format. Owner ID must be a valid number.'
+      });
+    }
+
+    owner_id = parsedOwnerId;
+
+    const { data: cartRows, error: cartError } = await supabase
+      .from('foodCart_table')
+      .select('recipe_id')
+      .eq('owner_id', owner_id);
+
+    console.log('cartRows:', cartRows);
+    if (cartError) {
+      console.error('Supabase cart fetch error:', cartError);
+      throw cartError;
+    }
+
+    if (!cartRows || cartRows.length === 0) {
+      return res.json({ success: true, recipes: [] });
+    }
+
+    const recipeIds = cartRows
+      .map(row => parseInt(row.recipe_id, 10))
+      .filter(id => !isNaN(id));
+
+    console.log('Filtered recipeIds:', recipeIds, 'types:', recipeIds.map(id => typeof id));
+
+    if (recipeIds.length === 0) {
+      return res.json({ success: true, recipes: [] });
+    }
+
+    const { data: recipes, error: recipeError } = await supabase
+      .from('recipe_Table')
+      .select('*')
+      .in('id', recipeIds);
+
+    if (recipeError) {
+      console.error('Supabase recipe fetch error:', recipeError);
+      throw recipeError;
+    }
+
+    res.json({ success: true, recipes });
+
+  } catch (error) {
+    console.error('Error fetching food cart recipes:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch food cart recipes due to an internal server error.'
+    });
+  }
+});
+// Function to insert new Ingredient
+async function insertIngredient(ingredient) {
+  const { data, error } = await supabase
+    .from('ingredients_table')
+    .insert([ingredient])
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+// Endpoint to insert a new ingredient
+app.post('/insert-ingredient', async (req, res) => {
+  try {
+    const ingredient = req.body;
+
+    // Basic validation (can be expanded)
+    if (!ingredient.quantity || !ingredient.name || !ingredient.owner_id) {
+      return res.status(400).json({
+        success: false,
+        error: 'Required fields: quantity, name, owner_id',
+      });
+    }
+
+    const newIngredient = await insertIngredient(ingredient);
+
+    if (newIngredient) {
+      res.status(201).json({ success: true, newIngredient });
+    } else {
+      // This case should ideally not be reached if insertIngredient is successful and single() works
+      res.status(500).json({ success: false, error: 'Failed to retrieve inserted ingredient data.' });
+    }
+
+  } catch (error) {
+    console.error('Error inserting ingredient in endpoint:', error);
+    // Check if the error is a Supabase error object and extract details
+    const errorMessage = error.message || 'An unknown error occurred during ingredient insertion.';
+    const errorDetails = error.details || null;
+    const errorCode = error.code || null;
+
+    res.status(500).json({
+      success: false,
+      error: errorMessage,
+      details: errorDetails,
+      code: errorCode
+    });
+  }
+});
 
 // DELETE post by title
 app.delete('/user-recipes/delete/:title', async (req, res) => {
@@ -658,5 +791,5 @@ app.get('/search-recipes/:searchTerm', async (req, res) => {
   }
 });
 
-
+app.get('')
 

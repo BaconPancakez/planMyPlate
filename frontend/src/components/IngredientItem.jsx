@@ -11,7 +11,6 @@ const IngredientItem = ({ ingredient, servingSize }) => {
       <img src={image} alt={name} className="ii-image" /> {/* Use the prefixed class name */}
       <div className="ii-info"> {/* Use the prefixed class name */}
         <div className="ii-name">{name.toUpperCase()}</div> {/* Use the prefixed class name */}
-        <div className="ii-type">Type: {type}</div> {/* Use the prefixed class name */}
       </div>
       <div className="ii-quantity"> {/* Use the prefixed class name */}
         {unit === 'count' ? `x ${scaledQuantity}` : `${scaledQuantity} ${unit}`}

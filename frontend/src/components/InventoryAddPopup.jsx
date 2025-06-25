@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { localStorage } from '../utils/localStorage'; // Import localStorage utility
 
 function AddIngredient({isVisible, onClose, onAdd})
 {
@@ -6,18 +7,59 @@ function AddIngredient({isVisible, onClose, onAdd})
     const [quantity, setQuantity] = useState('');
     const [units, setUnits] = useState('')
     
+    const handleAdd = async (ingredientData) => {
+        const owner_id = localStorage.get('id'); // Get owner_id from localStorage
+        if (!owner_id) {
+            alert('User not logged in. Cannot add ingredient.');
+            return;
+        }
+
+        const ingredientToSend = {
+            name: ingredientData.ingredientName,
+            quantity: ingredientData.quantity,
+            units: ingredientData.units,
+            owner_id: parseInt(owner_id, 10), // Ensure owner_id is a number
+            category: null // Assuming category is optional or null for now
+        };
+
+        try {
+            // Update the fetch URL to point to the backend server (port 8080)
+            const response = await fetch('http://localhost:8080/insert-ingredient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(ingredientToSend),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                console.log('Ingredient added successfully:', data.newIngredient);
+                onAdd(data.newIngredient); // Call onAdd with the newly added ingredient data
+                onClose();
+            } else {
+                console.error('Failed to add ingredient:', data.error);
+                alert(`Failed to add ingredient: ${data.error}`);
+            }
+        } catch (error) {
+            console.error('Error adding ingredient:', error);
+            alert('An error occurred while adding the ingredient.');
+        }
+    };
+
     const submit = (e) =>{
         e.preventDefault();
         
         if (ingredientName && quantity) // not empty
         {         
-            // Custom callback prop that expects DATA
-            onAdd({ingredientName, quantity, units}); 
+            // Call handleAdd instead of onAdd directly
+            handleAdd({ingredientName, quantity, units}); 
 
             setIngredientName('');
             setQuantity('');
             setUnits('')
-            onClose();
+            // onClose is now called inside handleAdd on success
 
         } else
         {

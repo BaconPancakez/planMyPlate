@@ -38,11 +38,11 @@ const validateUserSession = async (navigate, currentPath) => {
       }
     }
 
-    // Only redirect to /home if currentPath is undefined or invalid
-    if (!currentPath || currentPath === "/login") {
-      navigate("/home");
-    } else {
+    // Redirect based on currentPath
+    if (currentPath && currentPath !== "/login") {
       navigate(currentPath); // Redirect to current path
+    } else {
+      navigate("/home"); // Default to home
     }
 
     console.log("User session validated successfully.");
