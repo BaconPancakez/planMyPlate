@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './AddRecipe.css';
+import { localStorage } from "../utils/localStorage";
+
 
 export default function AddRecipe() {
   const [title, setTitle] = useState(''); // added state for title (initially empty string)
@@ -32,7 +34,7 @@ export default function AddRecipe() {
     const recipeData = {
       title: title,
       image: displayedImageUrl || imageUrl,
-      author: '1', // Assuming '1' is the profileId of the user posting the recipe
+      author: localStorage.get('id'), // Assuming '1' is the profileId of the user posting the recipe
       cuisine: cuisine,
       dietary: dietType,
       meal: mealType,

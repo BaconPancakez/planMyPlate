@@ -4,6 +4,7 @@ import Filter from "../components/Filter";
 import SearchBar from "../components/SearchBar";
 import "./MyRecipe.css";
 import { useState, useEffect } from "react";
+import { localStorage } from "../utils/localStorage";
 
 
 
@@ -13,7 +14,7 @@ export default function MyRecipe() {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [filters, setFilters] = useState({ dietary: [], meal: [], total_time: [] });
   const [loading, setLoading] = useState(true);
-  const profileId = 1; // later change to the user token
+  const profileId = localStorage.get('id'); // later change to the user token
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -36,12 +37,37 @@ export default function MyRecipe() {
   const handleApplyFilters = (newFilters) => {
     setFilters(newFilters);
     let filtered = allRecipes;
-    if (newFilters.dietary.length)
-      filtered = filtered.filter(r => newFilters.dietary.includes(r.dietary));
-    if (newFilters.meal.length)
-      filtered = filtered.filter(r => newFilters.meal.includes(r.meal));
-    if (newFilters.total_time.length)
-      filtered = filtered.filter(r => newFilters.total_time.includes(r.total_time));
+
+    // Helper to normalize values for comparison
+    const normalize = v => (Array.isArray(v) ? v.map(x => String(x).toLowerCase().trim()) : String(v).toLowerCase().trim());
+
+    // Dietary filter (handles array or string in recipe)
+    if (newFilters.dietary.length) {
+      const selected = newFilters.dietary.map(v => v.toLowerCase().trim());
+      filtered = filtered.filter(r => {
+        const val = normalize(r.dietary);
+        if (Array.isArray(val)) return val.some(v => selected.includes(v));
+        return selected.includes(val);
+      });
+    }
+    // Meal filter
+    if (newFilters.meal.length) {
+      const selected = newFilters.meal.map(v => v.toLowerCase().trim());
+      filtered = filtered.filter(r => {
+        const val = normalize(r.meal);
+        if (Array.isArray(val)) return val.some(v => selected.includes(v));
+        return selected.includes(val);
+      });
+    }
+    // Total time filter
+    if (newFilters.total_time.length) {
+      const selected = newFilters.total_time.map(v => v.toLowerCase().trim());
+      filtered = filtered.filter(r => {
+        const val = normalize(r.total_time);
+        if (Array.isArray(val)) return val.some(v => selected.includes(v));
+        return selected.includes(val);
+      });
+    }
     setFilteredRecipes(filtered);
   };
 
