@@ -7,7 +7,6 @@ const MyProfile = () => {
   const [profile, setProfile] = useState({
     username: 'JohnDoe',
     email: 'john@example.com',
-    dob: '2000-01-01',
     about: 'I enjoy cooking healthy meals and exploring new recipes.',
     allergies: ['Peanuts', 'Shellfish']
   });
@@ -84,14 +83,6 @@ const MyProfile = () => {
           ) : (
             <p className="readonly">{profile.email}</p>
           )}
-
-          <label>Date of Birth:</label>
-          {editing ? (
-            <input type="date" name="dob" value={profile.dob} onChange={handleChange} className="input" />
-          ) : (
-            <p className="readonly">{profile.dob}</p>
-          )}
-
           <label>About Me:</label>
           {editing ? (
             <textarea name="about" value={profile.about} onChange={handleChange} className="input" />
