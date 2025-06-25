@@ -13,10 +13,11 @@ export default function RecipeCard({ recipe, isChecked, onToggleCheck, onView, o
           className="rc-checkbox"
         />
       </div>
-      <img src={recipe.image} alt={recipe.name} className="rc-image" />
+      <img src={recipe.image} alt={recipe.title} className="rc-image" />
       <div className="rc-info">
-        <h3 className="rc-title">{recipe.name}</h3>
-        <p className="rc-warning">⚠️ {recipe.warning}</p>
+        <h3 className="rc-title">{recipe.title}</h3>
+        {/* Only show warning if it exists */}
+        {recipe.warning && <p className="rc-warning">⚠️ {recipe.warning}</p>}
       </div>
       <div className="rc-actions">
         <button onClick={onView} className="rc-view-btn">👀 View Recipe</button>

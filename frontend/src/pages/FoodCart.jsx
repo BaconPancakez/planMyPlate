@@ -1,5 +1,6 @@
 // pages/FoodCart.jsx
 import React, { useState, useEffect } from 'react';
+import { localStorage }  from "../utils/localStorage";
 import RecipeCard from '../components/RecipeCard';
 import RecipePopup from '../components/RecipePopup';
 import { useNavigate } from 'react-router-dom';
@@ -13,15 +14,33 @@ export default function FoodCart() {
 
   useEffect(() => {
     // Get owner_id from localStorage (or set your own logic)
-    const owner_id = localStorage.getItem('id');
-    if (!owner_id) return;
-    fetch(`/api/foodcart/${owner_id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('Fetched food cart recipes:', data);
-        setRecipes(data.recipes || []);
+    const owner_id = localStorage.get('id');
+    console.log('[FoodCart] owner_id from localStorage:', owner_id);
+    if (!owner_id) {
+      console.warn('[FoodCart] No owner_id found in localStorage. Aborting fetch.');
+      return;
+    }
+    const url = `http://localhost:8080/api/foodcart/${owner_id}`;
+    console.log('[FoodCart] Fetching:', url);
+    fetch(url)
+      .then((res) => {
+        console.log('[FoodCart] Raw response:', res);
+        if (!res.ok) {
+          console.error(`[FoodCart] Fetch failed with status: ${res.status}`);
+        }
+        return res.text();
       })
-      .catch((err) => console.error('Failed to fetch food cart recipes:', err));
+      .then((text) => {
+        console.log('[FoodCart] Raw response text:', text);
+        try {
+          const data = JSON.parse(text);
+          console.log('[FoodCart] Parsed JSON:', data);
+          setRecipes(data.recipes || []);
+        } catch (err) {
+          console.error('[FoodCart] Failed to parse JSON:', err);
+        }
+      })
+      .catch((err) => console.error('[FoodCart] Network or fetch error:', err));
   }, []);
 
   const toggleCheck = (id) => {

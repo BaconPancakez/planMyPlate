@@ -471,7 +471,6 @@ app.get('/api/foodcart/:owner_id', async (req, res) => {
     });
   }
 });
-
 // Function to insert new Ingredient
 async function insertIngredient(ingredient) {
   const { data, error } = await supabase
