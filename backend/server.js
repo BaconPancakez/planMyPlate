@@ -294,7 +294,7 @@ function getRecipeId(recipe) {
 
 // Routes
 // Updated insertProfile function to handle missing password and validate img
-async function insertProfile(username, email, password = null, login_type, allergy = "None", about_me = "", img = "https://example.com/default-profile.jpg") {
+async function insertProfile(username, email, password = null, login_type, allergy = "[]", about_me = "", img = "https://example.com/default-profile.jpg") {
   try {
     const { data, error } = await supabase
       .from('profile_table')
