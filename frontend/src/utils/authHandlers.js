@@ -46,6 +46,7 @@ const validateUserSession = async (navigate, currentPath) => {
     }
 
     console.log("User session validated successfully.");
+    navigate("/home");
     return true;
   } catch (error) {
     console.error("Error validating user session:", error);
