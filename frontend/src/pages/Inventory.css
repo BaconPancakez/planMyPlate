@@ -339,8 +339,8 @@ INVENTORY POP-UP [InventoryAddPopup.jsx]
 .closeBtn
 {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 10px;
+    right: 10px;
     padding: 2px 2px;
 }
 

@@ -4,7 +4,7 @@ import { localStorage } from './localStorage';
 const BASE_URL = "http://localhost:8080";
 
 // Updated validation logic to fetch username if missing
-const validateUserSession = async (navigate) => {
+const validateUserSession = async (navigate, currentPath) => {
   try {
     const id = localStorage.get("id");
     let username = localStorage.get("username");
@@ -38,7 +38,13 @@ const validateUserSession = async (navigate) => {
       }
     }
 
-    navigate("/home");
+    // Only redirect to /home if currentPath is undefined or invalid
+    if (!currentPath || currentPath === "/login") {
+      navigate("/home");
+    } else {
+      navigate(currentPath); // Redirect to current path
+    }
+
     console.log("User session validated successfully.");
     return true;
   } catch (error) {

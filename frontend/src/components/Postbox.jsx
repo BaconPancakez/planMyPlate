@@ -19,6 +19,7 @@ export default function Postbox({ recipes = [] }) {
 
   const handleDeleteRecipe = async (recipe) => {
     if (!window.confirm('Are you sure you want to delete this recipe?')) return;
+    
     try {
       const response = await fetch(`http://localhost:8080/user-recipes/delete/${recipe.title}`, {
         method: 'DELETE',
@@ -56,7 +57,7 @@ export default function Postbox({ recipes = [] }) {
         <div className="popup-backdrop" onClick={() => setShowPopup(false)}>
           <div className="popup-container" onClick={(e) => e.stopPropagation()}>
             <button className="popup-close" onClick={() => setShowPopup(false)}>
-              &times;
+              <img src="../src/assets/CloseBtn.png"/>
             </button>
             {activeRecipe ? (
               <RecipePop recipe={activeRecipe} isMyRecipe={true} onDelete={handleDeleteRecipe} />
