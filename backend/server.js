@@ -54,58 +54,6 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-
-
-
-
-
-
-
-
-
-// Database helper functions using Supabase
-  // Functions to interact with the 'recipe_Table' table
-  // These functions will be used in the routes later
-// Get all posts
-// async function getAllPosts(supabase) {
-//   const { data, error } = await supabase
-//     .from('recipe_Table')
-//     .select(`
-//       title,
-//       image,
-//       cuisine,
-//       dietary,
-//       meal,
-//       prep_time,
-//       cook_time,
-//       total_time,
-//       ingredients,
-//       directions,
-//       profile_table (
-//         username
-//       )
-//     `)
-
-//   if (error) {
-//     throw error;
-//   }
-
-//   // Map the result to flatten username
-//   return data.map(r => ({
-//     title: r.title,
-//     image: r.image,
-//     username: r.profile_table?.username,
-//     cuisine: r.cuisine,
-//     dietary: r.dietary,
-//     meal: r.meal,
-//     prep_time: r.prep_time,
-//     cook_time: r.cook_time,
-//     total_time: r.total_time,
-//     ingredients: r.ingredients,
-//     directions: r.directions
-//   }));
-// }
-
 async function getAllRecipes(supabase) {
   const { data, error } = await supabase
     .from('recipe_Table')
@@ -294,7 +242,7 @@ function getRecipeId(recipe) {
 
 // Routes
 // Updated insertProfile function to handle missing password and validate img
-async function insertProfile(username, email, password = null, login_type, allergy = "[]", about_me = "", img = "https://example.com/default-profile.jpg") {
+async function insertProfile(username, email, password = null, login_type, allergy = [], about_me = "", img = "https://example.com/default-profile.jpg") {
   try {
     const { data, error } = await supabase
       .from('profile_table')
@@ -580,7 +528,16 @@ app.post('/profile', async (req, res) => {
     res.json({ success: true, id: profile.id });
   } catch (error) {
     console.error('Error inserting profile:', error);
-    res.status(500).json({ success: false, error: 'Internal server error' });
+
+    // Improved error response
+    if (error.message.includes('duplicate key value')) {
+      return res.status(409).json({
+        success: false,
+        error: 'A profile with this email already exists.',
+      });
+    }
+
+    res.status(500).json({ success: false, error: 'Internal server error', details: error.message });
   }
 });
 
