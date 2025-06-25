@@ -141,7 +141,7 @@ export default function RecipePopup({ recipe, onClose }) {
       {/* The inner container for the popup content, often used for scrolling or max-width */}
       <div className="popup-container" onClick={(e) => e.stopPropagation()}> {/* Stop propagation to prevent closing when clicking inside */}
         {/* Close Button: Positioned absolutely within the popup-container for proper placement */}
-        <button className="popup-close" onClick={onClose}><img src="../src/assets/CloseBtn.png"/></button>
+        <button className="popup-close" onClick={onClose}><img src="/assets/CloseBtn.png"/></button>
 
         {/* The actual styled content box for the recipe details */}
         <div className="recipe-popup">

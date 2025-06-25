@@ -43,7 +43,7 @@ export default function RecipeList({ recipes }) {
             onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside the popup
           >
             <button className="popup-close" onClick={() => setShowPopup(false)}> {/* Close button */}
-              <img src="../src/assets/CloseBtn.png"/>
+              <img src="/assets/CloseBtn.png"/>
             </button>
             { <RecipePop recipe={activeRecipe} isMyRecipe={false}/> }
           </div>

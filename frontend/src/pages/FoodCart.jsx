@@ -24,7 +24,7 @@ export default function FoodCart() {
       }
 
       // Ensure the URL points to your backend server
-      const url = `http://localhost:8080/api/foodcart/${owner_id}`;
+      const url = `${import.meta.env.VITE_API_LINK}api/foodcart/${owner_id}`;
       console.log('[FoodCart] Fetching:', url);
 
       try {
@@ -66,7 +66,7 @@ export default function FoodCart() {
     }
 
     // Construct the DELETE URL using both owner_id and recipeIdToDelete
-    const deleteUrl = `http://localhost:8080/api/foodcart/${owner_id}/${recipeIdToDelete}`;
+    const deleteUrl = `${import.meta.env.VITE_API_LINK}/api/foodcart/${owner_id}/${recipeIdToDelete}`;
     console.log(`[FoodCart] Attempting to DELETE: ${deleteUrl}`);
 
     try {

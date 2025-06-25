@@ -78,7 +78,7 @@ function AddIngredient({isVisible, onClose, onAdd})
 
                 <div className="closeBtn">
                     <button type="button" onClick={onClose} className='icon-button default-button'>
-                        <img src="../src/assets/CloseBtn.png"/> 
+                        <img src="/assets/CloseBtn.png"/> 
                     </button>
                 </div>
 

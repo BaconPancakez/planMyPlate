@@ -41,7 +41,7 @@ export default function NavBar() {
         {/* Profile Section */}
         {isNavOpen && (
           <div className="profile"> {/* Profile section displayed when sidebar is expanded */}
-            <img src="./src/assets/pfp.png" alt="Profile" />
+            <img src="/assets/pfp.png" alt="Profile" />
             <p>Plan My Plate</p>
           </div>
         )}

@@ -70,7 +70,7 @@ function InventoryContent()
                         {/* Add button */}
                         <div className="parent-box">
                             <button onClick={() => setPopup(true)} className="AddBtn default-button">
-                                <img src="../src/assets/Add.png"/>
+                                <img src="/assets/Add.png"/>
                             </button>                                
                         </div>
 
