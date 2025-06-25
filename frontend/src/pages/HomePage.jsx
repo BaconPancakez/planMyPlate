@@ -29,7 +29,7 @@ const HomePage = () => {
           </div>
           <div className="about-section">
             <h2>About Us</h2>
-            <p>Welcome to PlanMyPlate!</p>
+            <p>When you don't know what to cook, you can rely on Plan My Plate to find a recipe that is tailored to your tastes. You can also track your fridge inventory without having to rummage through your in-real-life fridge with a lot of pain. Additionally, you can have a shopping list that is personalised based on what meals you plan to whip up!</p>
           </div>
         </div>
 
