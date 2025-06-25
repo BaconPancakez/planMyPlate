@@ -8,36 +8,48 @@
 //   const navigate = useNavigate();
 //   const selectedRecipes = useMemo(() => location.state?.selected || [], [location.state]);
 
-//   const [servingSizes, setServingSizes] = useState(
+//   // Initialize servingSizes directly from selectedRecipes
+//   const [servingSizes, setServingSizes] = useState(()
 //     selectedRecipes.reduce((acc, recipe) => {
 //       acc[recipe.id] = 1;
 //       return acc;
 //     }, {})
 //   );
 
-//   const [aggregatedIngredients, setAggregatedIngredients] = useState([]);
-
-//   useEffect(() => {
+//   const aggregatedIngredients = useMemo(() => {
 //     const aggregate = {};
 
 //     selectedRecipes.forEach(recipe => {
 //       const currentServing = servingSizes[recipe.id] || 1;
 //       recipe.ingredients.forEach(ingredient => {
+//         // Ensure quantity is parsed to a number before calculation
+//         const ingredientQuantity = parseFloat(ingredient.qty);
+//         if (isNaN(ingredientQuantity)) {
+//             console.warn(`[IngredientsList] Invalid quantity for ingredient: ${ingredient.name}. Quantity: ${ingredient.qty}`);
+//             return; // Skip this ingredient if quantity is invalid
+//         }
+
 //         const key = ingredient.name.toLowerCase();
 
 //         if (aggregate[key]) {
-//           aggregate[key].quantity += ingredient.quantity * currentServing;
+//           aggregate[key].quantity += ingredientQuantity * currentServing;
 //         } else {
 //           aggregate[key] = {
+//             // Spread existing ingredient properties (name, unit, etc.)
 //             ...ingredient,
-//             quantity: ingredient.quantity * currentServing,
+//             // Override 'qty' with a new 'quantity' property (as a number)
+//             quantity: ingredientQuantity * currentServing,
+//             // Add a default image if ingredient.image is not provided in your database
+//             image: ingredient.image || 'https://placehold.co/50x50/cccccc/ffffff?text=No+Img', // Placeholder image
+//             // Add a default type if ingredient.type is not provided
+//             type: ingredient.type || 'General',
 //           };
 //         }
 //       });
 //     });
 
-//     setAggregatedIngredients(Object.values(aggregate));
-//   }, [selectedRecipes, servingSizes]);
+//     return Object.values(aggregate);
+//   }, [selectedRecipes, servingSizes]); // Dependencies ensure re-calculation on change
 
 //   const handleChangeServing = (id, delta) => {
 //     setServingSizes((prev) => ({
@@ -47,12 +59,17 @@
 //   };
 
 //   const handleAddIngredientsToShoppingList = () => {
-//     navigate('/shopping-list', { state: { ingredientsToAdd: aggregatedIngredients } });
+//     // Ensure all aggregated ingredients have a numeric quantity before passing
+//     const ingredientsToAdd = aggregatedIngredients.map(ing => ({
+//       ...ing,
+//       quantity: parseFloat(ing.quantity) || 0 // Re-parse or ensure it's a number
+//     }));
+//     navigate('/shopping-list', { state: { ingredientsToAdd: ingredientsToAdd } });
 //   };
 
 //   return (
 //     <div className="page ingredients-list-page">
-//       <div className="header">        
+//       <div className="header">
 //         <h1>INGREDIENTS LIST</h1>
 //       </div>
 
@@ -81,8 +98,6 @@
 //             ADD TO SHOPPING LIST
 //           </button>
 //         )}
-
-
 //       </div>
 //     </div>
 //   );
@@ -99,18 +114,35 @@ import './IngredientsList.css';
 const IngredientsList = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const selectedRecipes = useMemo(() => location.state?.selected || [], [location.state]);
+  // Try to get selected recipes from location.state, else from localStorage
+  const [selectedRecipes, setSelectedRecipes] = useState(() => {
+    if (location.state?.selected && location.state.selected.length > 0) {
+      return location.state.selected;
+    }
+    // Try to recover from localStorage
+    const ids = JSON.parse(window.localStorage.getItem('selectedRecipeIds') || '[]');
+    if (ids.length === 0) return [];
+    // Try to get all food cart recipes from localStorage (if available)
+    const foodCartRaw = window.localStorage.getItem('foodCartRecipes');
+    if (foodCartRaw) {
+      const foodCart = JSON.parse(foodCartRaw);
+      return foodCart.filter(r => ids.includes(r.id));
+    }
+    // Otherwise, fallback to empty (could fetch from backend here if needed)
+    return [];
+  });
 
-  const [servingSizes, setServingSizes] = useState(
+  // If selectedRecipes is empty, try to fetch from backend (optional, not implemented here)
+
+  // Initialize servingSizes directly from selectedRecipes
+  const [servingSizes, setServingSizes] = useState(() =>
     selectedRecipes.reduce((acc, recipe) => {
       acc[recipe.id] = 1;
       return acc;
     }, {})
   );
 
-  const [aggregatedIngredients, setAggregatedIngredients] = useState([]);
-
-  useEffect(() => {
+  const aggregatedIngredients = useMemo(() => {
     const aggregate = {};
 
     selectedRecipes.forEach(recipe => {
@@ -142,7 +174,7 @@ const IngredientsList = () => {
       });
     });
 
-    setAggregatedIngredients(Object.values(aggregate));
+    return Object.values(aggregate);
   }, [selectedRecipes, servingSizes]); // Dependencies ensure re-calculation on change
 
   const handleChangeServing = (id, delta) => {

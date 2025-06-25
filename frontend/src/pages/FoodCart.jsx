@@ -98,6 +98,8 @@ export default function FoodCart() {
 
   const handleShowIngredients = () => {
     const selected = recipes.filter((r) => checkedItems.includes(r.id));
+    // Store selected recipe IDs in localStorage for robustness
+    localStorage.set('selectedRecipeIds', checkedItems);
     navigate('/ingredients', { state: { selected } });
   };
 
