@@ -48,7 +48,7 @@ export default function Explore() {
     if (currentFilters.total_time.length) params.append('total_time', currentFilters.total_time.join(','));
     if (currentSearchQuery) params.append('searchTerm', currentSearchQuery);
 
-    const fetchUrl = `http://localhost:8080/user-recipes/filter?${params.toString()}`;
+    const fetchUrl = `${import.meta.env.VITE_API_LINK}/user-recipes/filter?${params.toString()}`;
     console.log('Fetching filtered recipes from:', fetchUrl);
 
     try {
