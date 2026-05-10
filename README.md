@@ -1,5 +1,7 @@
 # Plan My Plate
 
+https://devpost.com/software/plan-my-bite
+
 ## Overview
 
 Plan My Plate is a meal planning application that helps users organize recipes, generate shopping lists, and manage ingredients efficiently. It features a React-based frontend and an Express/Supabase backend.
